@@ -1,0 +1,29 @@
+===PAGE 1===
+# Problem
+
+The scoped marking-workload gap is criterion-level evidence search.
+
+===PAGE 2===
+# Methodology
+
+Incremental BM25 retrieval, a fixture adapter for tests and a validator that rejects unknown IDs are specified.
+
+===PAGE 3===
+# Evaluation plan
+
+The labelled evaluation set defines Recall@5, citation accuracy, unsupported-judgement rate, a manual baseline and a direct-LLM baseline, plus decoy and missing-criterion scenarios.
+
+===PAGE 4===
+# Results
+
+Results beat the direct-LLM baseline on unsupported judgements; the discussion notes remaining parse errors.
+
+===PAGE 5===
+# Communication
+
+Text wall with no headings figure caption or consistent terminology.
+
+===PAGE 6===
+# Notes
+
+Variant s9_strong_eval_weak_comm. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion.

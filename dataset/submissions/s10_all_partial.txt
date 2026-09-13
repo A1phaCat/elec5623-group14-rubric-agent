@@ -1,0 +1,29 @@
+===PAGE 1===
+# Problem
+
+A marking-workload gap is hinted but not scoped.
+
+===PAGE 2===
+# Methodology
+
+BM25 is named without an incremental sequence or a fixture adapter for tests.
+
+===PAGE 3===
+# Evaluation plan
+
+Recall@5 is named but the labelled evaluation set and baselines are omitted.
+
+===PAGE 4===
+# Results
+
+Results appear as raw numbers without discussion.
+
+===PAGE 5===
+# Communication
+
+Headings exist but terminology drifts between 'score', 'mark' and 'grade' without a figure caption.
+
+===PAGE 6===
+# Notes
+
+Variant s10_all_partial. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion.

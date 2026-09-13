@@ -1,0 +1,59 @@
+===PAGE 1===
+# Opening
+
+The scoped marking-workload gap is repeated evidence search across a 15-page report.
+
+===PAGE 2===
+# Method start
+
+The incremental BM25 retrieval path is the first implemented stage.
+
+===PAGE 3===
+# Unrelated
+
+Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion.
+
+===PAGE 4===
+# Still unrelated
+
+Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion.
+
+===PAGE 5===
+# Method middle
+
+A fixture adapter for tests lets the pipeline run without live model calls.
+
+===PAGE 6===
+# Padding
+
+Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion.
+
+===PAGE 7===
+# Users
+
+Affected users remain human markers who confirm every score.
+
+===PAGE 8===
+# Method end
+
+The validator rejects unknown IDs before anything reaches the review UI.
+
+===PAGE 9===
+# Evaluation plan
+
+Metrics include Recall@5 and citation accuracy against a labelled evaluation set with a manual baseline and a direct-LLM baseline.
+
+===PAGE 10===
+# Results
+
+Results show retrieved spans from three non-adjacent method sections and the discussion treats this as a recall check.
+
+===PAGE 11===
+# Limits
+
+Limitations: synthetic data only.
+
+===PAGE 12===
+# Communication
+
+Numbered headings and a single figure caption keep consistent terminology.

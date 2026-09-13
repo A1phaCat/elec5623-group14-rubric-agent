@@ -1,0 +1,39 @@
+===PAGE 1===
+# Introduction
+
+The scoped marking-workload gap for long analytic rubrics is that tutors repeatedly search the same report for criterion-specific evidence.
+
+===PAGE 2===
+# Users
+
+Affected users are university markers and unit coordinators who need a testable link from each criterion to a source span.
+
+===PAGE 3===
+# Methodology
+
+Development is incremental: rubric parsing, then BM25 retrieval, then a fixture adapter for tests, then a validator that rejects unknown IDs.
+
+===PAGE 4===
+# Architecture
+
+The assessment model is provider-independent and never receives the full submission.
+
+===PAGE 5===
+# Evaluation plan
+
+The labelled evaluation set uses Recall@5, citation accuracy and two baselines: manual marking and direct whole-document LLM grading. Test scenarios include missing-criterion and keyword-decoy cases.
+
+===PAGE 6===
+# Results
+
+On the synthetic corpus the method recovered criterion evidence and the discussion notes that scores remain provisional until a marker confirms them.
+
+===PAGE 7===
+# Limitations
+
+Limitations include the small labelled set and the restriction to text-only submissions.
+
+===PAGE 8===
+# Communication
+
+Each figure caption uses consistent terminology and numbered headings without drifting labels.

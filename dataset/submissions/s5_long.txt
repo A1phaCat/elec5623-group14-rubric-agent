@@ -1,0 +1,59 @@
+===PAGE 1===
+# Problem
+
+The scoped marking-workload gap grows with report length, which this 12-page file represents.
+
+===PAGE 2===
+# Users
+
+Affected users still need a testable gap statement and visible evidence.
+
+===PAGE 3===
+# Methodology
+
+Incremental BM25 retrieval, a fixture adapter for tests, and a validator that rejects unknown IDs stay in scope.
+
+===PAGE 4===
+# Evaluation plan
+
+The labelled evaluation set records Recall@5, citation accuracy, a manual baseline and a direct-LLM baseline.
+
+===PAGE 5===
+# Results
+
+Latency results on this long file are logged; the discussion compares them with the 120-second target.
+
+===PAGE 6===
+# Communication
+
+Consistent terminology and figure captions continue through the filler pages.
+
+===PAGE 7===
+# Appendix filler 7
+
+Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion.
+
+===PAGE 8===
+# Appendix filler 8
+
+Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion.
+
+===PAGE 9===
+# Appendix filler 9
+
+Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion.
+
+===PAGE 10===
+# Appendix filler 10
+
+Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion.
+
+===PAGE 11===
+# Appendix filler 11
+
+Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion.
+
+===PAGE 12===
+# Appendix filler 12
+
+Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion.

@@ -1,0 +1,24 @@
+===PAGE 1===
+# Problem and motivation
+
+The problem is that marking is slow. Stakeholders are not named and no evidence of need is offered.
+
+===PAGE 2===
+# Requirements
+
+Requirements are listed as a flat set without priority and without acceptance criteria.
+
+===PAGE 3===
+# Methodology
+
+The method is described once; there are no iterations and no tests are planned.
+
+===PAGE 4===
+# Feasibility and risks
+
+A timeline is given by week but risks are not discussed.
+
+===PAGE 5===
+# Appendix
+
+Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion.

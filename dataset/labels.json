@@ -1,0 +1,755 @@
+[
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s1_standard",
+    "criterion_id": "C1",
+    "must_contain": [
+      "scoped marking-workload gap"
+    ],
+    "sufficiency": "sufficient",
+    "score": 4,
+    "scenario": "S1",
+    "split": "dev"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s1_standard",
+    "criterion_id": "C2",
+    "must_contain": [
+      "fixture adapter for tests",
+      "validator that rejects unknown IDs"
+    ],
+    "sufficiency": "sufficient",
+    "score": 4,
+    "scenario": "S1",
+    "split": "dev"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s1_standard",
+    "criterion_id": "C3",
+    "must_contain": [
+      "labelled evaluation set",
+      "Recall@5"
+    ],
+    "sufficiency": "sufficient",
+    "score": 4,
+    "scenario": "S1",
+    "split": "dev"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s1_standard",
+    "criterion_id": "C4",
+    "must_contain": [
+      "discussion notes that scores remain provisional"
+    ],
+    "sufficiency": "sufficient",
+    "score": 4,
+    "scenario": "S1",
+    "split": "dev"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s1_standard",
+    "criterion_id": "C5",
+    "must_contain": [
+      "figure caption",
+      "consistent terminology"
+    ],
+    "sufficiency": "sufficient",
+    "score": 2,
+    "scenario": "S1",
+    "split": "dev"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s2_dispersed",
+    "criterion_id": "C1",
+    "must_contain": [
+      "scoped marking-workload gap"
+    ],
+    "sufficiency": "sufficient",
+    "score": 4,
+    "scenario": "S2",
+    "split": "dev"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s2_dispersed",
+    "criterion_id": "C2",
+    "must_contain": [
+      "incremental BM25 retrieval path",
+      "fixture adapter for tests",
+      "validator rejects unknown IDs"
+    ],
+    "sufficiency": "sufficient",
+    "score": 4,
+    "scenario": "S2",
+    "split": "dev"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s2_dispersed",
+    "criterion_id": "C3",
+    "must_contain": [
+      "labelled evaluation set"
+    ],
+    "sufficiency": "sufficient",
+    "score": 4,
+    "scenario": "S2",
+    "split": "dev"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s2_dispersed",
+    "criterion_id": "C4",
+    "must_contain": [
+      "three non-adjacent method sections"
+    ],
+    "sufficiency": "sufficient",
+    "score": 4,
+    "scenario": "S2",
+    "split": "dev"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s2_dispersed",
+    "criterion_id": "C5",
+    "must_contain": [
+      "figure caption"
+    ],
+    "sufficiency": "sufficient",
+    "score": 2,
+    "scenario": "S2",
+    "split": "dev"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s3_missing_eval",
+    "criterion_id": "C1",
+    "must_contain": [
+      "scoped marking-workload gap"
+    ],
+    "sufficiency": "sufficient",
+    "score": 4,
+    "scenario": "S3",
+    "split": "dev"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s3_missing_eval",
+    "criterion_id": "C2",
+    "must_contain": [
+      "fixture adapter for tests"
+    ],
+    "sufficiency": "sufficient",
+    "score": 4,
+    "scenario": "S3",
+    "split": "dev"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s3_missing_eval",
+    "criterion_id": "C3",
+    "must_contain": [
+      "labelled evaluation set"
+    ],
+    "sufficiency": "insufficient",
+    "score": null,
+    "scenario": "S3",
+    "split": "dev"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s3_missing_eval",
+    "criterion_id": "C4",
+    "must_contain": [
+      "no measurement section"
+    ],
+    "sufficiency": "partial",
+    "score": 2,
+    "scenario": "S3",
+    "split": "dev"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s3_missing_eval",
+    "criterion_id": "C5",
+    "must_contain": [
+      "figure caption"
+    ],
+    "sufficiency": "sufficient",
+    "score": 2,
+    "scenario": "S3",
+    "split": "dev"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s4_decoy_eval",
+    "criterion_id": "C1",
+    "must_contain": [
+      "scoped marking-workload gap"
+    ],
+    "sufficiency": "sufficient",
+    "score": 4,
+    "scenario": "S4",
+    "split": "dev"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s4_decoy_eval",
+    "criterion_id": "C2",
+    "must_contain": [
+      "fixture adapter for tests"
+    ],
+    "sufficiency": "sufficient",
+    "score": 4,
+    "scenario": "S4",
+    "split": "dev"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s4_decoy_eval",
+    "criterion_id": "C3",
+    "must_contain": [
+      "keyword without specifying"
+    ],
+    "sufficiency": "insufficient",
+    "score": null,
+    "scenario": "S4",
+    "split": "dev"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s4_decoy_eval",
+    "criterion_id": "C4",
+    "must_contain": [
+      "anecdotal"
+    ],
+    "sufficiency": "partial",
+    "score": 2,
+    "scenario": "S4",
+    "split": "dev"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s4_decoy_eval",
+    "criterion_id": "C5",
+    "must_contain": [
+      "figure caption"
+    ],
+    "sufficiency": "sufficient",
+    "score": 2,
+    "scenario": "S4",
+    "split": "dev"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s5_long",
+    "criterion_id": "C1",
+    "must_contain": [
+      "scoped marking-workload gap"
+    ],
+    "sufficiency": "sufficient",
+    "score": 4,
+    "scenario": "S5",
+    "split": "heldout"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s5_long",
+    "criterion_id": "C2",
+    "must_contain": [
+      "fixture adapter for tests"
+    ],
+    "sufficiency": "sufficient",
+    "score": 4,
+    "scenario": "S5",
+    "split": "heldout"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s5_long",
+    "criterion_id": "C3",
+    "must_contain": [
+      "labelled evaluation set"
+    ],
+    "sufficiency": "sufficient",
+    "score": 4,
+    "scenario": "S5",
+    "split": "heldout"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s5_long",
+    "criterion_id": "C4",
+    "must_contain": [
+      "120-second target"
+    ],
+    "sufficiency": "sufficient",
+    "score": 4,
+    "scenario": "S5",
+    "split": "heldout"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s5_long",
+    "criterion_id": "C5",
+    "must_contain": [
+      "figure captions"
+    ],
+    "sufficiency": "sufficient",
+    "score": 2,
+    "scenario": "S5",
+    "split": "heldout"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s6_weak_problem",
+    "criterion_id": "C1",
+    "must_contain": [
+      "No scoped marking-workload gap"
+    ],
+    "sufficiency": "insufficient",
+    "score": null,
+    "scenario": "S1",
+    "split": "dev"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s6_weak_problem",
+    "criterion_id": "C2",
+    "must_contain": [
+      "fixture adapter for tests"
+    ],
+    "sufficiency": "sufficient",
+    "score": 4,
+    "scenario": "S1",
+    "split": "dev"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s6_weak_problem",
+    "criterion_id": "C3",
+    "must_contain": [
+      "labelled evaluation set"
+    ],
+    "sufficiency": "sufficient",
+    "score": 4,
+    "scenario": "S1",
+    "split": "dev"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s6_weak_problem",
+    "criterion_id": "C4",
+    "must_contain": [
+      "discussion links them"
+    ],
+    "sufficiency": "sufficient",
+    "score": 4,
+    "scenario": "S1",
+    "split": "dev"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s6_weak_problem",
+    "criterion_id": "C5",
+    "must_contain": [
+      "figure caption"
+    ],
+    "sufficiency": "sufficient",
+    "score": 2,
+    "scenario": "S1",
+    "split": "dev"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s7_partial_results",
+    "criterion_id": "C1",
+    "must_contain": [
+      "scoped marking-workload gap"
+    ],
+    "sufficiency": "sufficient",
+    "score": 4,
+    "scenario": "S1",
+    "split": "dev"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s7_partial_results",
+    "criterion_id": "C2",
+    "must_contain": [
+      "fixture adapter for tests"
+    ],
+    "sufficiency": "sufficient",
+    "score": 4,
+    "scenario": "S1",
+    "split": "dev"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s7_partial_results",
+    "criterion_id": "C3",
+    "must_contain": [
+      "labelled evaluation set"
+    ],
+    "sufficiency": "sufficient",
+    "score": 4,
+    "scenario": "S1",
+    "split": "dev"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s7_partial_results",
+    "criterion_id": "C4",
+    "must_contain": [
+      "no discussion of limitations"
+    ],
+    "sufficiency": "partial",
+    "score": 2,
+    "scenario": "S1",
+    "split": "dev"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s7_partial_results",
+    "criterion_id": "C5",
+    "must_contain": [
+      "consistent terminology"
+    ],
+    "sufficiency": "partial",
+    "score": 1,
+    "scenario": "S1",
+    "split": "dev"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s8_missing_method",
+    "criterion_id": "C1",
+    "must_contain": [
+      "scoped marking-workload gap"
+    ],
+    "sufficiency": "sufficient",
+    "score": 4,
+    "scenario": "S1",
+    "split": "dev"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s8_missing_method",
+    "criterion_id": "C2",
+    "must_contain": [
+      "use AI somehow"
+    ],
+    "sufficiency": "insufficient",
+    "score": null,
+    "scenario": "S1",
+    "split": "dev"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s8_missing_method",
+    "criterion_id": "C3",
+    "must_contain": [
+      "labelled evaluation set"
+    ],
+    "sufficiency": "sufficient",
+    "score": 4,
+    "scenario": "S1",
+    "split": "dev"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s8_missing_method",
+    "criterion_id": "C4",
+    "must_contain": [
+      "discussion is empty"
+    ],
+    "sufficiency": "insufficient",
+    "score": null,
+    "scenario": "S1",
+    "split": "dev"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s8_missing_method",
+    "criterion_id": "C5",
+    "must_contain": [
+      "figure caption"
+    ],
+    "sufficiency": "sufficient",
+    "score": 2,
+    "scenario": "S1",
+    "split": "dev"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s9_strong_eval_weak_comm",
+    "criterion_id": "C1",
+    "must_contain": [
+      "scoped marking-workload gap"
+    ],
+    "sufficiency": "sufficient",
+    "score": 4,
+    "scenario": "S1",
+    "split": "heldout"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s9_strong_eval_weak_comm",
+    "criterion_id": "C2",
+    "must_contain": [
+      "fixture adapter for tests"
+    ],
+    "sufficiency": "sufficient",
+    "score": 4,
+    "scenario": "S1",
+    "split": "heldout"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s9_strong_eval_weak_comm",
+    "criterion_id": "C3",
+    "must_contain": [
+      "unsupported-judgement rate"
+    ],
+    "sufficiency": "sufficient",
+    "score": 4,
+    "scenario": "S1",
+    "split": "heldout"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s9_strong_eval_weak_comm",
+    "criterion_id": "C4",
+    "must_contain": [
+      "direct-LLM baseline"
+    ],
+    "sufficiency": "sufficient",
+    "score": 4,
+    "scenario": "S1",
+    "split": "heldout"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s9_strong_eval_weak_comm",
+    "criterion_id": "C5",
+    "must_contain": [
+      "no headings figure caption"
+    ],
+    "sufficiency": "insufficient",
+    "score": null,
+    "scenario": "S1",
+    "split": "heldout"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s10_all_partial",
+    "criterion_id": "C1",
+    "must_contain": [
+      "not scoped"
+    ],
+    "sufficiency": "partial",
+    "score": 2,
+    "scenario": "S1",
+    "split": "heldout"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s10_all_partial",
+    "criterion_id": "C2",
+    "must_contain": [
+      "without an incremental sequence"
+    ],
+    "sufficiency": "partial",
+    "score": 2,
+    "scenario": "S1",
+    "split": "heldout"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s10_all_partial",
+    "criterion_id": "C3",
+    "must_contain": [
+      "baselines are omitted"
+    ],
+    "sufficiency": "partial",
+    "score": 2,
+    "scenario": "S1",
+    "split": "heldout"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s10_all_partial",
+    "criterion_id": "C4",
+    "must_contain": [
+      "without discussion"
+    ],
+    "sufficiency": "partial",
+    "score": 2,
+    "scenario": "S1",
+    "split": "heldout"
+  },
+  {
+    "rubric_id": "engineering_report",
+    "submission_id": "s10_all_partial",
+    "criterion_id": "C5",
+    "must_contain": [
+      "terminology drifts"
+    ],
+    "sufficiency": "partial",
+    "score": 1,
+    "scenario": "S1",
+    "split": "heldout"
+  },
+  {
+    "rubric_id": "proposal_rubric",
+    "submission_id": "p1_strong",
+    "criterion_id": "C1",
+    "must_contain": [
+      "stakeholders are tutors",
+      "evidence of need"
+    ],
+    "sufficiency": "sufficient",
+    "score": 5,
+    "scenario": "S1",
+    "split": "dev"
+  },
+  {
+    "rubric_id": "proposal_rubric",
+    "submission_id": "p1_strong",
+    "criterion_id": "C2",
+    "must_contain": [
+      "prioritised as Must",
+      "acceptance criteria"
+    ],
+    "sufficiency": "sufficient",
+    "score": 5,
+    "scenario": "S1",
+    "split": "dev"
+  },
+  {
+    "rubric_id": "proposal_rubric",
+    "submission_id": "p1_strong",
+    "criterion_id": "C3",
+    "must_contain": [
+      "incremental iterations",
+      "fixture model adapter"
+    ],
+    "sufficiency": "sufficient",
+    "score": 5,
+    "scenario": "S1",
+    "split": "dev"
+  },
+  {
+    "rubric_id": "proposal_rubric",
+    "submission_id": "p1_strong",
+    "criterion_id": "C4",
+    "must_contain": [
+      "weekly timeline",
+      "risk register"
+    ],
+    "sufficiency": "sufficient",
+    "score": 5,
+    "scenario": "S1",
+    "split": "dev"
+  },
+  {
+    "rubric_id": "proposal_rubric",
+    "submission_id": "p2_gaps",
+    "criterion_id": "C1",
+    "must_contain": [
+      "Stakeholders are not named"
+    ],
+    "sufficiency": "partial",
+    "score": 2.5,
+    "scenario": "S3",
+    "split": "dev"
+  },
+  {
+    "rubric_id": "proposal_rubric",
+    "submission_id": "p2_gaps",
+    "criterion_id": "C2",
+    "must_contain": [
+      "without priority"
+    ],
+    "sufficiency": "partial",
+    "score": 2.5,
+    "scenario": "S3",
+    "split": "dev"
+  },
+  {
+    "rubric_id": "proposal_rubric",
+    "submission_id": "p2_gaps",
+    "criterion_id": "C3",
+    "must_contain": [
+      "no iterations"
+    ],
+    "sufficiency": "partial",
+    "score": 2.5,
+    "scenario": "S3",
+    "split": "dev"
+  },
+  {
+    "rubric_id": "proposal_rubric",
+    "submission_id": "p2_gaps",
+    "criterion_id": "C4",
+    "must_contain": [
+      "risks are not discussed"
+    ],
+    "sufficiency": "partial",
+    "score": 2.5,
+    "scenario": "S3",
+    "split": "dev"
+  },
+  {
+    "rubric_id": "proposal_rubric",
+    "submission_id": "p3_decoy",
+    "criterion_id": "C1",
+    "must_contain": [
+      "survey of twelve tutors"
+    ],
+    "sufficiency": "sufficient",
+    "score": 5,
+    "scenario": "S4",
+    "split": "heldout"
+  },
+  {
+    "rubric_id": "proposal_rubric",
+    "submission_id": "p3_decoy",
+    "criterion_id": "C2",
+    "must_contain": [
+      "does not attach either"
+    ],
+    "sufficiency": "insufficient",
+    "score": null,
+    "scenario": "S4",
+    "split": "heldout"
+  },
+  {
+    "rubric_id": "proposal_rubric",
+    "submission_id": "p3_decoy",
+    "criterion_id": "C3",
+    "must_contain": [
+      "without describing a single iteration"
+    ],
+    "sufficiency": "insufficient",
+    "score": null,
+    "scenario": "S4",
+    "split": "heldout"
+  },
+  {
+    "rubric_id": "proposal_rubric",
+    "submission_id": "p3_decoy",
+    "criterion_id": "C4",
+    "must_contain": [
+      "risk register lists mitigations"
+    ],
+    "sufficiency": "sufficient",
+    "score": 5,
+    "scenario": "S4",
+    "split": "heldout"
+  }
+]

@@ -1,0 +1,24 @@
+===PAGE 1===
+# Problem
+
+The scoped marking-workload gap is unverifiable AI scores on long reports.
+
+===PAGE 2===
+# Users
+
+Affected users are markers who must still make the final decision.
+
+===PAGE 3===
+# Methodology
+
+The incremental method uses BM25 retrieval and a fixture adapter for tests plus a validator that rejects unknown IDs.
+
+===PAGE 4===
+# Results
+
+Narrative results describe a working parser; the discussion admits there is no measurement section.
+
+===PAGE 5===
+# Communication
+
+Headings are consistent and the only figure caption names the parser.

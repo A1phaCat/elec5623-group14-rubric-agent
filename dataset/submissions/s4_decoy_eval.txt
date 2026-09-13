@@ -1,0 +1,29 @@
+===PAGE 1===
+# Problem
+
+The scoped marking-workload gap is opaque chatbot grading.
+
+===PAGE 2===
+# Users
+
+Affected users include tutors marking proposals.
+
+===PAGE 3===
+# Methodology
+
+An incremental BM25 retrieval path and fixture adapter for tests feed a validator that rejects unknown IDs.
+
+===PAGE 4===
+# Evaluation mention
+
+We mention evaluation only as a keyword without specifying metrics or a baseline. This sentence is a decoy and does not include Recall@5, labelled data, or test scenarios.
+
+===PAGE 5===
+# Results
+
+Results are anecdotal. The discussion says the demo 'felt fine'.
+
+===PAGE 6===
+# Communication
+
+Consistent terminology appears in headings and one figure caption.

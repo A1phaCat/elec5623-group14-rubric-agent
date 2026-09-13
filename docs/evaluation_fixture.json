@@ -1,0 +1,117 @@
+{
+  "generated_with": {
+    "gateway": "fixture-descriptor-v2",
+    "prompt_version": "assessment_v1",
+    "k": 5,
+    "repeats": 3,
+    "split": "all"
+  },
+  "pairs": 62,
+  "submissions": 13,
+  "rubrics": 2,
+  "metrics": {
+    "M1_rubric_criteria": 1.0,
+    "M2_locator_complete": 1.0,
+    "M3_recall_at_k": 0.9919354838709677,
+    "M3_precision_at_k": 0.7747311827956989,
+    "M4_sufficiency_macro_f1": 0.42805429864253397,
+    "M4_sufficiency_accuracy": 0.5,
+    "M5_citation_exists": 1.0,
+    "M5_citation_supports_proxy": 0.6190476190476191,
+    "M6_unsupported_rate": 0.0,
+    "M6_unsupported_rate_B2": 1.0,
+    "M6_relative_reduction_vs_B2": 1.0,
+    "M7_score_range_validity": 1.0,
+    "M8_agent_qwk": 0.21678321678321688,
+    "M8_agent_mae": 0.9047619047619048,
+    "M8_agent_score_coverage": 0.7777777777777778,
+    "M8_B2_qwk": 0.17629041406693136,
+    "M8_B2_mae": 1.1226415094339623,
+    "M12_repeatability": 1.0,
+    "M13_median_latency_ms": 1.2618750042747706,
+    "M13_s5_latency_ms": 3.7722919951193035,
+    "M16_export_completeness": 1.0,
+    "M17_feedback_grounding": 1.0
+  },
+  "targets": {
+    "M1_rubric_criteria": 0.95,
+    "M2_locator_complete": 1.0,
+    "M3_recall_at_k": 0.85,
+    "M4_sufficiency_macro_f1": 0.75,
+    "M5_citation_exists": 0.95,
+    "M6_unsupported_rate": 0.05,
+    "M6_relative_reduction_vs_B2": 0.3,
+    "M7_score_range_validity": 1.0,
+    "M12_repeatability": 0.9,
+    "M13_median_latency_ms": 120000,
+    "M13_s5_latency_ms": 120000,
+    "M16_export_completeness": 1.0,
+    "M17_feedback_grounding": 1.0
+  },
+  "pass": {
+    "M1_rubric_criteria": true,
+    "M2_locator_complete": true,
+    "M3_recall_at_k": true,
+    "M4_sufficiency_macro_f1": false,
+    "M5_citation_exists": true,
+    "M6_unsupported_rate": true,
+    "M6_relative_reduction_vs_B2": true,
+    "M7_score_range_validity": true,
+    "M12_repeatability": true,
+    "M13_median_latency_ms": true,
+    "M13_s5_latency_ms": true,
+    "M16_export_completeness": true,
+    "M17_feedback_grounding": true
+  },
+  "per_scenario": {
+    "S1": {
+      "pairs": 34,
+      "sufficiency_accuracy": 0.4117647058823529,
+      "unsupported_rate": 0.0,
+      "score_mae": 1.0869565217391304
+    },
+    "S2": {
+      "pairs": 5,
+      "sufficiency_accuracy": 0.8,
+      "unsupported_rate": 0.0,
+      "score_mae": 0.4
+    },
+    "S3": {
+      "pairs": 9,
+      "sufficiency_accuracy": 0.5555555555555556,
+      "unsupported_rate": 0.0,
+      "score_mae": 0.4
+    },
+    "S4": {
+      "pairs": 9,
+      "sufficiency_accuracy": 0.6666666666666666,
+      "unsupported_rate": 0.0,
+      "score_mae": 0.6
+    },
+    "S5": {
+      "pairs": 5,
+      "sufficiency_accuracy": 0.4,
+      "unsupported_rate": 0.0,
+      "score_mae": 1.5
+    }
+  },
+  "validator_warnings": {},
+  "baseline_B2": {
+    "sufficiency_accuracy": 0.5161290322580645,
+    "sufficiency_macro_f1": 0.39965811965811965,
+    "claims": 120,
+    "unsupported_claims": 120,
+    "unsupported_rate": 1.0,
+    "score_qwk": 0.17629041406693136,
+    "score_mae": 1.1226415094339623,
+    "score_coverage": 0.9814814814814815
+  },
+  "requires_marker_session": [
+    "M9",
+    "M10",
+    "M11",
+    "M14",
+    "M15 (data audit)",
+    "M5 human support judgement"
+  ]
+}

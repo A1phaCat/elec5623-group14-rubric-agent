@@ -1,0 +1,29 @@
+===PAGE 1===
+# Problem
+
+The scoped marking-workload gap is unverifiable provisional scores.
+
+===PAGE 2===
+# Methodology
+
+We will use AI somehow.
+
+===PAGE 3===
+# Evaluation plan
+
+The labelled evaluation set still lists Recall@5, citation accuracy, a manual baseline and a direct-LLM baseline.
+
+===PAGE 4===
+# Results
+
+Results are described as pending; the discussion is empty.
+
+===PAGE 5===
+# Communication
+
+A figure caption exists and headings stay consistent.
+
+===PAGE 6===
+# Notes
+
+Variant s8_missing_method. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion.

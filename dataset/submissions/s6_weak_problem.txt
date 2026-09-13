@@ -1,0 +1,29 @@
+===PAGE 1===
+# Problem
+
+Students write reports. No scoped marking-workload gap is given.
+
+===PAGE 2===
+# Methodology
+
+Incremental BM25 retrieval and a fixture adapter for tests sit behind a validator that rejects unknown IDs.
+
+===PAGE 3===
+# Evaluation plan
+
+The labelled evaluation set uses Recall@5, citation accuracy, a manual baseline and a direct-LLM baseline.
+
+===PAGE 4===
+# Results
+
+Results include a small table; the discussion links them to retrieval quality.
+
+===PAGE 5===
+# Communication
+
+Headings, one figure caption and consistent terminology are present.
+
+===PAGE 6===
+# Notes
+
+Variant s6_weak_problem. Background filler paragraph used only to lengthen the document. It discusses campus weather, timetable logistics and unrelated library hours and must not be treated as evidence for any rubric criterion.
