@@ -8,10 +8,12 @@
 
 ## Privacy and data (C3, NFR6)
 
-* `dataset/` is synthetic and group-authored. No student work is in this repository.
-* The live gateway is opt-in: it is only offered in the UI when `RMA_MODEL_ENDPOINT` and `RMA_MODEL` are set, and it never appears in tests or CI.
-* Before any real or de-identified submission is sent to a hosted model the group needs: tutor confirmation of the model provider, a written data-handling note, and de-identification of the file. Until then use the local-model option (Ollama) or the fixture.
-* Uploaded files in the UI are written under `data/` (git-ignored) only when a PDF has to be read from disk; nothing is uploaded anywhere else.
+* `dataset/` is synthetic and group-authored. The only real document is **our own proposal** (`dataset/real/`), with the cover page (names, student IDs) removed. No other student's work is in this repository.
+* Two live options with different data paths:
+  * **Local Ollama** (`ollama:<model>`): the model runs on the demo machine; submission text never leaves it. This is the option used for `docs/EVALUATION_live_qwen7b.md` and needs no approval beyond the group's own.
+  * **Hosted / Azure** (`live`, `RMA_*` env): text is sent to the provider. It is offered in the UI only when the variables are set, and it never appears in tests or CI. Before any real or de-identified submission goes this way the group needs tutor confirmation of the provider, a written data-handling note, and de-identification of the file.
+* Uploaded files in the UI are written under `data/` (git-ignored); nothing is uploaded anywhere except the chosen model endpoint.
+* The run log stores evidence IDs, scores and warnings, not the submission text.
 
 ## Secrets
 
@@ -30,17 +32,20 @@ export RMA_API_VERSION=2024-10-21
 rma demo --submission s4_decoy_eval
 ```
 
-Example (local Ollama, no key):
+Example (local Ollama, no key; the UI lists running models by itself):
 
 ```bash
-export RMA_GATEWAY=live RMA_MODEL_ENDPOINT=http://localhost:11434/v1 RMA_MODEL=llama3.1:8b
+brew install ollama && ollama pull qwen2.5:7b-instruct
+OLLAMA_CONTEXT_LENGTH=16384 ollama serve &      # default context (4k) is too small for B2 on long documents
+rma --gateway ollama:qwen2.5:7b-instruct demo --submission s4_decoy_eval
 ```
 
 ## Model output is untrusted input (Lab 6 §6, §10)
 
-* Every model response is parsed strictly against Listing 6.1; anything else is rejected with `invalid_model_output`.
+* Every model response is parsed strictly against Listing 6.1; anything else is rejected with `invalid_model_output` (after one re-ask that quotes the parse error).
 * A transport failure produces an explicit `provider_error`, never a fabricated score.
-* The validator checks the content, not just the shape: evidence IDs must exist in the retrieved set, scores must be on the rubric grid, and every positive sentence must carry a citation.
+* The validator checks the content, not just the shape: evidence IDs must exist in the retrieved set, scores must be on the rubric grid, and every sentence that asserts something about the submission must carry a citation.
+* A rejected record gets **one** corrective round: the model sees the validator's findings and answers again; the answer is validated again. Two failures → no score. The number of attempts is in the log, so "how often did the model need correcting" is a reported number (`revision_rate`), not a hidden retry loop.
 * Prompts are versioned files; the version is in every log line so a prompt change is auditable.
 
 ## Known limitations

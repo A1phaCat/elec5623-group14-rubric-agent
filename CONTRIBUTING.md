@@ -16,7 +16,7 @@ pytest -q
 
 1. Branch from `main`: `git switch -c a3/retrieval-hybrid` (prefix = your area A1–A5).
 2. Keep commits small and descriptive: `A4: validator rejects uncited claims (FR10)`.
-3. Every PR must: keep `pytest -q` green, update `docs/REQUIREMENTS_TRACEABILITY.md` if an FR/test changed, and re-run `rma eval --report docs/EVALUATION.md` if retrieval, gateway or validator changed.
+3. Every PR must: keep `pytest -q` and `ruff check src tests app scripts` green, update `docs/REQUIREMENTS_TRACEABILITY.md` if an FR/test changed, and re-run `rma eval --report docs/EVALUATION.md` if retrieval, gateway or validator changed.
 4. One reviewer from a different area approves before merge.
 5. Never commit keys, `data/`, `.venv/` or real student files.
 

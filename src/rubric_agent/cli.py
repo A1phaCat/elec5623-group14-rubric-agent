@@ -36,7 +36,7 @@ def _resolve(kind: str, name: str) -> Path:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="rma", description="Evidence-first rubric marking agent")
-    parser.add_argument("--gateway", default=None, help="fixture (default), fixture:<fail_mode>, or live (RMA_* env)")
+    parser.add_argument("--gateway", default=None, help="fixture (default), fixture:<fail_mode>, ollama:<model> (local server), or live (RMA_* env)")
     sub = parser.add_subparsers(dest="cmd", required=True)
 
     demo = sub.add_parser("demo", help="Run the agent path on one rubric + submission")
@@ -76,9 +76,13 @@ def main(argv: list[str] | None = None) -> int:
         for item in result.assessments:
             d = item.draft
             flag = "" if item.accepted else "  ⚠ " + "; ".join(item.warnings)
+            if "revised_once" in d.flags:
+                flag += "  ↻ corrected once after validator feedback"
             print(f"{d.criterion_id:<4} {d.sufficiency:<12} score={d.provisional_score!s:<5} of {d.score_max:<4} "
                   f"evidence={d.evidence_ids}{flag}")
             print(f"     {d.explanation}")
+            if d.draft_feedback:
+                print(f"     feedback: {d.draft_feedback}")
             for u in result.retrieved.get(d.criterion_id, []):
                 if u.id in d.evidence_ids:
                     print(f"     {u.id} {u.locator}: {u.text[:110]}…")

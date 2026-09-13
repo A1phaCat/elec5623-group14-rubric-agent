@@ -29,7 +29,8 @@ from pydantic import ValidationError
 
 from . import PROMPT_VERSION
 from .schemas import AssessmentDraft, Criterion, EvidenceUnit, Rubric
-from .textutil import citation_ids, sentences, stemmed_tokens as content_tokens
+from .textutil import citation_ids, sentences
+from .textutil import stemmed_tokens as content_tokens
 
 PROMPTS_DIR = Path(__file__).resolve().parents[2] / "prompts"
 
@@ -53,6 +54,20 @@ class ModelGateway(ABC):
 
     @abstractmethod
     def grade_direct(self, rubric: Rubric, full_text: str) -> list[AssessmentDraft]: ...
+
+    def revise(
+        self,
+        criterion: Criterion,
+        evidence: list[EvidenceUnit],
+        previous: AssessmentDraft,
+        warnings: list[str],
+    ) -> AssessmentDraft | None:
+        """Optional single corrective round after a validator rejection.
+
+        Returns a new draft, or None when the gateway cannot revise (fixture).
+        The pipeline validates the revision again; nothing is trusted on faith.
+        """
+        return None
 
 
 def rejected(criterion: Criterion, reason: str, flag: str) -> AssessmentDraft:
@@ -168,6 +183,7 @@ class FixtureGateway(ModelGateway):
             chosen = snap(criterion.max_mark * 0.5, criterion) if supported[0][0] >= 0.25 else snap(criterion.granularity, criterion)
         sufficiency = "sufficient" if chosen >= criterion.max_mark else "partial"
         level_text = next((d.text for d in criterion.descriptors if d.score == chosen), "")
+        level_text = level_text.rstrip(".").split(";")[0][:120]
         return AssessmentDraft(
             criterion_id=criterion.id, evidence_ids=cited, sufficiency=sufficiency,
             provisional_score=chosen, score_max=criterion.max_mark,
@@ -241,7 +257,9 @@ class OpenAICompatibleGateway(ModelGateway):
         key_header: str = "authorization",
         api_version: str | None = None,
         temperature: float = 0.0,
-        timeout: float = 60.0,
+        timeout: float = 180.0,
+        max_tokens: int = 700,
+        max_retries: int = 1,
         transport: Transport | None = None,
     ) -> None:
         self.endpoint = endpoint.rstrip("/")
@@ -251,8 +269,12 @@ class OpenAICompatibleGateway(ModelGateway):
         self.api_version = api_version
         self.temperature = temperature
         self.timeout = timeout
+        self.max_tokens = max_tokens
+        self.max_retries = max_retries
         self._transport = transport or _urllib_transport
         self.last_error: str | None = None
+        self.last_attempts = 0
+        self._last_raw = ""
 
     @property
     def name(self) -> str:
@@ -260,7 +282,7 @@ class OpenAICompatibleGateway(ModelGateway):
         return f"{self.model}@{host}"
 
     @classmethod
-    def from_env(cls, env: dict[str, str] | None = None, **kw) -> "OpenAICompatibleGateway":
+    def from_env(cls, env: dict[str, str] | None = None, **kw) -> OpenAICompatibleGateway:
         env = env if env is not None else os.environ
         endpoint = env.get("RMA_MODEL_ENDPOINT")
         model = env.get("RMA_MODEL")
@@ -291,23 +313,40 @@ class OpenAICompatibleGateway(ModelGateway):
             "evidence": [
                 {"id": u.id, "page": u.page, "section": u.section, "text": u.text} for u in evidence
             ],
-            "required_output": {
-                "criterion_id": criterion.id,
-                "evidence_ids": ["<subset of the evidence ids above>"],
-                "sufficiency": "sufficient | partial | insufficient",
-                "provisional_score": "number on the rubric scale, or null when insufficient",
-                "score_max": criterion.max_mark,
-                "explanation": "every positive claim cites [E-00N]",
-                "draft_feedback": "optional",
+            "allowed_evidence_ids": [u.id for u in evidence],
+            "output_schema": {
+                "criterion_id": "string, must equal criterion.id",
+                "evidence_ids": "array of strings drawn only from allowed_evidence_ids",
+                "sufficiency": "one of: sufficient, partial, insufficient",
+                "provisional_score": "number on the rubric scale (multiple of granularity, <= max_mark), or null when insufficient",
+                "score_max": "number, must equal criterion.max_mark",
+                "explanation": "string; every sentence that asserts something about the submission ends with one or more [E-00N] citations",
+                "draft_feedback": "string or null",
+                "flags": "array of strings, usually empty",
+            },
+            "format_example_for_a_DIFFERENT_criterion": {
+                "_note": "Shows the shape only. Write your own explanation about THIS criterion and THIS evidence.",
+                "criterion_id": "X9",
+                "evidence_ids": ["E-042", "E-043"],
+                "sufficiency": "partial",
+                "provisional_score": 1.0,
+                "score_max": 3.0,
+                "explanation": "The safety section lists two hazards [E-042]. No mitigation is described for either hazard [E-043].",
+                "draft_feedback": "Add a mitigation for each hazard listed in [E-042].",
                 "flags": [],
             },
         }
         return system, json.dumps(payload, ensure_ascii=False, indent=1)
 
-    @staticmethod
-    def render_direct_prompt(rubric: Rubric, full_text: str) -> tuple[str, str]:
+    MAX_DIRECT_CHARS = 48_000  # ~12k tokens; longer documents are truncated, as a one-shot grader would be
+
+    @classmethod
+    def render_direct_prompt(cls, rubric: Rubric, full_text: str) -> tuple[str, str]:
         system = (PROMPTS_DIR / "direct_grading_v1.md").read_text(encoding="utf-8")
+        if len(full_text) > cls.MAX_DIRECT_CHARS:
+            full_text = full_text[: cls.MAX_DIRECT_CHARS] + "\n[document truncated for context length]"
         payload = {
+            "criterion_ids": [c.id for c in rubric.criteria],
             "rubric": [
                 {"id": c.id, "name": c.name, "max_mark": c.max_mark,
                  "levels": [{"score": d.score, "descriptor": d.text} for d in c.descriptors]}
@@ -319,7 +358,7 @@ class OpenAICompatibleGateway(ModelGateway):
 
     # -- calls ----------------------------------------------------------------------
 
-    def _chat(self, system: str, user: str) -> str:
+    def _chat(self, system: str, user: str, *, extra_messages: list[dict] | None = None) -> str:
         url = f"{self.endpoint}/chat/completions"
         if self.api_version:
             url += f"?api-version={self.api_version}"
@@ -329,35 +368,82 @@ class OpenAICompatibleGateway(ModelGateway):
                 headers["api-key"] = self._api_key
             else:
                 headers["Authorization"] = f"Bearer {self._api_key}"
+        messages = [{"role": "system", "content": system}, {"role": "user", "content": user}, *(extra_messages or [])]
         body = json.dumps({
             "model": self.model,
             "temperature": self.temperature,
+            "max_tokens": self.max_tokens,
             "response_format": {"type": "json_object"},
-            "messages": [{"role": "system", "content": system}, {"role": "user", "content": user}],
+            "messages": messages,
         }).encode("utf-8")
         raw = self._transport(url, headers, body, self.timeout)
         data = json.loads(raw)
         return data["choices"][0]["message"]["content"]
 
     def assess(self, criterion: Criterion, evidence: list[EvidenceUnit]) -> AssessmentDraft:
+        """One call, plus at most one corrective retry when the output violates the schema.
+
+        The retry feeds the rejection reason back as a message (Lab 6: preserve
+        the error). If the second answer is also invalid the record stays rejected.
+        """
         self.last_error = None
+        self.last_attempts = 0
         system, user = self.render_assessment_prompt(criterion, evidence)
+        extra: list[dict] = []
+        draft = rejected(criterion, "no attempt", "provider_error")
+        for _ in range(1 + self.max_retries):
+            self.last_attempts += 1
+            try:
+                content = self._chat(system, user, extra_messages=extra)
+            except (urllib.error.URLError, OSError, KeyError, ValueError, json.JSONDecodeError) as exc:
+                self.last_error = f"{type(exc).__name__}"
+                return rejected(criterion, f"provider error: {type(exc).__name__}", "provider_error")
+            draft = parse_model_json(content, criterion)
+            if "invalid_model_output" not in draft.flags:
+                break
+            extra = [
+                {"role": "assistant", "content": content},
+                {"role": "user", "content": f"Rejected: {draft.explanation} Return only the JSON object that matches output_schema."},
+            ]
+        self._last_raw = content if "content" in locals() else ""
+        return draft
+
+    def revise(self, criterion, evidence, previous, warnings):
+        system, user = self.render_assessment_prompt(criterion, evidence)
+        problems = "; ".join(warnings)
+        feedback = (
+            f"The validator rejected your answer: {problems}. "
+            "Fix only these problems: cite an allowed [E-00N] at the end of every sentence that asserts something about "
+            "the submission, use only IDs from allowed_evidence_ids, keep the score on the rubric scale, and return "
+            "insufficient with a null score if the evidence does not support the criterion. Return only the JSON object."
+        )
+        extra = [
+            {"role": "assistant", "content": previous.model_dump_json()},
+            {"role": "user", "content": feedback},
+        ]
         try:
-            content = self._chat(system, user)
+            content = self._chat(system, user, extra_messages=extra)
         except (urllib.error.URLError, OSError, KeyError, ValueError, json.JSONDecodeError) as exc:
             self.last_error = f"{type(exc).__name__}"
-            return rejected(criterion, f"provider error: {type(exc).__name__}", "provider_error")
+            return None
+        self.last_attempts += 1
         return parse_model_json(content, criterion)
 
     def grade_direct(self, rubric: Rubric, full_text: str) -> list[AssessmentDraft]:
         system, user = self.render_direct_prompt(rubric, full_text)
         try:
             content = self._chat(system, user)
-            data = json.loads(_strip_fences(content))
-            items = data.get("criteria") if isinstance(data, dict) else data
+            items = _direct_items(json.loads(_strip_fences(content)))
+            if len(items) < len(rubric.criteria):  # one re-ask, same as the agent path
+                content = self._chat(system, user, extra_messages=[
+                    {"role": "assistant", "content": content},
+                    {"role": "user", "content": f"Rejected: expected {len(rubric.criteria)} items, one per criterion id, "
+                                                "inside {\"criteria\": [...]}. Return only that JSON object."},
+                ])
+                items = _direct_items(json.loads(_strip_fences(content)))
             out = []
             for c in rubric.criteria:
-                item = next((i for i in items if str(i.get("criterion_id")) == c.id), None)
+                item = next((i for i in items if isinstance(i, dict) and str(i.get("criterion_id")) == c.id), None)
                 if item is None:
                     out.append(rejected(c, "criterion missing from direct output", "invalid_model_output"))
                     continue
@@ -367,6 +453,28 @@ class OpenAICompatibleGateway(ModelGateway):
             return out
         except Exception as exc:  # noqa: BLE001 - baseline must never crash an evaluation
             return [rejected(c, f"provider error: {type(exc).__name__}", "provider_error") for c in rubric.criteria]
+
+
+def _direct_items(data: object) -> list[dict]:
+    """Accept the shapes one-shot graders actually return for B2.
+
+    `{"criteria": [...]}` (requested), a bare list, a single criterion object,
+    or a dict keyed by criterion id.
+    """
+    if isinstance(data, list):
+        return [d for d in data if isinstance(d, dict)]
+    if not isinstance(data, dict):
+        return []
+    for key in ("criteria", "assessments", "results", "items"):
+        if isinstance(data.get(key), list):
+            return [d for d in data[key] if isinstance(d, dict)]
+    if "criterion_id" in data:
+        return [data]
+    out = []
+    for key, value in data.items():
+        if isinstance(value, dict):
+            out.append({"criterion_id": value.get("criterion_id", key), **value})
+    return out
 
 
 def _strip_fences(content: str) -> str:
@@ -401,16 +509,32 @@ def parse_model_json(content: str, criterion: Criterion) -> AssessmentDraft:
 # --- Factory -----------------------------------------------------------------------
 
 
+OLLAMA_URL = "http://localhost:11434"
+
+
 def build_gateway(spec: str | None = None, *, env: dict[str, str] | None = None) -> ModelGateway:
-    """`fixture`, `fixture:<fail_mode>`, or `live` (reads RMA_* environment)."""
+    """`fixture`, `fixture:<fail_mode>`, `live` (reads RMA_* environment) or `ollama:<model>` (local server)."""
     env = env if env is not None else os.environ
     spec = spec or env.get("RMA_GATEWAY", "fixture")
     if spec.startswith("fixture"):
         _, _, mode = spec.partition(":")
         return FixtureGateway(fail_mode=mode or None)
+    if spec.startswith("ollama:"):
+        model = spec.partition(":")[2]
+        return OpenAICompatibleGateway(endpoint=env.get("RMA_OLLAMA_URL", OLLAMA_URL) + "/v1", model=model, api_key=None)
     if spec in {"live", "openai", "azure", "ollama"}:
         return OpenAICompatibleGateway.from_env(env)
     raise ValueError(f"unknown gateway spec: {spec}")
+
+
+def local_ollama_models(url: str = OLLAMA_URL, timeout: float = 1.0) -> list[str]:
+    """Names of models served by a local Ollama instance; empty when none is running."""
+    try:
+        with urllib.request.urlopen(f"{url}/api/tags", timeout=timeout) as resp:  # noqa: S310 - fixed localhost URL
+            data = json.loads(resp.read().decode("utf-8"))
+    except (urllib.error.URLError, OSError, ValueError):
+        return []
+    return sorted(m.get("name", "") for m in data.get("models", []) if m.get("name"))
 
 
 def explanations_grounded(draft: AssessmentDraft, allowed: set[str]) -> bool:

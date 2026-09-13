@@ -17,12 +17,15 @@ jobs:
           python-version: ${{ matrix.python-version }}
           cache: pip
       - run: pip install -e '.[dev]'
+      - run: ruff check src tests app scripts
       - run: python scripts/generate_dataset.py
       - run: git diff --exit-code -- dataset/labels.json dataset/rubrics dataset/submissions/*.txt
         name: dataset is reproducible from the generator
       - run: pytest -q
       - run: python -m rubric_agent.cli eval --report eval_report.md --json eval.json
         name: evaluation harness (fixture, offline)
+      - run: python -m rubric_agent.cli demo --rubric dataset/real/elec5623_business_proposal_rubric.md --submission dataset/real/group14_proposal_v2.pdf > /dev/null
+        name: real 16-page PDF on the official Canvas rubric parses and runs
       - uses: actions/upload-artifact@v4
         with:
           name: eval-${{ matrix.python-version }}

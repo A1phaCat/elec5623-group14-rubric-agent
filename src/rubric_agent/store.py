@@ -43,6 +43,20 @@ class ReplayOutcome:
     within_tolerance: bool
 
 
+def gateway_spec_for(model_id: str) -> str:
+    """Rebuild the gateway spec that produced a logged `model_id`.
+
+    Fixture ids start with `fixture`; live ids are `<model>@<host>` and a local
+    Ollama host maps to `ollama:<model>`, any other host to `live` (RMA_* env).
+    """
+    if model_id.startswith("fixture"):
+        return "fixture"
+    model, _, host = model_id.partition("@")
+    if host.startswith(("localhost:11434", "127.0.0.1:11434")):
+        return f"ollama:{model}"
+    return "live"
+
+
 def replay_entry(entry: RunLogEntry, *, gateway=None, tolerance: float = 0.10) -> ReplayOutcome:
     """Re-run one logged call with the logged settings and compare (NFR2, M12)."""
     from .gateway import build_gateway
@@ -50,13 +64,13 @@ def replay_entry(entry: RunLogEntry, *, gateway=None, tolerance: float = 0.10) -
 
     if not entry.rubric_ref or not entry.submission_ref:
         raise ValueError("log entry lacks rubric_ref/submission_ref; cannot replay")
-    gateway = gateway or build_gateway("fixture" if entry.model_id.startswith("fixture") else None)
+    gateway = gateway or build_gateway(gateway_spec_for(entry.model_id))
     result = run_pipeline(
         Path(entry.rubric_ref), Path(entry.submission_ref),
         gateway=gateway, k=entry.retrieval_k, test_case_id=entry.test_case_id,
     )
     new = next(a for a in result.assessments if a.draft.criterion_id == entry.criterion_id)
-    new_log = next(l for l in result.logs if l.criterion_id == entry.criterion_id)
+    new_log = next(entry_ for entry_ in result.logs if entry_.criterion_id == entry.criterion_id)
     old_top1 = entry.evidence_ids[0] if entry.evidence_ids else None
     new_top1 = new_log.evidence_ids[0] if new_log.evidence_ids else None
     drift = None

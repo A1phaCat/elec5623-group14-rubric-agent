@@ -57,6 +57,7 @@ def run_pipeline(
     test_case_id: str = "adhoc",
     logger: RunLogger | None = None,
     rubric_id: str | None = None,
+    revise: bool = True,
 ) -> PipelineResult:
     started = time.perf_counter()
     gateway = gateway or FixtureGateway()
@@ -74,7 +75,19 @@ def run_pipeline(
         hits = retriever.retrieve(criterion, k=k)
         retrieved[criterion.id] = hits
         draft = gateway.assess(criterion, hits)
-        validated = validate_assessment(draft, criterion, hits)
+        validated = validate_assessment(draft.model_copy(deep=True), criterion, hits)
+        attempts = 1
+        first_warnings: list[str] = []
+        if not validated.accepted and revise:
+            # One corrective round: the validator's findings go back to the model (Lab 6:
+            # keep the error in the observation). The revision is validated like any other output.
+            first_warnings = list(validated.warnings)
+            revised = gateway.revise(criterion, hits, draft, first_warnings)
+            if revised is not None:
+                attempts = 2
+                second = validate_assessment(revised, criterion, hits)
+                second.draft.flags = list(dict.fromkeys([*second.draft.flags, "revised_once"]))
+                validated = second
         assessments.append(validated)
         entry = RunLogEntry(
             test_case_id=test_case_id,
@@ -92,6 +105,8 @@ def run_pipeline(
             provisional_score=validated.draft.provisional_score,
             cited_ids=list(validated.draft.evidence_ids),
             warnings=list(validated.warnings),
+            attempts=attempts,
+            first_attempt_warnings=first_warnings,
         )
         logs.append(entry)
         if logger:

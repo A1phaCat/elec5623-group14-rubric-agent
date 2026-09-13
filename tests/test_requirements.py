@@ -15,7 +15,7 @@ from rubric_agent.errors import ExportBlocked, RubricParseError
 from rubric_agent.eval import evaluate_corpus
 from rubric_agent.gateway import FixtureGateway, OpenAICompatibleGateway, build_gateway
 from rubric_agent.pipeline import run_pipeline
-from rubric_agent.review import EXPORT_FIELDS, ReviewSession
+from rubric_agent.review import EXPORT_FIELDS
 from rubric_agent.rubric_parser import parse_rubric
 from rubric_agent.text_parser import parse_submission
 
@@ -152,7 +152,7 @@ def _stub(reply: str):
 
     def transport(url, headers, body, timeout):
         calls.append((url, headers, body))
-        return '{"choices":[{"message":{"content":%s}}]}' % __import__("json").dumps(reply)
+        return '{"choices":[{"message":{"content":' + __import__("json").dumps(reply) + '}}]}'
 
     return transport, calls
 
@@ -184,11 +184,113 @@ def test_live_gateway_malformed_output_is_rejected(reply):
     assert "invalid_model_output" in draft.flags
 
 
+def test_fr1_s7_banded_table_rubric_without_max_column():
+    text = (
+        "# Banded rubric\n\n"
+        "| Criterion | Excellent (8-10) | Good (5–7) | Limited (1-4) | Not shown (0) |\n"
+        "|---|---|---|---|---|\n"
+        "| Analysis | Rigorous, quantified analysis | Mostly sound analysis | Superficial | Absent |\n"
+        "| Report quality | Clear and concise | Readable | Hard to follow | Absent |\n"
+    )
+    r = parse_rubric(text, rubric_id="banded")
+    assert r.source_format == "table" and [c.max_mark for c in r.criteria] == [10.0, 10.0]
+    assert [d.score for d in r.criteria[0].descriptors] == [0.0, 4.0, 7.0, 10.0]
+    assert r.criteria[0].granularity == 1.0 and r.criteria[1].name == "Report quality"
+
+    from rubric_agent.rubric_parser import level_from_header
+    assert level_from_header("HD 4") == 4.0 and level_from_header("Weight") is None and level_from_header("1.5") == 1.5
+
+
+def test_real_canvas_rubric_and_real_pdf_parse():
+    """The official ELEC5623 proposal rubric and our own proposal PDF (a 16-page real document, cover removed)."""
+    r = parse_rubric(ROOT / "dataset/real/elec5623_business_proposal_rubric.md")
+    assert [c.max_mark for c in r.criteria] == [1.5, 1.5, 2, 2, 1.5, 1.5] and all(c.granularity == 0.5 for c in r.criteria)
+    pages = parse_submission(ROOT / "dataset/real/group14_proposal_v2.pdf")
+    units = chunk_pages(pages)
+    assert len(pages) >= 15 and len(units) >= 40
+    sections = {u.section for u in units}
+    assert {"Executive Summary", "Functional Requirements", "Evaluation Plan"} <= sections, sections
+    words = [len(u.text.split()) for u in units]
+    assert max(words) <= 260 and sorted(words)[len(words) // 2] >= 40  # PDF paragraphs were split, not one unit per page
+
+
+def test_live_gateway_corrective_round_after_validator_rejection():
+    """First answer has an uncited claim → validator rejects → one revision → accepted."""
+    import json as _json
+
+    bad = _json.dumps({"criterion_id": "C1", "evidence_ids": ["E-001"], "sufficiency": "partial", "provisional_score": 2,
+                       "score_max": 4, "explanation": "The problem is scoped. It names users [E-001].", "draft_feedback": None, "flags": []})
+    good = _json.dumps({"criterion_id": "C1", "evidence_ids": ["E-001"], "sufficiency": "partial", "provisional_score": 2,
+                        "score_max": 4, "explanation": "The problem is scoped [E-001]. It names users [E-001].", "draft_feedback": None, "flags": []})
+    calls = []
+
+    def transport(url, headers, body, timeout):
+        calls.append(_json.loads(body))
+        reply = good if len(calls) % 2 == 0 else bad  # first answer bad, corrected answer good
+        return '{"choices":[{"message":{"content":' + _json.dumps(reply) + '}}]}'
+
+    gw = OpenAICompatibleGateway(endpoint="https://example.test/v1", model="m", api_key=None, transport=transport)
+    result = run_pipeline(ENG, S1, gateway=gw, rubric_id="engineering_report")
+    c1 = result.assessments[0]
+    assert c1.accepted and "revised_once" in c1.draft.flags
+    log = result.logs[0]
+    assert log.attempts == 2 and any(w.startswith("uncited_claim") for w in log.first_attempt_warnings)
+    # The revision request carried the validator's finding back to the model.
+    assert any("uncited_claim" in m["content"] for m in calls[1]["messages"] if m["role"] == "user")
+
+    # With revise disabled the rejection stands.
+    calls.clear()
+    result2 = run_pipeline(ENG, S1, gateway=gw, rubric_id="engineering_report", revise=False)
+    assert not result2.assessments[0].accepted and result2.logs[0].attempts == 1
+
+
+def test_citation_variants_are_recognised_but_still_checked():
+    from rubric_agent.textutil import citation_ids, unsupported_claims
+
+    assert citation_ids("Scoped problem [E-001]. Users named [E-002, E-003]. Quote [E-004: 'x y'].") == ["E-001", "E-002", "E-003", "E-004"]
+    assert unsupported_claims("Scoped problem [E-001: 'gap']. Users are named.") == ["Users are named."]
+    rubric = parse_rubric(ENG)
+    units = chunk_pages(parse_submission(S1))
+    from rubric_agent.schemas import AssessmentDraft
+    from rubric_agent.validator import validate_assessment
+
+    draft = AssessmentDraft(criterion_id="C1", evidence_ids=["E-001"], sufficiency="partial", provisional_score=2, score_max=4,
+                            explanation="Scoped [E-001]. Users named [E-999: 'tutors'].")
+    v = validate_assessment(draft, rubric.criteria[0], units[:2])
+    assert any(w.startswith("unknown_citation_ids") for w in v.warnings) and v.draft.provisional_score is None
+
+
+def test_positive_claim_detection_rules():
+    """M6 counts sentences that assert content is present; absences and rubric judgements are not claims."""
+    from rubric_agent.textutil import positive_claims, unsupported_claims
+
+    text = ("The report scopes the problem for tutors [E-001]. "
+            "However, it does not explicitly state who is affected. "
+            "This aligns with the descriptor for 2.0. "
+            "No baseline is given. "
+            "The method section lists three metrics.")
+    assert unsupported_claims(text) == ["The method section lists three metrics."]
+    assert len(positive_claims(text)) == 2
+    # A cited sentence is always a claim even if it contains a negation.
+    assert positive_claims("The plan does not name a baseline but lists two metrics [E-004].") == [
+        "The plan does not name a baseline but lists two metrics [E-004]."]
+
+
+def test_direct_baseline_accepts_common_output_shapes():
+    from rubric_agent.gateway import _direct_items
+
+    item = {"criterion_id": "C1", "sufficiency": "partial", "provisional_score": 2, "score_max": 4, "explanation": "x"}
+    assert _direct_items({"criteria": [item]}) == [item]
+    assert _direct_items([item]) == [item]
+    assert _direct_items(item) == [item]
+    assert _direct_items({"C1": {"sufficiency": "partial"}})[0]["criterion_id"] == "C1"
+    assert _direct_items("nonsense") == []
+
+
 def test_live_gateway_transport_error_is_fail_closed():
     def boom(url, headers, body, timeout):
         raise OSError("connection refused")
 
-    rubric = parse_rubric(ENG)
     gw = OpenAICompatibleGateway(endpoint="http://localhost:1/v1", model="m", api_key=None, transport=boom)
     result = run_pipeline(ENG, S1, gateway=gw, rubric_id="engineering_report")
     assert all(a.draft.sufficiency == "insufficient" and "provider_error" in a.warnings for a in result.assessments)
@@ -226,7 +328,7 @@ def test_fr12_fr13_fr15_nfr5_export_block_and_override():
     edited = next(row for row in record if row["marker_state"] == "edited")
     assert edited["marker_final_score"] == 1
     assert "ai_suggested_score" in edited  # original suggestion retained (FR13)
-    assert record[0]["model_id"] and record[0]["prompt_version"] == "assessment_v1"
+    assert record[0]["model_id"] and record[0]["prompt_version"] == "assessment_v2"
     csv_text = session.export_csv()
     assert csv_text.splitlines()[0].startswith("criterion_id,criterion_name")
     assert len(csv_text.splitlines()) == len(record) + 1
@@ -253,7 +355,7 @@ def test_fr16_nfr7_run_log_and_replay(tmp_path):
     entries = logger.read()
     assert len(entries) == len(result.assessments)
     for e in entries:
-        assert e.model_id and e.prompt_version == "assessment_v1" and e.test_case_id == "s1_standard"
+        assert e.model_id and e.prompt_version == "assessment_v2" and e.test_case_id == "s1_standard"
         assert e.retrieval_method == "bm25" and e.retrieval_k == 5 and e.rubric_ref and e.submission_ref
     outcomes = [replay_entry(e) for e in entries]
     assert all(o.same_top1 and o.same_cited and o.within_tolerance for o in outcomes)

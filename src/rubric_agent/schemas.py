@@ -6,7 +6,7 @@ model returns must validate against it before the Validator even looks at it.
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
@@ -16,7 +16,7 @@ DecisionState = Literal["pending", "accepted", "edited", "rejected"]
 
 
 def utc_now() -> str:
-    return datetime.now(timezone.utc).isoformat()
+    return datetime.now(UTC).isoformat()
 
 
 class StrictModel(BaseModel):
@@ -118,6 +118,8 @@ class RunLogEntry(StrictModel):
     provisional_score: float | None = None
     cited_ids: list[str] = Field(default_factory=list)
     warnings: list[str] = Field(default_factory=list)
+    attempts: int = 1
+    first_attempt_warnings: list[str] = Field(default_factory=list)
     created_at: str = Field(default_factory=utc_now)
 
 

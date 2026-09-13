@@ -367,7 +367,7 @@ def main() -> None:
     (ROOT / "dataset" / "labels.json").write_text(json.dumps(LABELS, indent=2), encoding="utf-8")
     _write_mini_pdf(SUBS / "mini.pdf", ["SECTION: Methods Fixture adapter for tests"])
     print(f"wrote {len(files)} submissions and {len(LABELS)} labels "
-          f"({sum(1 for l in LABELS if l['split'] == 'heldout')} held-out)")
+          f"({sum(1 for lab in LABELS if lab['split'] == 'heldout')} held-out)")
 
 
 def _pdf_escape(text: str) -> bytes:

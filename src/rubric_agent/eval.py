@@ -151,7 +151,7 @@ def evaluate_corpus(
     with_baseline: bool = True,
 ) -> dict:
     gateway = gateway or FixtureGateway()
-    labels = [l for l in load_labels(dataset_dir / "labels.json") if split == "all" or l.split == split]
+    labels = [lab for lab in load_labels(dataset_dir / "labels.json") if split == "all" or lab.split == split]
     by_pair: dict[tuple[str, str], list[GoldLabel]] = defaultdict(list)
     for label in labels:
         by_pair[(label.rubric_id, label.submission_id)].append(label)
@@ -168,6 +168,8 @@ def evaluate_corpus(
     export_ok = export_total = 0
     feedback_ok = feedback_total = 0
     warnings_seen: dict[str, int] = defaultdict(int)
+    first_attempt_warnings: dict[str, int] = defaultdict(int)
+    revised = calls = 0
     latencies: list[float] = []
     s5_latencies: list[float] = []
     repeat_ok = repeat_total = 0
@@ -195,6 +197,11 @@ def evaluate_corpus(
             s5_latencies.append(result.latency_ms)
         locator_total += len(result.units)
         locator_ok += sum(1 for u in result.units if u.page >= 1 and u.section)
+        for entry in result.logs:
+            calls += 1
+            revised += int(entry.attempts > 1)
+            for w in entry.first_attempt_warnings:
+                first_attempt_warnings[w.split(":", 1)[0]] += 1
 
         for validated in result.assessments:
             draft = validated.draft
@@ -321,6 +328,8 @@ def evaluate_corpus(
             for s, acc in sorted(per_scenario.items())
         },
         "validator_warnings": dict(sorted(warnings_seen.items())),
+        "first_attempt_warnings": dict(sorted(first_attempt_warnings.items())),
+        "revision_rate": revised / max(calls, 1),
         "baseline_B2": base_s if with_baseline else None,
         "requires_marker_session": ["M9", "M10", "M11", "M14", "M15 (data audit)", "M5 human support judgement"],
     }
@@ -359,8 +368,11 @@ def write_markdown_report(report: dict, path: Path) -> None:
         lines += ["", "## Baseline B2 (direct whole-document grading, same gateway)", "",
                   f"Sufficiency accuracy {_fmt(b['sufficiency_accuracy'])}, unsupported-claim rate {_fmt(b['unsupported_rate'])} "
                   f"({b['unsupported_claims']}/{b['claims']} claims), QWK {_fmt(b['score_qwk'])}, MAE {_fmt(b['score_mae'])}."]
-    lines += ["", "## Validator warnings raised", ""]
-    lines += [f"- `{k}`: {v}" for k, v in report["validator_warnings"].items()] or ["- none"]
+    lines += ["", "## Validator", "",
+              "Final records with warnings: " + (", ".join(f"`{k}` ×{v}" for k, v in report["validator_warnings"].items()) or "none") + ".",
+              "",
+              f"Corrective round used on {report['revision_rate']:.1%} of calls. First-attempt rejections: "
+              + (", ".join(f"`{k}` ×{v}" for k, v in report["first_attempt_warnings"].items()) or "none") + "."]
     lines += ["", "## Not measurable offline", "", "Requires a marker session (proposal S8): " + ", ".join(report["requires_marker_session"]) + ".", ""]
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text("\n".join(lines), encoding="utf-8")

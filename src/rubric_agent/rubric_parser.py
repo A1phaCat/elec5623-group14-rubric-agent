@@ -4,9 +4,10 @@ Three text layouts are recognised without any prompt writing:
 
 1. *Block* — `CRITERION:` / `## Name` headers with `ID:`, `MAX:`, `GRANULARITY:`
    fields and `<score>: <descriptor>` lines.
-2. *Table* — a Markdown table whose header contains `Max` and numeric level
-   columns (`| ID | Criterion | Max | 0 | 0.5 | 1.0 |`). Descriptor text may
-   span several cells; every numeric header becomes one level.
+2. *Table* — a Markdown table with a `Max`/`Weight` column and/or level
+   columns. Level headers may be numbers (`| 0 | 0.5 | 1.0 |`) or graded
+   bands (`| Excellent (8–10) | Good (5–7) | Limited (0–4) |`); a band maps
+   to its upper bound. Without a `Max` column the top band is the maximum.
 3. *Numbered list* — the layout most course rubrics are pasted in:
    `1. Problem definition (4 marks)` followed by `- 0: ...` / `* 2 – ...` lines.
 
@@ -51,7 +52,7 @@ def parse_rubric(source: str | Path, *, rubric_id: str | None = None) -> Rubric:
 
     if re.search(r"(?m)^CRITERION:", text):
         criteria, fmt = _parse_blocks(text), "block"
-    elif "|" in text and re.search(r"(?im)^\|.*\bmax\b", text):
+    elif _looks_like_table(text):
         criteria, fmt = _parse_table(text), "table"
     elif NUMBERED.search(text):
         criteria, fmt = _parse_numbered(text), "numbered"
@@ -116,7 +117,33 @@ def _parse_blocks(text: str) -> list[Criterion]:
     return criteria
 
 
-def _parse_table(text: str) -> list[Criterion]:
+MAX_HEADERS = ("max", "max mark", "max marks", "marks", "weight", "weighting", "points", "total")
+NAME_HEADERS = ("criterion", "criteria", "name", "component", "section")
+RANGE = re.compile(r"(\d+(?:\.\d+)?)\s*(?:-|–|—|to)\s*(\d+(?:\.\d+)?)")
+TRAILING_NUMBER = re.compile(r"\(?\s*(\d+(?:\.\d+)?)\s*(?:marks?|points?|pts?)?\s*\)?\s*$")
+
+
+def level_from_header(header: str) -> float | None:
+    """Map a table header cell to a level score.
+
+    `1.5` → 1.5; `Excellent (8–10)` → 10 (upper bound of the band); `HD 4` → 4.
+    Returns None for non-level columns such as `Criterion`, `Max` or `Weight`.
+    """
+    h = header.strip().lower()
+    if not h or h in MAX_HEADERS or h in NAME_HEADERS or h == "id":
+        return None
+    if re.fullmatch(r"-?\d+(?:\.\d+)?", h):
+        return float(h)
+    m = RANGE.search(h)
+    if m:
+        return float(m.group(2))
+    m = TRAILING_NUMBER.search(h)
+    if m and re.search(r"[a-z]", h):
+        return float(m.group(1))
+    return None
+
+
+def _table_rows(text: str) -> list[list[str]]:
     rows: list[list[str]] = []
     for line in text.splitlines():
         raw = line.strip()
@@ -126,20 +153,47 @@ def _parse_table(text: str) -> list[Criterion]:
         if cells and all(re.fullmatch(r":?-{3,}:?", c or "") for c in cells):
             continue
         rows.append(cells)
+    return rows
+
+
+def _looks_like_table(text: str) -> bool:
+    rows = _table_rows(text)
+    if len(rows) < 2:
+        return False
+    header = [h.lower() for h in rows[0]]
+    has_max = any(h in MAX_HEADERS for h in header)
+    levels = sum(1 for h in header if level_from_header(h) is not None)
+    return has_max or levels >= 2
+
+
+def _parse_table(text: str) -> list[Criterion]:
+    rows = _table_rows(text)
     if len(rows) < 2:
         return []
     header = [h.lower() for h in rows[0]]
     criteria: list[Criterion] = []
     for i, row in enumerate(rows[1:], start=1):
         data = {header[j]: row[j] for j in range(min(len(header), len(row)))}
-        name = data.get("criterion") or data.get("name") or row[0]
-        max_raw = data.get("max") or data.get("max mark") or data.get("marks") or row[1]
-        max_mark = float(re.sub(r"[^0-9.]", "", max_raw))
+        name = next((data[h] for h in NAME_HEADERS if data.get(h)), row[0])
         descriptors = []
+        banded = False
         for key, value in data.items():
-            if re.fullmatch(r"-?\d+(?:\.\d+)?", key) and value:
-                descriptors.append(ScoreDescriptor(score=float(key), text=value))
-        gran = _infer_granularity(descriptors, max_mark)
+            level = level_from_header(key)
+            if level is not None and value:
+                descriptors.append(ScoreDescriptor(score=level, text=value))
+                banded = banded or bool(RANGE.search(key))
+        max_raw = next((data[h] for h in MAX_HEADERS if data.get(h)), "")
+        digits = re.sub(r"[^0-9.]", "", max_raw)
+        if digits:
+            max_mark = float(digits)
+        elif descriptors:
+            max_mark = max(d.score for d in descriptors)  # no Max column: the top band is the maximum
+        else:
+            raise RubricParseError(f"table row {i} has neither a Max column nor level columns")
+        if banded:  # bands such as 5–7 imply whole (or half) marks inside the band
+            gran = 0.5 if any(d.score != int(d.score) for d in descriptors) else 1.0
+        else:
+            gran = _infer_granularity(descriptors, max_mark)
         criteria.append(_make(data.get("id") or f"C{i}", name, max_mark, gran, descriptors))
     return criteria
 

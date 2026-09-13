@@ -10,9 +10,16 @@ from __future__ import annotations
 import csv
 import io
 import json
+from datetime import datetime
 
 from .errors import ExportBlocked
 from .schemas import Criterion, EvidenceUnit, MarkerDecision, ValidatedAssessment, utc_now
+
+
+def _seconds_between(start_iso: str, end_iso: str) -> float:
+    start = datetime.fromisoformat(start_iso.replace("Z", "+00:00"))
+    end = datetime.fromisoformat(end_iso.replace("Z", "+00:00"))
+    return max((end - start).total_seconds(), 0.0)
 
 EXPORT_FIELDS = [
     "criterion_id", "criterion_name", "max_mark",
@@ -39,6 +46,30 @@ class ReviewSession:
         self.model_id = model_id
         self.prompt_version = prompt_version
         self.decisions = {cid: MarkerDecision(criterion_id=cid) for cid in self.assessments}
+        self.started_at = utc_now()
+        self.interventions = 0  # every decide()/reset() call; M10/M11 raw material
+
+    # -- session summary (M10 review time, M11 override rate) --------------------------
+
+    def summary(self) -> dict:
+        states = [d.state for d in self.decisions.values()]
+        got, cap = self.total()
+        return {
+            "started_at": self.started_at,
+            "exported_at": utc_now(),
+            "duration_s": round(_seconds_between(self.started_at, utc_now()), 1),
+            "criteria": len(self.decisions),
+            "accepted": states.count("accepted"),
+            "edited": states.count("edited"),
+            "rejected": states.count("rejected"),
+            "pending": states.count("pending"),
+            "override_rate": round((states.count("edited") + states.count("rejected")) / max(len(states), 1), 3),
+            "interventions": self.interventions,
+            "marker_total": got,
+            "marker_max": cap,
+            "model_id": self.model_id,
+            "prompt_version": self.prompt_version,
+        }
 
     # -- decisions ------------------------------------------------------------------
 
@@ -63,10 +94,14 @@ class ReviewSession:
             criterion_id=criterion_id, state=state,  # type: ignore[arg-type]
             marker_score=marker_score, marker_comment=comment, decided_at=utc_now(),
         )
+        if self.decisions[criterion_id] != decision.model_copy(update={"decided_at": self.decisions[criterion_id].decided_at}):
+            self.interventions += 1
         self.decisions[criterion_id] = decision
         return decision
 
     def reset(self, criterion_id: str) -> None:
+        if self.decisions[criterion_id].state != "pending":
+            self.interventions += 1
         self.decisions[criterion_id] = MarkerDecision(criterion_id=criterion_id)
 
     def unconfirmed(self) -> list[str]:
@@ -105,7 +140,8 @@ class ReviewSession:
         return rows
 
     def export_json(self) -> str:
-        return json.dumps({"exported_at": utc_now(), "criteria": self.export_record()}, indent=2)
+        rows = self.export_record()  # raises ExportBlocked first
+        return json.dumps({"exported_at": utc_now(), "session": self.summary(), "criteria": rows}, indent=2)
 
     def export_csv(self) -> str:
         rows = self.export_record()
