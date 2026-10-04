@@ -10,6 +10,7 @@ from __future__ import annotations
 import csv
 import io
 import json
+import math
 from datetime import datetime
 
 from .errors import ExportBlocked
@@ -40,9 +41,17 @@ class ReviewSession:
         model_id: str = "",
         prompt_version: str = "",
     ) -> None:
-        self.assessments = {item.draft.criterion_id: item for item in assessments}
-        self.criteria = {c.id: c for c in (criteria or [])}
-        self.retrieved = retrieved or {}
+        ids = [item.draft.criterion_id for item in assessments]
+        if not ids or len(ids) != len(set(ids)):
+            raise ValueError("review needs a non-empty set of unique criterion assessments")
+        if criteria is not None:
+            criterion_ids = [c.id for c in criteria]
+            if len(criterion_ids) != len(set(criterion_ids)) or set(criterion_ids) != set(ids):
+                raise ValueError("review assessments must match every rubric criterion exactly once")
+        # Keep the reviewed suggestion stable if the caller later updates its result.
+        self.assessments = {item.draft.criterion_id: item.model_copy(deep=True) for item in assessments}
+        self.criteria = {c.id: c.model_copy(deep=True) for c in (criteria or [])}
+        self.retrieved = {cid: [u.model_copy(deep=True) for u in units] for cid, units in (retrieved or {}).items()}
         self.model_id = model_id
         self.prompt_version = prompt_version
         self.decisions = {cid: MarkerDecision(criterion_id=cid) for cid in self.assessments}
@@ -73,6 +82,20 @@ class ReviewSession:
 
     # -- decisions ------------------------------------------------------------------
 
+    def _validate_score(self, criterion_id: str, score: float | None) -> None:
+        crit = self.criteria.get(criterion_id)
+        maximum = crit.max_mark if crit else self.assessments[criterion_id].draft.score_max
+        if score is None or not math.isfinite(score) or not math.isfinite(maximum) or not (0 <= score <= maximum):
+            raise ValueError(f"score must be finite and inside 0..{maximum:g}")
+        if crit and abs(round(score / crit.granularity) * crit.granularity - score) > 1e-6:
+            raise ValueError(f"score must follow the rubric step of {crit.granularity:g}")
+
+    def _check_acceptance(self, criterion_id: str) -> None:
+        item = self.assessments[criterion_id]
+        if not item.accepted or item.draft.sufficiency == "insufficient" or item.draft.provisional_score is None:
+            raise ValueError("AI suggestion has no validated score; choose edited with your own score or rejected")
+        self._validate_score(criterion_id, item.draft.provisional_score)
+
     def decide(self, criterion_id: str, state: str, *, score: float | None = None, comment: str = "") -> MarkerDecision:
         if criterion_id not in self.decisions:
             raise KeyError(criterion_id)
@@ -80,13 +103,12 @@ class ReviewSession:
             raise ValueError(state)
         draft = self.assessments[criterion_id].draft
         if state == "accepted":
+            self._check_acceptance(criterion_id)
             marker_score = draft.provisional_score
         elif state == "edited":
             if score is None:
                 raise ValueError("edited decisions need a score")
-            crit = self.criteria.get(criterion_id)
-            if crit and not (0 <= score <= crit.max_mark):
-                raise ValueError(f"score {score} outside 0..{crit.max_mark}")
+            self._validate_score(criterion_id, score)
             marker_score = score
         else:
             marker_score = None
@@ -94,8 +116,10 @@ class ReviewSession:
             criterion_id=criterion_id, state=state,  # type: ignore[arg-type]
             marker_score=marker_score, marker_comment=comment, decided_at=utc_now(),
         )
-        if self.decisions[criterion_id] != decision.model_copy(update={"decided_at": self.decisions[criterion_id].decided_at}):
-            self.interventions += 1
+        previous = self.decisions[criterion_id]
+        if previous == decision.model_copy(update={"decided_at": previous.decided_at}):
+            return previous
+        self.interventions += 1
         self.decisions[criterion_id] = decision
         return decision
 
@@ -110,6 +134,8 @@ class ReviewSession:
     # -- export (FR15, M16) -----------------------------------------------------------
 
     def export_record(self) -> list[dict]:
+        if set(self.decisions) != set(self.assessments):
+            raise ExportBlocked("review decisions do not cover every criterion")
         missing = self.unconfirmed()
         if missing:
             raise ExportBlocked(f"unconfirmed criteria: {', '.join(missing)}")
@@ -117,6 +143,20 @@ class ReviewSession:
         for cid, validated in self.assessments.items():
             draft = validated.draft
             decision = self.decisions[cid]
+            # Recheck persisted/public decision objects at the final export boundary.
+            try:
+                if decision.criterion_id != cid or not decision.decided_at:
+                    raise ValueError("decision is missing its criterion or confirmation time")
+                if decision.state == "accepted":
+                    self._check_acceptance(cid)
+                    if decision.marker_score != draft.provisional_score:
+                        raise ValueError("accepted score differs from the AI suggestion")
+                elif decision.state == "edited":
+                    self._validate_score(cid, decision.marker_score)
+                elif decision.state != "rejected" or decision.marker_score is not None:
+                    raise ValueError("invalid review decision")
+            except ValueError as exc:
+                raise ExportBlocked(f"invalid decision for {cid}: {exc}") from exc
             crit = self.criteria.get(cid)
             units = {u.id: u for u in self.retrieved.get(cid, [])}
             rows.append({

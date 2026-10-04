@@ -17,6 +17,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from rubric_agent import PROMPT_VERSION  # noqa: E402
+from rubric_agent.coverage import top_band_coverage  # noqa: E402
 from rubric_agent.errors import ExportBlocked, RubricParseError, SubmissionParseError  # noqa: E402
 from rubric_agent.gateway import build_gateway, local_ollama_models  # noqa: E402
 from rubric_agent.pipeline import run_direct_baseline, run_pipeline  # noqa: E402
@@ -134,7 +135,7 @@ st.caption(f"Rubric **{result.rubric.title}** ({result.rubric.source_format} for
 flagged = [a for a in result.assessments if not a.accepted]
 revised = [a for a in result.assessments if "revised_once" in a.draft.flags]
 if flagged:
-    st.warning(f"{len(flagged)} criterion record(s) failed validation and were downgraded to *insufficient* with no score. Details are shown per criterion.")
+    st.warning(f"{len(flagged)} criterion record(s) failed validation and cannot be accepted. Review the warnings, then edit or reject each suggestion.")
 if revised:
     st.info(f"{len(revised)} record(s) were corrected by the model after the validator sent its findings back (one corrective round; the corrected answer was validated again).")
 
@@ -169,6 +170,12 @@ for validated in result.assessments:
                 st.markdown("**Draft feedback to the student (optional, FR14)**")
                 st.write(draft.draft_feedback)
             hits = result.retrieved.get(draft.criterion_id, [])
+            coverage = top_band_coverage(crit, hits)
+            if coverage is not None:
+                st.markdown(f"**Top-band checklist** (software, max {coverage.score:g})")
+                st.caption(coverage.text)
+                st.write("Present: " + (", ".join(coverage.present) or "—"))
+                st.write("Missing: " + (", ".join(coverage.missing) or "—"))
             st.markdown(f"**Evidence** ({len(hits)} retrieved, {len(draft.evidence_ids)} cited)")
             if not hits:
                 st.info("No relevant evidence found for this criterion (FR6 explicit state).")
@@ -197,6 +204,9 @@ for validated in result.assessments:
                 try:
                     session.decide(draft.criterion_id, action, score=score, comment=comment)
                 except ValueError as exc:
+                    # A failed replacement must not leave the previously confirmed
+                    # score available for export while the widget shows another value.
+                    session.reset(draft.criterion_id)
                     st.error(str(exc))
 
 # --- Baseline comparison ------------------------------------------------------------------

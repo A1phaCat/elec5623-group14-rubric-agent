@@ -85,6 +85,19 @@ def citation_ids(text: str) -> list[str]:
     return out
 
 
+# [E-001: "span"] or [E-001: 'span'] inside one citation bracket.
+CITED_QUOTE = re.compile(r"""(E-\d{3})\s*:\s*(["'])(.*?)\2""", re.DOTALL)
+
+
+def cited_quotes(text: str) -> list[tuple[str, str]]:
+    """Quoted spans written next to an evidence id, as in [E-001: "span"]."""
+    found: list[tuple[str, str]] = []
+    for group in BRACKET.findall(text or ""):
+        for eid, _mark, quote in CITED_QUOTE.findall(group):
+            found.append((eid, quote))
+    return found
+
+
 def sentences(text: str) -> list[str]:
     return [s.strip() for s in SENTENCE_SPLIT.split(normalize(text)) if s.strip()]
 

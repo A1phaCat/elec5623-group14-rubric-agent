@@ -230,7 +230,7 @@ def test_live_gateway_corrective_round_after_validator_rejection():
         return '{"choices":[{"message":{"content":' + _json.dumps(reply) + '}}]}'
 
     gw = OpenAICompatibleGateway(endpoint="https://example.test/v1", model="m", api_key=None, transport=transport)
-    result = run_pipeline(ENG, S1, gateway=gw, rubric_id="engineering_report")
+    result = run_pipeline(ENG, S1, gateway=gw, rubric_id="engineering_report", workers=1)
     c1 = result.assessments[0]
     assert c1.accepted and "revised_once" in c1.draft.flags
     log = result.logs[0]
@@ -240,7 +240,7 @@ def test_live_gateway_corrective_round_after_validator_rejection():
 
     # With revise disabled the rejection stands.
     calls.clear()
-    result2 = run_pipeline(ENG, S1, gateway=gw, rubric_id="engineering_report", revise=False)
+    result2 = run_pipeline(ENG, S1, gateway=gw, rubric_id="engineering_report", revise=False, workers=1)
     assert not result2.assessments[0].accepted and result2.logs[0].attempts == 1
 
 
