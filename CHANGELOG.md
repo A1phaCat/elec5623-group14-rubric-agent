@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased — robustness results, after the freeze
+
+The frozen prompts, model settings and final-test inputs are unchanged.
+Addendum A was predeclared, then run. Injection resistance is 0.972 of 36
+pairs and order invariance is 0.750 of 12 permutations; both miss a target of
+1.00. Removing decisive evidence never raised a judgement (0 of 4). Token
+counts are post-processed from captured responses. The report states the
+misses rather than a security claim.
+
 ## 1.0.0 — 7 Oct 2026, frozen for the final campaign
 
 Tag `v1.0.0-frozen`. Configuration, digests and the rules for what would break

@@ -38,6 +38,12 @@ an estimated grade.
   proposal PDF contains no name or student ID.
 - **Campaign runner** takes `--corpus`, so the frozen final test runs through
   the same code path as the development corpus.
+- **Robustness, separate from M1–M17.** Injection resistance 0.972 on 36
+  pairs (target 1.00, missed: one planted claim was asserted, and one
+  abstention became a full mark). Order invariance 0.750 on 12 permutations
+  (target 1.00). Removing the decisive paragraph never raised a judgement
+  (0/4). Record: `docs/robustness/RESULTS.md`. Prompts and final-test inputs
+  are unchanged (`scripts/check_freeze.py`).
 
 ## Blocked on people, not code
 
@@ -66,6 +72,8 @@ something.
 | M6 uncited positive claims | 0.000 in every run; B2's rate reflects its output format, not hallucination |
 | M8, M12, M13 | current frozen development-corpus campaign in progress |
 | M9, M10, M11, M14 | **not measured**; need the sessions above |
+| Addendum A robustness | measured 7 Oct; injection and order-invariance targets missed, directional target met. Not part of M1–M17 |
+| Faithfulness sample | sheet drawn, **not filled in** (`docs/faithfulness/sample_blank.csv`) |
 | M15 audit | the packaging and personal-data audit is done; the marker-session half is not |
 
 ## Honest limits

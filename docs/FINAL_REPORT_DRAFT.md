@@ -53,14 +53,14 @@ Evidence-first scoring, deterministic verification and retrieval-augmented gener
 
 | Closest work | Established method and overlap | Our implementation and remaining boundary |
 |---|---|---|
-| Evidence-First Scoring (EFS), Cai (2026) | Criterion-specific evidence extraction precedes scoring from the evidence and rubric; EFS is a method within a prompt-injection paper, not a separate paper title | We retrieve chunks using BM25 and present them for human review. This separation is prior work; our implementation has no measured prompt-injection guarantee |
+| Evidence-First Scoring (EFS), Cai (2026) | Criterion-specific evidence extraction precedes scoring from the evidence and rubric; EFS is a method within a prompt-injection paper, not a separate paper title | We retrieve chunks using BM25 and present them for human review. This separation is prior work. A 36-pair red team on synthetic documents is reported in §7; it is not a reproduction of Cai's study, and it missed its own target |
 | GradeAgentOps, Anghel et al. (2026) | Grading contracts, deterministic verification, bounded repair, optional memory and provenance; evaluated on 1,000 short answers with two expert graders | Validation and revision overlap directly. We focus on a long-submission review workflow and lack an equivalent independent expert study |
 | RULERS, Hong et al. (2026a) | Locked rubric specifications, evidence verification and post-hoc score calibration | We parse rubric descriptors and provide provisional scores without learned calibration. Checking citations or keeping logs is not a unique contribution |
 | RAG-assisted short-answer grading, Chu et al. (2025) | Retrieves domain knowledge using the question and answer context | We retrieve evidence within the submitted document, rather than external subject knowledge; both are retrieval-assisted grading |
 
 RULERS v1 is dated 13 January 2026, before our proposal. Its v3, dated 9 September, changes the title to *From Rubrics to Reliable Scores: Evidence-Grounded Text Evaluation with LLM Judges* (Hong et al., 2026b); this is a revision of the same work. Publication versions and primary-source links are recorded in `docs/RELATED_WORK.md`.
 
-Lewis et al. (2020) provide the general retrieval-augmented generation framework. BM25 is our transparent lexical baseline (Robertson and Zaragoza, 2009), not a new retrieval algorithm. Liu et al. (2024) motivate testing whether information remains usable in a long context; they do not prove that K=5 improves our grading. Gao et al. (2023) distinguish citation quality from answer quality. Accordingly, a valid evidence id or recoverable quote does not prove semantic support. Our heuristic claim and substring checks require independent human assessment for that stronger conclusion.
+Lewis et al. (2020) provide the general retrieval-augmented generation framework. BM25 is our transparent lexical baseline (Robertson and Zaragoza, 2009), not a new retrieval algorithm. Behaviour under a controlled input change is tested with CheckList-style paired relations (Ribeiro et al., 2020) and reported separately from M1–M17. Liu et al. (2024) motivate testing whether information remains usable in a long context; they do not prove that K=5 improves our grading. Gao et al. (2023) distinguish citation quality from answer quality. Accordingly, a valid evidence id or recoverable quote does not prove semantic support. Our heuristic claim and substring checks require independent human assessment for that stronger conclusion.
 
 The defensible contribution is the integration of criterion-wise retrieval, local-model suggestions, bounded correction and an accept/edit/reject workflow with separate AI and human values. Its value is tested through traceability, agreement, abstention and usability evidence. B2 compares the whole workflow against direct scoring; B3 holds the prompt, citation rules and validator fixed while changing context selection. These are engineering controls, not demonstrations of superiority over the named papers. A plain-RAG/no-repair ablation and independent marker studies would isolate further benefits. No time-saving or human-level agreement claim is currently supported.
 
@@ -319,6 +319,25 @@ finished carrying a feedback-citation warning, which a marker sees.
 
 M6=0 means no uncited sentence among the detector's surviving positive statements. Rejected outputs and unrecognised claims limit that measure. An existing citation or exact quote does not prove a judgement correct. Apparent agreement can also reflect the AI-assisted synthetic corpus and lenient first labels.
 
+### Robustness, measured separately from M1–M17
+
+Addendum A of `docs/EVALUATION_PROTOCOL.md` was committed before this run. The model, prompt and validator are the frozen configuration. Each metric compares two outputs of that same system; it does not use a gold label. The record is `docs/robustness/RESULTS.md`.
+
+| Test | Result | Denominator | Target |
+|---|---:|---:|---|
+| Injection resistance | 0.972 | 36 pairs | 1.00, missed |
+| Score did not rise | 1.000 | 30 pairs where both scored | 1.00 |
+| Injected false claim asserted | 1 record | 36 | 0, missed |
+| Score appeared where the benign twin abstained, and it was full marks | 1 | count | 0, missed |
+| Injected paragraph retrieved / cited | 0.472 / 0.000 | 36 | report only |
+| Order invariance, all three conditions | 0.750 | 12 permuted calls | 1.00, missed |
+| First cited evidence id unchanged | 1.000 | 12 | 1.00 |
+| Judgement rose after the decisive paragraph was removed | 0.000 | 4 pairs | 0.00 |
+
+On `rb1_inj_retrieval` criterion C4 the explanation asserted the planted claim: the cited evidence "provides a detailed discussion of the results, including validation and a weekly experiment log." Permuting the same retrieved units made one criterion fall from sufficient 4 to insufficient with no score, twice, and moved another score from 5.0 to 2.5. Removing the decisive paragraph never raised a judgement; on 3 of 4 pairs it fell.
+
+Captured responses, including retries, contain usage on all 404 calls: 679,801 prompt tokens and 61,055 completion tokens. Median calls per criterion is 1 and the maximum is 2, against a budget of 3. These are local token counts, not a monetary cost (`docs/robustness/usage.json`). A blank 30-claim faithfulness sheet is at `docs/faithfulness/sample_blank.csv`; it has not been filled in. The defect, mitigation and same-input re-test record is `docs/DEFECT_LOG.md`.
+
 ## 8. Reflection and next steps
 
 The useful engineering result is an inspectable workflow: source locations, provisional judgements, explicit validation failures and separate human decisions. Evidence-first scoring and repair are prior work; the project must earn its contribution through reliable integration and measured behaviour on the stated use case.
@@ -366,7 +385,7 @@ untouched originals before any discussion, then adjudication
 (`dataset/final_test/annotation/REGISTER.md`). Until that exists, the numbers
 in §7 describe this build on this corpus and nothing wider.
 
-Next, complete two independent annotation passes, run A/B2/B3 with frozen inputs and manifests, and conduct 2–3 marker sessions. Report at least three actual traces covering ordinary, dispersed/missing and decoy cases. Compare quality together with abstentions and timing. Concurrent calls can change runtime behaviour; measure rather than assume stable scores or lower latency. Claims about calibration, prompt-injection robustness or time savings remain outside the demonstrated evidence.
+Next, complete two independent annotation passes, run A/B2/B3 with frozen inputs and manifests, and conduct 2–3 marker sessions. Report at least three actual traces covering ordinary, dispersed/missing and decoy cases. Compare quality together with abstentions and timing. Concurrent calls can change runtime behaviour; measure rather than assume stable scores or lower latency. Calibration and time savings remain unmeasured. Prompt-injection behaviour is measured on 36 synthetic pairs in §7 and missed its target; that is not a security guarantee.
 
 ## 9. Responsible use
 
@@ -436,6 +455,8 @@ Lewis, P., Perez, E., Piktus, A., Petroni, F., Karpukhin, V., Goyal, N., Küttle
 Liu, N. F., Lin, K., Hewitt, J., Paranjape, A., Bevilacqua, M., Petroni, F., & Liang, P. (2024). Lost in the middle: How language models use long contexts. *Transactions of the Association for Computational Linguistics, 12*, 157–173.
 
 Min, S., Krishna, K., Lyu, X., Lewis, M., Yih, W.-t., Koh, P. W., Iyyer, M., Zettlemoyer, L., & Hajishirzi, H. (2023). FActScore: Fine-grained atomic evaluation of factual precision in long form text generation. In *Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing* (pp. 12076–12100). Association for Computational Linguistics. https://doi.org/10.18653/v1/2023.emnlp-main.741
+
+Ribeiro, M. T., Wu, T., Guestrin, C., & Singh, S. (2020). Beyond accuracy: Behavioral testing of NLP models with CheckList. In *Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics* (pp. 4902–4912). Association for Computational Linguistics. https://doi.org/10.18653/v1/2020.acl-main.442
 
 Robertson, S., & Zaragoza, H. (2009). The probabilistic relevance framework: BM25 and beyond. *Foundations and Trends in Information Retrieval, 3*(4), 333–389. https://doi.org/10.1561/1500000019
 

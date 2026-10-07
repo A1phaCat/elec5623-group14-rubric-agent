@@ -23,6 +23,10 @@
 - **What it produced:** revised `docs/FINAL_REPORT_DRAFT.md` against Haolin Jin's proposal comments, and wrote `docs/MARKER_RESPONSE.md`. Publisher and arXiv pages were opened for Cai (2026), Hong et al. (2026, arXiv v1 and the current record) and Chu et al. (2025). GradeAgentOps was taken from the Crossref record for DOI 10.3390/ai7060198, including the deposited abstract.
 - **What it did not do:** change the 6.5/10 proposal mark, resubmit the proposal, invent who did which work, invent metrics or quotations, relabel the 62 pairs, or rerun the model.
 
+- **Tool:** Cursor agent, 7 Oct 2026 (robustness wrap-up).
+- **What it produced:** wrote `docs/robustness/RESULTS.md` from the already-run `robustness.json`, post-processed token counts with `scripts/extract_usage.py`, and inserted those figures into the report, status and changelog.
+- **What it did not do:** change the frozen prompts or final-test inputs, fill the faithfulness sheet, annotate final_test, or rerun the model.
+
 Update this file whenever an AI tool contributes to a change.
 
 ## 4 October 2026 — Codex assistance
