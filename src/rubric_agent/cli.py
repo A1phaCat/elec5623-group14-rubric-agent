@@ -16,10 +16,10 @@ from pathlib import Path
 from .eval import evaluate_corpus, write_markdown_report
 from .gateway import build_gateway
 from .pipeline import run_direct_baseline, run_pipeline
+from .resources import resource_directory
 from .store import RunLogger, replay_entry
 
-ROOT = Path(__file__).resolve().parents[2]
-DATASET = ROOT / "dataset"
+DATASET = resource_directory("dataset")
 
 
 def _resolve(kind: str, name: str) -> Path:
@@ -43,6 +43,7 @@ def main(argv: list[str] | None = None) -> int:
     demo.add_argument("--rubric", default="engineering_report")
     demo.add_argument("--submission", default="s1_standard")
     demo.add_argument("--k", type=int, default=5)
+    demo.add_argument("--evidence-mode", choices=["bm25", "full_context"], default="bm25")
     demo.add_argument("--auto-accept", action="store_true", help="accept every suggestion and print the export")
     demo.add_argument("--log", type=Path, default=None, help="append run log JSONL here")
 
@@ -50,6 +51,8 @@ def main(argv: list[str] | None = None) -> int:
     ev.add_argument("--split", choices=["all", "dev", "heldout"], default="all")
     ev.add_argument("--repeats", type=int, default=3)
     ev.add_argument("--k", type=int, default=5)
+    ev.add_argument("--evidence-mode", choices=["bm25", "full_context"], default="bm25",
+                    help="bm25 retrieval or B3 full-context ablation with the same citation/validation rules")
     ev.add_argument("--no-baseline", action="store_true")
     ev.add_argument("--report", type=Path, default=None, help="write Markdown report here")
     ev.add_argument("--json", type=Path, default=None, help="write raw JSON here")
@@ -63,6 +66,10 @@ def main(argv: list[str] | None = None) -> int:
     bl.add_argument("--submission", default="s1_standard")
 
     args = parser.parse_args(argv)
+    if args.cmd in {"demo", "eval"} and args.k < 1:
+        parser.error("--k must be positive")
+    if args.cmd == "eval" and args.repeats < 1:
+        parser.error("--repeats must be positive")
     gateway = build_gateway(args.gateway)
 
     if args.cmd == "demo":
@@ -70,7 +77,8 @@ def main(argv: list[str] | None = None) -> int:
         submission = _resolve("submission", args.submission)
         logger = RunLogger(args.log) if args.log else None
         result = run_pipeline(rubric, submission, gateway=gateway, k=args.k,
-                              test_case_id=submission.stem, logger=logger, rubric_id=rubric.stem)
+                              test_case_id=submission.stem, logger=logger, rubric_id=rubric.stem,
+                              evidence_mode=args.evidence_mode)
         print(f"gateway={gateway.name} rubric={result.rubric.title!r} ({result.rubric.source_format}) "
               f"criteria={len(result.rubric.criteria)} units={len(result.units)} latency_ms={result.latency_ms:.1f}")
         for item in result.assessments:
@@ -90,13 +98,14 @@ def main(argv: list[str] | None = None) -> int:
             session = result.review_session()
             for item in result.assessments:
                 cid = item.draft.criterion_id
-                session.decide(cid, "accepted" if item.draft.provisional_score is not None else "rejected", comment="auto")
+                can_accept = item.accepted and item.draft.provisional_score is not None and item.draft.sufficiency != "insufficient"
+                session.decide(cid, "accepted" if can_accept else "rejected", comment="auto")
             print(session.export_json())
         return 0
 
     if args.cmd == "eval":
         report = evaluate_corpus(DATASET, gateway=gateway, k=args.k, repeats=args.repeats, split=args.split,
-                                 log_path=args.log, with_baseline=not args.no_baseline)
+                                 log_path=args.log, with_baseline=not args.no_baseline, evidence_mode=args.evidence_mode)
         if args.json:
             args.json.parent.mkdir(parents=True, exist_ok=True)
             args.json.write_text(json.dumps(report, indent=2), encoding="utf-8")
@@ -107,7 +116,10 @@ def main(argv: list[str] | None = None) -> int:
             print(json.dumps(report, indent=2))
         else:
             failing = [k for k, v in report["pass"].items() if v is False]
-            print("pass" if not failing else f"failing targets: {', '.join(failing)}")
+            unmeasured = [k for k, v in report["pass"].items() if v is None]
+            print("all measured targets pass" if not failing else f"failing targets: {', '.join(failing)}")
+            if unmeasured:
+                print(f"unmeasured targets: {', '.join(unmeasured)}")
         return 0
 
     if args.cmd == "replay":

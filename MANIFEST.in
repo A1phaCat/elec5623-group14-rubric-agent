@@ -1,0 +1,5 @@
+include README.md pyproject.toml setup.py
+recursive-include prompts *.md
+include dataset/labels.json
+recursive-include dataset/rubrics *.md *.pdf
+recursive-include dataset/submissions *.txt *.pdf

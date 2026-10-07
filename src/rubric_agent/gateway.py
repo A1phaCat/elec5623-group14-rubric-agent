@@ -23,16 +23,16 @@ import urllib.error
 import urllib.request
 from abc import ABC, abstractmethod
 from collections.abc import Callable
-from pathlib import Path
 
 from pydantic import ValidationError
 
 from . import PROMPT_VERSION
+from .resources import resource_directory
 from .schemas import AssessmentDraft, Criterion, EvidenceUnit, Rubric
 from .textutil import citation_ids, sentences
 from .textutil import stemmed_tokens as content_tokens
 
-PROMPTS_DIR = Path(__file__).resolve().parents[2] / "prompts"
+PROMPTS_DIR = resource_directory("prompts")
 
 NEGATION_CUES = (
     " does not ", " do not ", " did not ", " is not ", " are not ", " no ", " not ",

@@ -64,10 +64,14 @@ def replay_entry(entry: RunLogEntry, *, gateway=None, tolerance: float = 0.10) -
 
     if not entry.rubric_ref or not entry.submission_ref:
         raise ValueError("log entry lacks rubric_ref/submission_ref; cannot replay")
+    evidence_modes = {"bm25": "bm25", "full-context-v1": "full_context"}
+    if entry.retrieval_method not in evidence_modes:
+        raise ValueError(f"cannot replay unknown retrieval method: {entry.retrieval_method}")
     gateway = gateway or build_gateway(gateway_spec_for(entry.model_id))
     result = run_pipeline(
         Path(entry.rubric_ref), Path(entry.submission_ref),
         gateway=gateway, k=entry.retrieval_k, test_case_id=entry.test_case_id,
+        evidence_mode=evidence_modes[entry.retrieval_method],
     )
     new = next(a for a in result.assessments if a.draft.criterion_id == entry.criterion_id)
     new_log = next(entry_ for entry_ in result.logs if entry_.criterion_id == entry.criterion_id)
