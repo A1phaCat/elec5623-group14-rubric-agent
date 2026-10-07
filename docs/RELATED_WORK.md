@@ -27,6 +27,32 @@ Full author lists and publication details are in the report's reference list. Al
 - Robertson and Zaragoza (2009). [BM25 source](https://doi.org/10.1561/1500000019).
 - Gao et al. (2023). [ALCE citation-evaluation paper and metadata](https://aclanthology.org/2023.emnlp-main.398/).
 - Liu et al. (2024). [Lost in the Middle paper and metadata](https://aclanthology.org/2024.tacl-1.9/).
+- Ribeiro, M. T., Wu, T., Guestrin, C., & Singh, S. (2020). *Beyond Accuracy: Behavioral Testing of NLP Models with CheckList*. ACL 2020, pp. 4902–4912. [Paper and metadata](https://aclanthology.org/2020.acl-main.442/), [DOI](https://doi.org/10.18653/v1/2020.acl-main.442). Author list, venue, pages and DOI taken from the ACL Anthology BibTeX record on 7 October 2026. Week 9 lab reference [2].
+
+## Behavioural testing: what we borrowed from CheckList
+
+Ribeiro et al. (2020) argue that held-out accuracy on a single test set hides
+capability-specific failures, and propose organising tests around capabilities
+with three templates we use directly: **minimum functionality**, **invariance**
+(a perturbation that must not change the output) and **directional expectation**
+(a perturbation whose effect has a known sign). Their central methodological
+point for us is that the oracle can be the *expected relationship between
+outputs* rather than a reference string, which is what makes the tests usable
+with no gold label.
+
+That is the whole reason this project can test behaviour now: independent
+annotation of the final-test corpus is still pending, and a relation-based
+oracle does not need it. `docs/EVALUATION_PROTOCOL.md` Addendum A applies the
+invariance template to evidence presentation order and the directional template
+to removing a decisive paragraph.
+
+What we do **not** claim: CheckList is a general methodology and a tooling
+package for NLP capability testing, with user studies showing it helps experts
+find more bugs. We reuse two of its test templates on a handful of cases. We
+have not reproduced its experiments, built templates at its scale, or evaluated
+its tooling. Naming the templates correctly is attribution, not a contribution
+claim, and our paired rates are reported under their own metric names so they
+are not confused with its results.
 
 ## Contribution we can defend from the implementation
 
@@ -45,7 +71,7 @@ The existing B2 comparison changes context selection, prompting and validation t
 
 Use a shared dataset, rubric, backbone and decoding settings for direct whole-document grading, plain BM25-assisted grading without validation/repair, and the full system. An EFS-style extraction-then-scoring comparator is appropriate but must be labelled an adaptation unless the published protocol is faithfully reproduced. A no-repair control isolates the extra corrective call. Keep unrun comparisons out of results tables.
 
-Do not copy QWK values from different papers into a leaderboard against our 62 pairs: their datasets, score ranges, annotators and models differ. Independently annotate evidence support and scores; add a second annotator before claiming human-level agreement. For RULERS calibration, use a separate calibration split and report it. For any prompt-injection claim, collect benign/perturbed paired results rather than inferring robustness from JSON validity.
+Do not copy QWK values from different papers into a leaderboard against our 62 pairs: their datasets, score ranges, annotators and models differ. Independently annotate evidence support and scores; add a second annotator before claiming human-level agreement. For RULERS calibration, use a separate calibration split and report it. For any prompt-injection claim, collect benign/perturbed paired results rather than inferring robustness from JSON validity — **this one is now done**: predeclared in `EVALUATION_PROTOCOL.md` Addendum A.2 and measured in `docs/robustness/`, with the benign twin as the comparison rather than an inference from valid JSON.
 
 Commercial tools and miscellaneous repositories can provide workflow context, but they do not replace these close scientific comparators. No claim that another tool lacks a feature is made from an absent README mention.
 
