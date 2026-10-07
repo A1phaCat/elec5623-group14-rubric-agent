@@ -7,79 +7,78 @@ generated from git history in `CONTRIBUTIONS.md`; read that for the record and
 this for the plan. The A2 rubric awards group marks, so this is work
 prioritisation, not an individual mark guarantee.
 
-Everyone commits under their own GitHub account on the private repository, so
-each person's contribution appears in the history under their own name. Nobody
-commits on anyone else's behalf.
+Everyone commits under their own GitHub account, so each person's contribution
+appears in the history under their own name. Nobody commits on anyone else's
+behalf. The repository is public; uploading a finished annotation sheet is
+still a write, so the uploader needs collaborator access.
 
-## The allocation
+Code, the frozen campaign and the robustness run are already done and
+disclosed as AI-assisted. They are not one of the five tasks below. What
+remains is human work, split into five pieces of about two hours. **No names
+are attached until someone claims a piece in the group chat.** One person,
+one piece.
 
-| Member | Task | Effort | What it produces, and where it lands |
-|---|---|---|---|
-| **Zhengyu Han** | Technical lead: implementation and evaluation, **AI-assisted and disclosed** (`AI_USE.md`). Annotator **B**. Week 10 and Week 12 interactive orals and the Week 13 technical section. Final report review and submission. | the bulk | the frozen build, the campaign, the robustness experiment, report §§4–8 |
-| **Yuchun Zheng** | Annotator **A**: the 27 final-test pairs, working alone. | ~1.5 h | `dataset/final_test/annotation/annotator_A.csv`, uploaded through the GitHub web interface under their own account |
-| **Zhaoxinyi Zhou** | 2–3 marker sessions with timing and the questionnaire, **each including the rubric-only arm**, plus screenshots of the frozen build. | ~2–3 h | `docs/sessions/*.json` naming them as facilitator; refreshed `docs/img/` |
-| **Zongjian Li** | Verify the three closest papers against report §3 and own the novelty answer in the Week 13 Q&A. | ~2 h | a reviewed §3 and the ability to answer "what is actually new here" live |
-| **Yutong Liu** | Clean-machine reproduction on their own laptop, following only the README, logging every snag. | ~1–2 h | a snag log; any README defect found is a real result |
+## What the tutor still marks
 
-## Why the annotation order matters
+The build, the frozen configuration and the development-corpus campaign are already in the repository. They cover product completeness, the GenAI architecture and Track A. Haolin Jin's proposal comments, and the A2 rubric in `ELEC5623_A2.pdf`, still require the evidence below. The five pieces are that evidence. If one piece is missing, the report has to say "not measured" for the corresponding marks.
 
-Han must finish **sheet B before sheet A is uploaded**. The two annotations are
-only independent if neither annotator can see the other's answers, and the
-agreement statistic is the only independent evidence this project will have
-about its reference labels. If sheet A lands first and Han then fills sheet B,
-the independence claim is gone and cannot be recovered.
+| A2 criterion | Marks | Piece that supplies it | Not acceptable as a substitute |
+|---|---:|---|---|
+| Evaluation, evidence and critical analysis | 4 | 1 and 2, then the frozen final-test run; piece 5's citation check | fixture numbers, the September run, or labels written by the model |
+| Product quality and user workflow | 2 | 3, with both the tool arm and the rubric-only arm | a demo with no timed person |
+| Novelty and positioning | 3 | 4, checked against the papers rather than the report's own summary | a claim that evidence-first scoring is ours |
+| Documentation and team delivery | 1 | 5's snag log, plus each person committing under their own account | a table of names with no file behind it |
 
-So the sequence is fixed:
+GenAI engineering (4) and Track A alignment (2) are already demonstrated by the frozen system. They do not need a sixth piece. After the five pieces exist, the report is updated from those files: new numbers replace the development-corpus table, missed targets stay missed, and §10 names only people who committed something. That update is disclosed AI assistance. It is not a substitute for the five pieces.
 
-1. Han completes `annotator_B.csv` and commits it.
-2. Only then does Yuchun Zheng upload `annotator_A.csv`.
-3. `scripts/adjudicate_annotations.py agreement` runs on the untouched
-   originals, and `agreement.json` is committed **before** anyone discusses a
-   disagreement.
+## The five open tasks
+
+| Piece | About | Hours | What to hand in |
+|---|---|---:|---|
+| **1. 标注 A** | Read 6 short reports and fill 27 rows. Sufficiency and score are separate questions. Do not look at any model output or at the other sheet. | 2 | `dataset/final_test/annotation/annotator_A.csv`, your name and dates in `REGISTER.md` |
+| **2. 标注 B** | The same 27 rows, filled alone. Same rules. | 2 | `annotator_B.csv`, your name and dates in `REGISTER.md` |
+| **3. 试用** | Two people use the review screen. Time each person twice: once with the tool, once with the rubric only. Save both times, how often they changed a score, and screenshots of the current screen. Say they are classmates, not professional markers. | 2 | `docs/sessions/*.json` plus the screenshots. Instructions: `docs/MARKER_SESSIONS.md` |
+| **4. 核对论文** | Open Evidence-First Scoring, GradeAgentOps and RULERS from the links in `docs/RELATED_WORK.md`. Check that report §3 matches each paper. Write what overlaps and what is only ours. Do not write that we beat those papers. | 2 | a short note committed under your account, and the ability to say that note aloud on 4 November |
+| **5. 跑通并核对引用** | On your own laptop, follow `README.md` only and log every snag. Then fill `docs/faithfulness/sample_blank.csv`: for each of the 30 sentences, does the cited passage actually support that sentence? Judge the passage, not whether the score feels right. | 2 | the snag log and the completed faithfulness sheet, under your account |
+
+Pieces 1 and 2 must be two different people. Fill the sheet before you can
+see the other one. Do not post either CSV in the group chat. Tell the chat
+only that you are finished, send the file privately to Zhengyu Han, and upload
+it after both sheets exist. Agreement is computed from those untouched files
+before anyone discusses a disagreement.
+
+Showing up at the Week 10 oral, the Week 12 oral and the 4 November
+presentation is separate. Those are individual, and AI is not allowed in the
+room. Picking a piece above does not replace being able to say, in one
+sentence, what this tool does.
+
+## Why the two annotation sheets stay apart
+
+The two annotations are independent only if neither person can see the other's
+answers. The agreement statistic is the only independent evidence this project
+will have about its reference labels. The repository is public, so uploading
+one sheet immediately shows it to the other person. Send the file privately
+first. Upload both only after both exist, then compute agreement before any
+discussion.
+
+1. Two different people complete the two sheets offline.
+2. Each sends the CSV privately to Zhengyu Han and says "done" in the chat, without attaching it.
+3. Both files are uploaded, then `scripts/adjudicate_annotations.py agreement` runs on the untouched originals. `agreement.json` is committed before anyone discusses a disagreement.
 4. Adjudication, then `build`, then the frozen final-test campaign.
 
-A packaged copy of the blank sheet and a Chinese instruction sheet for Yuchun
-Zheng lives outside the repository at `5623/标注包_final_test/`. The sheet
-survives Excel's "CSV UTF-8" byte-order mark, which is tested.
+A packaged copy of the blank sheet and a Chinese instruction sheet lives
+outside the repository at `5623/标注包_final_test/`. The sheet survives Excel's
+"CSV UTF-8" byte-order mark, which is tested.
 
-## Each task, in enough detail to start
+## Each piece, in enough detail to start
 
-**Yuchun Zheng — annotator A.** Read `annotation/INSTRUCTIONS.txt` once, then
-fill `sufficiency`, `score` and `rationale` for all 27 rows. The one thing that
-matters: sufficiency is about whether the *evidence* lets a marker pick a
-descriptor, not about whether the work is good. Clearly documented weak work is
-`sufficient` evidence for a **low** score. Do not look at any model output or at
-the development corpus labels. Upload through GitHub's web interface so the
-commit is under your account; no git installation needed.
+**1 and 2 — the two sheets.** Read `annotation/INSTRUCTIONS.txt` once, then fill `sufficiency`, `score` and `rationale` for all 27 rows. Sufficiency is about whether the evidence lets a marker pick a descriptor, not about whether the work is good. Clearly documented weak work is `sufficient` evidence for a **low** score. Do not look at any model output or at the development corpus labels. Do not use an AI to choose the labels.
 
-**Zhaoxinyi Zhou — marker sessions.** `docs/MARKER_SESSIONS.md` has the
-protocol, the consent note to read verbatim, and the questionnaire. The part
-most easily missed: each participant must **also** mark a submission with the
-rubric alone, timed, or M10 cannot be computed at all. Record sessions as
-`docs/sessions/<participant>_<arm>.json` from `TEMPLATE.json`, then run
-`scripts/summarise_sessions.py`.
+**3 — sessions.** `docs/MARKER_SESSIONS.md` has the protocol, the consent note to read verbatim, and the questionnaire. Each participant must **also** mark a submission with the rubric alone, timed, or M10 cannot be computed at all. Record sessions as `docs/sessions/<participant>_<arm>.json` from `TEMPLATE.json`, then run `scripts/summarise_sessions.py`.
 
-**Zongjian Li — novelty.** Open Evidence-First Scoring (Cai 2026),
-GradeAgentOps (Anghel et al. 2026) and RULERS (Hong et al. 2026a/b) from the
-links in `RELATED_WORK.md`, check that report §3 describes each one correctly,
-and be able to say in the Q&A where we overlap and what is narrowly ours. The
-proposal lost a mark for claiming novelty that prior work already had; the
-defence is accuracy, not a bigger claim.
+**4 — the three papers.** Open Evidence-First Scoring (Cai 2026), GradeAgentOps (Anghel et al. 2026) and RULERS (Hong et al. 2026a/b) from the links in `RELATED_WORK.md`. The proposal lost a mark for claiming novelty that prior work already had. The useful result is a correction, not a bigger claim.
 
-**Yutong Liu — clean-machine reproduction.** Clone the repository on your own
-laptop and follow the README exactly. Log every point where the instructions
-were wrong, incomplete or needed guessing. A snag is a finding, not a
-failure — the CI break fixed on 7 October was precisely this class of defect
-(`pytest` behaved differently from `python -m pytest`), and it would have hit
-you. Report what happened rather than working around it silently.
-
-**Zhengyu Han — orals and submission.** AI assistance is disclosed in
-`AI_USE.md` and is permitted for the 20% development component. It is
-prohibited during the Week 10, Week 12 and Week 13 live assessments, so the
-technical explanation has to be genuinely held, not read. Be able to explain:
-why restricting evidence beat full context, why the one-shot baseline agrees
-better on scores while being uncheckable, why macro-F1 is misleading when one
-class has a single gold pair, and what the injection test actually showed.
+**5 — another computer, then the 30 sentences.** Follow the README exactly. The CI break fixed on 7 October was this class of defect (`pytest` behaved differently from `python -m pytest`). Report what happened rather than working around it silently. The faithfulness sheet is `docs/faithfulness/sample_blank.csv`. A yes means the cited passage supports the sentence. Do not use a model to answer, and do not treat a matching evidence id as enough.
 
 ## What an AI assistant cannot supply
 
@@ -103,13 +102,11 @@ the boundary is what makes the disclosure meaningful.
 | Target | Output | Who |
 |---|---|---|
 | ~~7 Oct~~ **done** | code and prompts frozen (`FREEZE.md`); A/B2/B3 campaign run; robustness experiment predeclared and run; CheckList cited | Han |
-| 10 Oct | **sheet B complete and committed** — gates everything below | Han |
-| 14 Oct | sheet A uploaded; `agreement.json` committed from the untouched originals, before any discussion | Zheng, then Han runs agreement |
-| 16 Oct | adjudicated labels built; frozen final-test campaign run | Han |
-| 21 Oct | 2–3 marker sessions with both arms; refreshed screenshots | Zhou |
-| 21 Oct | clean-machine reproduction and snag log | Liu |
-| 24 Oct | report §3 verified against the three papers | Li |
-| 29 Oct | report integrated; contribution register regenerated; references checked | Han, all review |
+| 10 Oct | both annotators have claimed pieces 1 and 2 and started offline | whoever claims them |
+| 14 Oct | both sheets received privately; `agreement.json` committed from the untouched originals, before any discussion | the two annotators, then Han runs agreement |
+| 21 Oct | piece 3 sessions, piece 4 paper note, piece 5 snag log and faithfulness sheet | whoever claims each |
+| 24 Oct | frozen final-test campaign on the adjudicated labels; report §§7–10 rewritten from the new files only | disclosed AI assistance, after the five pieces, not instead of them |
+| 29 Oct | contribution register regenerated; each named person matches a commit | all five |
 | 1 Nov | clean-clone rehearsal on the submission package; demo rehearsal without AI | all five |
 | 3 Nov 23:59 | source plus report submitted | Han |
 | 4 Nov | presentation and Q&A, no AI | all five |
@@ -145,13 +142,13 @@ must say until it changes.
 A task assignment is not evidence. An AI-generated file is not evidence that
 the assigned person did the work. Do not commit under another person's name.
 
-| Member | What produces verifiable evidence |
+| Piece | What produces verifiable evidence |
 |---|---|
-| Zhengyu Han | already recorded in `docs/CONTRIBUTIONS.md` |
-| Zongjian Li | commits to the rubric parser or `docs/RELATED_WORK.md`; a reviewed reference list with the papers actually opened |
-| Yuchun Zheng | a completed annotation sheet in `dataset/final_test/annotation/` with their name in `REGISTER.md`; commits to ingestion or export checks |
-| Yutong Liu | the campaign they executed (`manifest.json` carries the settings and hashes) plus commits to `scripts/` or the logs |
-| Zhaoxinyi Zhou | session files in `docs/sessions/` naming them as facilitator; commits to `app/` or `tests/test_ui.py`; the refreshed screenshots |
+| 1 and 2 | the completed sheet plus the person's name and dates in `REGISTER.md`, committed by that person |
+| 3 | `docs/sessions/*.json` for both arms, and screenshots, committed by the facilitator |
+| 4 | a note naming the three papers and the sentences checked, committed by that person |
+| 5 | a snag log and `docs/faithfulness/sample_blank.csv` with `supported` filled, committed by that person |
+| Already done | the frozen build, under Zhengyu Han, disclosed as AI-assisted in `AI_USE.md` |
 
 Work that leaves no commit still counts, but it has to leave *some* artifact:
 an annotation sheet, a session record, a campaign manifest. Each of those names
