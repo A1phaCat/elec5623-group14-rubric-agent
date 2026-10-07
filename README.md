@@ -1,5 +1,7 @@
 # AI-Assisted Rubric Marking Agent
 
+第一次打开这个仓库，先看中文说明：[docs/看懂这个仓库.md](docs/看懂这个仓库.md)。那一页用普通话说清这个工具做什么、首页截图的每一块是什么、每个文件夹该不该点开。下面这一页是给改代码和交作业用的英文说明。
+
 ELEC5623 Group 14 · Track A · semester project prototype (v1.0.0, frozen 7 Oct 2026).
 
 A decision-support tool for human markers: it parses an analytic rubric and a
