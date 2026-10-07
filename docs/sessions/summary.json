@@ -1,0 +1,81 @@
+{
+  "created_at_utc": "2026-10-07T01:42:39.091996+00:00",
+  "status": "no sessions recorded",
+  "participants": [],
+  "sessions": [],
+  "agent_sessions": 0,
+  "manual_sessions": 0,
+  "M9_marker_correction_rate": {
+    "value": null,
+    "edited_criteria": null,
+    "criteria_decided": null,
+    "rejected_criteria": null,
+    "sessions": 0,
+    "target": "reported, not pass/fail",
+    "note": "A correction rate near zero is not accuracy; read it with M8 as an automation-bias signal (proposal R3).",
+    "unmeasured_because": "no agent-arm session recorded edited and criteria_decided"
+  },
+  "M10_review_time": {
+    "agent_median_s": null,
+    "manual_median_s": null,
+    "agent_sessions": 0,
+    "manual_sessions": 0,
+    "participants_with_both_arms": [],
+    "reduction": null,
+    "target": ">=0.20 reduction",
+    "target_met": null,
+    "unmeasured_because": "M10 is a comparison and needs timings from both the agent and the manual arm; recorded agent=0, manual=0"
+  },
+  "M11_perceived_usefulness_and_control": {
+    "items": {
+      "in_control_of_final_score": {
+        "mean": null,
+        "answers": [],
+        "respondents": 0
+      },
+      "evidence_saved_me_searching": {
+        "mean": null,
+        "answers": [],
+        "respondents": 0
+      },
+      "could_tell_where_score_came_from": {
+        "mean": null,
+        "answers": [],
+        "respondents": 0
+      },
+      "would_trust_as_a_first_pass": {
+        "mean": null,
+        "answers": [],
+        "respondents": 0
+      },
+      "interface_stayed_out_of_my_way": {
+        "mean": null,
+        "answers": [],
+        "respondents": 0
+      }
+    },
+    "target": "in_control_of_final_score mean >= 4/5",
+    "target_met": null,
+    "free_text": [],
+    "unmeasured_because": "no participant answered the control item"
+  },
+  "M14_usability": {
+    "interventions_per_session": [],
+    "max_interventions": null,
+    "sessions": 0,
+    "intervention_target": "<=1 per session",
+    "intervention_target_met": null,
+    "evidence_in_context_rate": null,
+    "evidence_items_in_context": null,
+    "evidence_items_searched_manually": null,
+    "evidence_target": "1.00 of evidence items opened in context",
+    "evidence_target_met": null,
+    "unmeasured_because": "no agent-arm session recorded a facilitator intervention tally"
+  },
+  "limits": [
+    "0 participant(s), convenience sample, non-expert, one session per arm.",
+    "Synthetic submissions only; no real student work was marked.",
+    "These numbers describe this prototype with these documents, not university marking.",
+    "Any metric reported as null above is unmeasured and must be written as 'not measured'."
+  ]
+}

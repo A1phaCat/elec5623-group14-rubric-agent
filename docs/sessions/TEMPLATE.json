@@ -1,0 +1,45 @@
+{
+  "_instructions": "Copy to <participant>_<arm>.json and fill in. Delete keys you genuinely could not record rather than guessing; the summariser reports them as unmeasured. Do not add a name, student ID or any other personal detail.",
+  "participant": "P1",
+  "arm": "agent",
+  "_arm_values": "agent | manual",
+  "date": "2026-10-__",
+  "facilitator": "",
+  "rubric_id": "engineering_report",
+  "submission_id": "s2_dispersed",
+  "consent_note_read_verbatim": false,
+
+  "duration_s": null,
+  "_duration_s": "Agent arm: copy duration_s from the tool's exported session summary. Manual arm: stopwatch, start at first read, stop when every criterion has a score.",
+
+  "criteria_decided": null,
+  "accepted": null,
+  "edited": null,
+  "rejected": null,
+  "_decisions": "Agent arm only, copied from the exported session summary. edited counts toward M9; rejected is counted separately because the marker discarded rather than changed the suggestion.",
+
+  "facilitator_interventions": null,
+  "_facilitator_interventions": "M14. Count only explanations of the interface, not questions about marking judgement.",
+
+  "evidence_items_opened_in_context": null,
+  "evidence_items_found_by_searching_document": null,
+  "_evidence": "M14 second half. The target is that the second number is 0.",
+
+  "questionnaire": {
+    "_scale": "1 strongly disagree .. 5 strongly agree; null if not asked",
+    "in_control_of_final_score": null,
+    "evidence_saved_me_searching": null,
+    "could_tell_where_score_came_from": null,
+    "would_trust_as_a_first_pass": null,
+    "interface_stayed_out_of_my_way": null,
+    "what_would_you_change_first": ""
+  },
+
+  "manual_arm_scores": {
+    "_note": "Manual arm only: the participant's score per criterion, rubric alone.",
+    "C1": null
+  },
+
+  "observations": [],
+  "_observations": "Short factual notes. What they hesitated on, what they misread, what they said aloud. Verbatim where possible."
+}
