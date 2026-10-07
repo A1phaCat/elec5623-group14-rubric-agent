@@ -66,7 +66,7 @@ Live evaluation with the local model: `rma --gateway ollama:qwen2.5:7b-instruct 
 |---|---|
 | `src/rubric_agent/` | Package: parsers, chunker, retriever, gateway, validator, review, store, eval, CLI |
 | `app/streamlit_app.py`, `app/review.py`, `app/evaluation.py`, `app/run_log.py` | Marker UI (review · B2 comparison · export), Evaluation dashboard, Run-log viewer with replay |
-| `prompts/` | Versioned prompts (`assessment_v2` current, `assessment_v1` kept, `direct_grading_v1` for B2) |
+| `prompts/` | Versioned prompts (`assessment_v4` current, `v1`–`v3` and `v5` kept so `docs/tuning/` can be re-run, `direct_grading_v1` for B2) |
 | `dataset/` | 3 synthetic rubrics (block, table, numbered), 13 submissions, 62 labelled pairs, labelling guide |
 | `dataset/real/` | Official Canvas rubric (transcribed) + our proposal PDF |
 | `tests/` | Acceptance tests mapped to FR/NFR IDs and scenarios S1–S8, plus headless UI tests |

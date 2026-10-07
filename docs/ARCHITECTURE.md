@@ -68,7 +68,7 @@ flowchart TB
 ## 3. Data flow for one criterion
 
 1. `retriever.retrieve(criterion, k)` → `[EvidenceUnit]` (may be empty → explicit "no relevant evidence").
-2. `gateway.assess(criterion, evidence)` → `AssessmentDraft`. The prompt (`prompts/assessment_v2.md`) is versioned and its name is written to the run log. If the reply is not valid JSON for Listing 6.1 the gateway asks once more with the parse error attached.
+2. `gateway.assess(criterion, evidence)` → `AssessmentDraft`. The prompt (`prompts/assessment_v4.md`) is versioned and its name is written to the run log. If the reply is not valid JSON for Listing 6.1 the gateway asks once more with the parse error attached.
 3. `validator.validate_assessment(draft, criterion, evidence)`:
    * cited IDs ⊆ retrieved IDs, score ∈ [0, max] on the granularity grid,
    * positive sentences recognised by the heuristic carry `[E-00N]` (variants such as `[E-001, E-002]` or `[E-001: "quote"]` are recognised; the IDs are still checked),

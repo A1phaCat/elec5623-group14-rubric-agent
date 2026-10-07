@@ -66,7 +66,7 @@ The default BM25 path sends the retrieved units. B3 deliberately sends every ind
 
 ## 5. GenAI and agent component
 
-Fixed next-evaluation configuration: local `qwen2.5:7b-instruct` via Ollama, temperature 0, maximum 700 output tokens, prompt `prompts/assessment_v2.md`, BM25 K=5 (`k1=1.5`, `b=0.75`). Keeping the historical model makes workflow changes easier to analyse. The model must judge only supplied evidence and produce schema-valid JSON. An invalid initial JSON response may be requested once more; the pipeline separately allows one validator-driven revision. These budgets permit up to three HTTP calls per criterion, not necessarily one call per run-log entry. See `docs/EVALUATION_PROTOCOL.md` for frozen metrics and controls.
+Fixed next-evaluation configuration: local `qwen2.5:7b-instruct` via Ollama, temperature 0, maximum 700 output tokens, prompt `prompts/assessment_v4.md`, BM25 K=5 (`k1=1.5`, `b=0.75`). Keeping the historical model makes workflow changes easier to analyse; the prompt was selected in the dev-only window recorded in `docs/tuning/README.md` and frozen before the final-test annotation began. The model must judge only supplied evidence and produce schema-valid JSON. An invalid initial JSON response may be requested once more; the pipeline separately allows one validator-driven revision. These budgets permit up to three HTTP calls per criterion, not necessarily one call per run-log entry. See `docs/EVALUATION_PROTOCOL.md` for frozen metrics and controls.
 
 Loop, for each criterion:
 

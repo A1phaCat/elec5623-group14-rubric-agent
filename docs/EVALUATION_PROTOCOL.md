@@ -10,7 +10,7 @@ Use the same model deployment, temperature, rubric, submissions and labels for a
 
 | System | Fixed implementation | What the comparison can test |
 |---|---|---|
-| A — proposed assistant | BM25, k=5; per-criterion `assessment_v2`; evidence IDs; deterministic validator; at most one corrective round; marker decision required | The complete implemented workflow |
+| A — proposed assistant | BM25, k=5; per-criterion `assessment_v4`; evidence IDs; deterministic validator; at most one corrective round; marker decision required | The complete implemented workflow |
 | B2 — direct grading | Whole document + whole rubric in one call; `direct_grading_v1`; same gateway | Agreement and coverage against a simple model baseline; workflow and prompt both differ |
 | B3 — full-context ablation | `--evidence-mode full_context`; every original evidence unit, with the same IDs, per-criterion prompt, validator and corrective round as A | The effect of limiting evidence through BM25; compare A and B3 at the same settings |
 | Human reference | Two independent annotations, followed by recorded adjudication | Reference labels and annotation uncertainty; not a completed user study |
