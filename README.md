@@ -11,7 +11,17 @@ is not an autonomous grader (Constraint C1).
 
 ![Review UI — our proposal on the official rubric, local Qwen 7B](docs/img/review_ui_live.png)
 
-*Review page on the real case with the local 7B model: every claim in the explanation cites an evidence unit; each unit shows its page and section; the record was corrected once after the validator sent its findings back.*
+*Review page on the real case with the local 7B model, 7 October 2026: 16 pages
+become 66 evidence units, six criteria complete in 98 s, two records were
+repaired after the validator fed its findings back, and two are held as failing
+validation and cannot be accepted. The grounding audit reads 5/5 claims
+carrying an evidence id. Every score is `pending` until the marker decides.*
+
+![Evidence in context](docs/img/review_ui_evidence.png)
+
+*The same criterion, scrolled to the evidence: five units retrieved, five
+cited, each with its page and section, shown next to the explanation that cites
+it (FR7).*
 
 ```
 rubric + submission → parse → chunk (E-001…) → BM25 top-K per criterion

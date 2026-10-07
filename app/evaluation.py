@@ -14,13 +14,17 @@ sys.path.insert(0, str(ROOT / "src"))
 st.title("Evaluation results")
 st.caption("Numbers come from `rma eval` runs committed under docs/. Refresh with `rma eval --json docs/<name>.json --report docs/<NAME>.md`.")
 
-reports = sorted(ROOT.glob("docs/evaluation*.json"))
+# Campaign runs write A.json/B3.json into their own directory, so a flat glob
+# over docs/ would hide the very reports the final report cites.
+reports = sorted(ROOT.glob("docs/evaluation*.json")) + sorted(ROOT.glob("docs/evaluation*/[AB]*.json"))
 if not reports:
     st.info("No evaluation JSON found under docs/. Run `rma eval --json docs/evaluation_fixture.json`.")
     st.stop()
 
-labels = {p.name: p for p in reports}
-choice = st.selectbox("Report", list(labels), index=0)
+labels = {str(p.relative_to(ROOT / "docs")): p for p in reports}
+# Campaign results first: they describe the frozen build, the loose files are older.
+order = sorted(labels, key=lambda name: ("/" not in name, name))
+choice = st.selectbox("Report", order, index=0)
 report = json.loads(labels[choice].read_text(encoding="utf-8"))
 gen = report["generated_with"]
 metrics = report["metrics"]

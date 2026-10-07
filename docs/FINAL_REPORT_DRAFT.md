@@ -99,7 +99,20 @@ Reduced or omitted, on purpose:
 - OCR, images, and any path that files a grade.
 - Reordering evidence inside the prompt to avoid "lost in the middle". That would change the live system after the measured run, so it is recorded as a later experiment, not as a result.
 
-The Week 13 demo script is `docs/DEMO_SCRIPT.md`. Screenshots of the review UI are in `docs/img/`.
+The Week 13 demo script is `docs/DEMO_SCRIPT.md`. Screenshots in `docs/img/`
+were captured on 7 October 2026 from the frozen build, so they show the system
+the submitted source produces:
+
+- `review_ui_live.png` — the real 16-page proposal against the official Canvas
+  rubric with the local 7B model: 66 evidence units, six criteria in 98 s, two
+  records repaired after validator feedback and two held as failing validation
+  and unacceptable, every criterion still `pending`.
+- `review_ui_evidence.png` — the evidence panel for one criterion, five units
+  retrieved and five cited, each with page and section beside the explanation
+  that cites it (FR7).
+- `evaluation_page_frozen.png` — the Evaluation page on the frozen campaign,
+  showing 11 of 12 automatic targets met and M4 marked below target rather than
+  hidden.
 
 ## 7. Evaluation
 
