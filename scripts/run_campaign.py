@@ -1,9 +1,19 @@
-"""Resumable, localhost-only A/B2/B3 campaign on the bundled preliminary labels.
+"""Resumable, localhost-only A/B2/B3 campaign on a chosen labelled corpus.
 
 Usage: .venv/bin/python scripts/run_campaign.py --output docs/evaluation_current
 Use --fixture and a distinct output directory to verify the runner offline.
 Every completed submission/repeat is checkpointed, including rejected results.
 Resume never retries a completed failure or cherry-picks the best repeat.
+
+--corpus selects the corpus directory and --labels the label file inside it,
+so the frozen final test runs through the same runner as the development
+corpus:
+
+    scripts/run_campaign.py --corpus dataset/final_test --output docs/evaluation_final
+
+The corpus directory, the label file and every rubric/submission it names are
+hashed into manifest.json, and the runner refuses to continue an output
+directory whose manifest or settings differ.
 """
 
 from __future__ import annotations
@@ -47,11 +57,12 @@ def api(path: str) -> dict:
         return json.load(response)
 
 
-def manifest() -> dict:
+def manifest(corpus: Path, labels_path: Path) -> dict:
     package = Path(evaluator.__file__).resolve().parent
-    paths = [*package.rglob("*.py"), *PROMPTS_DIR.glob("*"), Path(__file__).resolve(), ROOT / "dataset/labels.json"]
-    paths.extend(ROOT / "dataset/rubrics" / f"{label.rubric_id}.md" for label in evaluator.load_labels(ROOT / "dataset/labels.json"))
-    paths.extend(ROOT / "dataset/submissions" / f"{label.submission_id}.txt" for label in evaluator.load_labels(ROOT / "dataset/labels.json"))
+    paths = [*package.rglob("*.py"), *PROMPTS_DIR.glob("*"), Path(__file__).resolve(), labels_path]
+    labels = evaluator.load_labels(labels_path)
+    paths.extend(corpus / "rubrics" / f"{label.rubric_id}.md" for label in labels)
+    paths.extend(corpus / "submissions" / f"{label.submission_id}.txt" for label in labels)
     files = {str(path.relative_to(ROOT)): hashlib.sha256(path.read_bytes()).hexdigest()
              for path in sorted(set(paths)) if path.is_file()}
     return {"sha256": hashlib.sha256(json.dumps(files, sort_keys=True).encode()).hexdigest(), "files": files}
@@ -80,14 +91,22 @@ def decode_result(value: dict) -> PipelineResult:
 
 
 class Campaign:
-    def __init__(self, output: Path, fixture: bool):
+    def __init__(self, output: Path, fixture: bool, corpus: Path, labels: str, split: str):
         self.output = output
         self.fixture = fixture
+        self.corpus = corpus
+        self.labels_path = corpus / labels
+        self.split = split
         self.lock = threading.Lock()
         self.condition = ""
         self.active = ""
+        if not self.labels_path.is_file():
+            raise SystemExit(
+                f"No label file at {self.labels_path}. A corpus needs adjudicated labels before a campaign; "
+                "see the annotation procedure in docs/EVALUATION_PROTOCOL.md."
+            )
         self.output.mkdir(parents=True, exist_ok=True)
-        frozen = manifest()
+        frozen = manifest(self.corpus, self.labels_path)
         if fixture:
             model = {"name": "fixture-descriptor-v2", "digest": None}
             server = None
@@ -100,8 +119,10 @@ class Campaign:
         settings = {"model": model["name"], "model_digest": model.get("digest"), "temperature": 0,
                     "max_tokens": 700, "timeout_seconds": 180, "schema_retries_max": 1,
                     "validator_corrective_rounds_max": 1, "k": 5, "A_repeats": 3, "B3_repeats": 3,
-                    "B2_repeats": 1, "split": "all", "workers": "one per criterion, pipeline default",
-                    "local_server": server, "declared_server_context": 16384}
+                    "B2_repeats": 1, "split": split, "workers": "one per criterion, pipeline default",
+                    "local_server": server, "declared_server_context": 16384,
+                    "corpus": str(corpus.relative_to(ROOT)), "labels_file": labels,
+                    "prompt_version": evaluator.PROMPT_VERSION}
         identity = {"frozen_inputs": frozen, "settings": settings, "fixture": fixture}
         self.frozen = frozen
         self.identity_path = output / "manifest.json"
@@ -121,7 +142,7 @@ class Campaign:
             endpoint=SERVER + "/v1", model=MODEL, api_key=None, transport=self.transport)
 
     def assert_frozen(self):
-        if manifest() != self.frozen:
+        if manifest(self.corpus, self.labels_path) != self.frozen:
             raise RuntimeError("Source/prompt/data changed during campaign; checkpoint preserved, refusing mixed-source run")
 
     def event(self, value: dict):
@@ -194,13 +215,15 @@ class Campaign:
             reports = {}
             for condition, mode, baseline in (("A", "bm25", True), ("B3", "full_context", False)):
                 self.condition = condition
-                report = evaluator.evaluate_corpus(ROOT / "dataset", gateway=self.gateway, repeats=3, k=5,
-                                                   split="all", with_baseline=baseline, evidence_mode=mode)
+                report = evaluator.evaluate_corpus(self.corpus, gateway=self.gateway, repeats=3, k=5,
+                                                   split=self.split, with_baseline=baseline, evidence_mode=mode,
+                                                   labels_path=self.labels_path)
                 report["campaign_manifest"] = "manifest.json"
                 save(self.output / f"{condition}.json", report)
                 evaluator.write_markdown_report(report, self.output / f"{condition}.md")
                 reports[condition] = report
-            save(self.output / "comparison.json", comparison(reports, self.output))
+            save(self.output / "comparison.json",
+                 comparison(reports, self.output, self.corpus, self.labels_path, self.split))
             self.identity["status"] = "complete"
             self.identity["completed_at_utc"] = now()
             save(self.identity_path, self.identity)
@@ -209,8 +232,8 @@ class Campaign:
             evaluator.run_pipeline, evaluator.run_direct_baseline = original_pipeline, original_baseline
 
 
-def comparison(reports: dict, output: Path) -> dict:
-    labels = evaluator.load_labels(ROOT / "dataset/labels.json")
+def comparison(reports: dict, output: Path, corpus: Path, labels_path: Path, split: str = "all") -> dict:
+    labels = [lab for lab in evaluator.load_labels(labels_path) if split == "all" or lab.split == split]
     golds = {(label.rubric_id, label.submission_id, label.criterion_id): label for label in labels}
     systems = {}
     predictions = {}
@@ -254,7 +277,7 @@ def comparison(reports: dict, output: Path) -> dict:
         row = {"rubric_id": rubric_id, "submission_id": submission_id, "systems": {}}
         for name in systems:
             accumulator = evaluator._Acc()
-            rubric = evaluator.parse_rubric(ROOT / "dataset/rubrics" / f"{rubric_id}.md", rubric_id=rubric_id)
+            rubric = evaluator.parse_rubric(corpus / "rubrics" / f"{rubric_id}.md", rubric_id=rubric_id)
             criteria = {criterion.id: criterion for criterion in rubric.criteria}
             for key, gold in golds.items():
                 if key[:2] != (rubric_id, submission_id):
@@ -267,6 +290,7 @@ def comparison(reports: dict, output: Path) -> dict:
             row["systems"][name] = accumulator.summary()
         per_submission.append(row)
     return {"created_at_utc": now(), "label_status": "preliminary synthetic reference, not independent human evaluation",
+            "corpus": str(corpus.relative_to(ROOT)), "labels_file": labels_path.name, "split": split,
             "pairs_per_system": len(golds), "systems": systems, "paired_scoring": paired,
             "per_submission": per_submission, "reference_disagreements": failures,
             "limitations": ["B2 has one run; its repeatability is not measured.",
@@ -282,8 +306,15 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, default=ROOT / "docs/evaluation_current")
     parser.add_argument("--fixture", action="store_true")
+    parser.add_argument("--corpus", type=Path, default=ROOT / "dataset",
+                        help="corpus directory holding rubrics/, submissions/ and the label file")
+    parser.add_argument("--labels", default="labels.json", help="label file name inside --corpus")
+    parser.add_argument("--split", choices=["all", "dev", "heldout"], default="all")
     args = parser.parse_args()
-    campaign = Campaign(args.output.resolve(), args.fixture)
+    corpus = args.corpus.resolve()
+    if not corpus.is_relative_to(ROOT):
+        raise SystemExit("--corpus must sit inside the repository so its files can be hashed into the manifest")
+    campaign = Campaign(args.output.resolve(), args.fixture, corpus, args.labels, args.split)
     try:
         campaign.run()
     except Exception as exc:
