@@ -2,6 +2,9 @@
 
 ELEC5623 Group 14 · Track A · Project Development draft  
 Status: draft for the group to revise before the 3 November 2026 submission.  
+Length: about 4,900 words excluding references, which lands near 12 pages once
+the diagram and two figures are placed. A2 recommends 8–12, so run a real
+layout pass on the built PDF; if it overruns, §3 and §6 compress most safely.  
 Revised 4 October 2026 against the A2 rubric and supplied proposal feedback. Historical model-quality numbers are dated separately from current regression and smoke checks. Independent annotation and marker studies remain incomplete.  
 Draft aid, 2026-10-04: Haolin Jin's proposal comments (6.5/10) are mapped to sections in `docs/MARKER_RESPONSE.md`. That note is not part of the submitted page count.
 
@@ -12,7 +15,24 @@ Tutor approval: Linghan Huang, 6 September 2026. The approved problem, users and
 
 We built a decision-support agent that helps a marker review a long submission one rubric criterion at a time. It parses the rubric and the document, retrieves a few evidence spans, asks a model for a provisional score that must cite those spans, checks the answer, and lets the marker accept, edit or reject it. It does not submit a grade.
 
-The historical local Qwen2.5-7B-Instruct run on 62 synthetic labelled pairs achieved sufficiency macro-F1 0.554, below the predeclared 0.75 target. Its surviving positive statements had citations under a heuristic detector. This shows a traceable workflow, not semantic correctness. A direct whole-document baseline agreed more often with the single-annotator sufficiency labels (accuracy 0.758 versus 0.613), but was not instructed to cite. We therefore separate citation-format compliance from grading quality and implement a same-prompt full-context comparison to test the retrieval choice more fairly.
+The most important result is an ablation, not a win. Holding the model, prompt,
+citation rules, validator and correction budget fixed and changing only how
+much of the document the model sees, the retrieval-limited system (A, BM25 top
+five) beats the full-context version (B3) on score error, 0.219 against 0.313
+normalised on the 32 pairs both scored, and makes fewer false abstentions, 2
+against 5. On a document containing a sentence that announces itself as a
+decoy, both cite the same passage and only B3 over-reads it. Restricting
+evidence is therefore doing work, which is the claim the architecture rests on.
+
+The honest counterweight: a one-shot whole-document baseline (B2) using the
+same model agrees with our reference scores substantially better, 0.050
+normalised MAE against A's 0.222, while carrying no evidence pointer on any
+claim, abstaining wrongly four times as often, and producing nothing scorable
+on one submission. With a 7B local model our workflow buys traceability and
+coverage and currently pays for it in score agreement. Sufficiency macro-F1
+remains below its 0.75 target at 0.439, for a structural reason we state rather
+than work around (§7). Independent human labels and marker timings are not yet
+collected, so no claim here rests on them.
 
 ## 2. Problem definition
 
@@ -48,17 +68,33 @@ Commercial tools provide workflow context, but do not replace the closest resear
 
 ## 4. System design
 
-```text
-Marker
-  → Streamlit UI
-      → parse rubric and submission
-      → chunk into evidence units with page and section
-      → BM25, top 5, per criterion
-      → model gateway (one criterion + those units)
-      → validator, then at most one revision
-      → marker accept / edit / reject
-      → JSON and CSV export, plus an append-only run log
+**Figure 1 — information flow.** The model is one component inside
+deterministic software, not the product. It never receives the whole
+submission on the default path, and no path writes a grade anywhere.
+
+```mermaid
+flowchart TB
+    Marker[Marker or tutor] -->|rubric + submission| UI[Review UI, Streamlit]
+    UI --> RP[rubric_parser: block, table, numbered, PDF]
+    UI --> TP[text_parser: TXT or PDF to pages and sections]
+    TP --> CH["chunker: evidence units E-00N, each with page and section"]
+    RP --> RT
+    CH --> RT["retriever: BM25 top-5 per criterion, or an explicit empty result"]
+    RT -->|"one criterion + those units + the allowed id list"| GW[gateway.ModelGateway]
+    GW --- FX[FixtureGateway, offline, used by tests and CI]
+    GW --- LV[OpenAICompatibleGateway: local Ollama, OpenAI or Azure]
+    GW -->|schema-valid JSON| VA["validator: range, grid, citations, quotes, claims"]
+    VA -->|rejected once| GW
+    VA -->|"accepted, or rejected and held"| RV[review: accept, edit or reject per criterion]
+    RV -->|"blocked until every criterion is decided"| EX[Export JSON and CSV]
+    RT --> ST[(Run log JSONL, replayable)]
+    VA --> ST
+    EX --> Marker
 ```
+
+The loop back from the validator to the gateway is the agent loop, and it runs
+at most once per criterion. A second failure leaves the record rejected with no
+score, visible to the marker as a warning.
 
 Deterministic code covers parsing, chunking, retrieval, validation, review state and the log. The model is behind one interface: an offline fixture for tests, a local Ollama model, or an OpenAI-compatible endpoint such as Azure when environment variables are set. The diagram in `docs/ARCHITECTURE.md` matches this code.
 
@@ -99,20 +135,27 @@ Reduced or omitted, on purpose:
 - OCR, images, and any path that files a grade.
 - Reordering evidence inside the prompt to avoid "lost in the middle". That would change the live system after the measured run, so it is recorded as a later experiment, not as a result.
 
-The Week 13 demo script is `docs/DEMO_SCRIPT.md`. Screenshots in `docs/img/`
-were captured on 7 October 2026 from the frozen build, so they show the system
-the submitted source produces:
+**Figure 2 — the review page on the real case**, captured 7 October 2026 from
+the frozen build, so it shows what the submitted source produces.
 
-- `review_ui_live.png` — the real 16-page proposal against the official Canvas
-  rubric with the local 7B model: 66 evidence units, six criteria in 98 s, two
-  records repaired after validator feedback and two held as failing validation
-  and unacceptable, every criterion still `pending`.
-- `review_ui_evidence.png` — the evidence panel for one criterion, five units
-  retrieved and five cited, each with page and section beside the explanation
-  that cites it (FR7).
-- `evaluation_page_frozen.png` — the Evaluation page on the frozen campaign,
-  showing 11 of 12 automatic targets met and M4 marked below target rather than
-  hidden.
+![Review page, real 16-page proposal on the official Canvas rubric, local Qwen 7B](img/review_ui_live.png)
+
+The 16-page PDF becomes 66 evidence units and six criteria complete in 98 s.
+Two records were repaired after the validator fed its findings back; two are
+held as failing validation and **cannot be accepted** at all. The grounding
+audit reads 5/5 claims carrying an evidence id. Every criterion is `pending`:
+nothing is scored until the marker decides, and export is blocked until all six
+are.
+
+**Figure 3 — evidence in context (FR7).**
+
+![Evidence panel: five units retrieved, five cited, each with page and section](img/review_ui_evidence.png)
+
+Each cited unit is shown with its page and section next to the explanation that
+cites it, so the marker checks the passage rather than trusting the sentence.
+`docs/img/evaluation_page_frozen.png` shows the Evaluation page on the frozen
+campaign, with M4 marked below target rather than hidden. The Week 13 demo
+run-sheet is `docs/DEMO_SCRIPT.md`.
 
 ## 7. Evaluation
 
@@ -185,26 +228,49 @@ prompt was selected on, so A's figures here are not an unbiased estimate. The
 labels are the project's own corrected judgements rather than independent
 ground truth.
 
-### Historical results (local 7B, 13 September 2026)
+### What changed since the September build
 
-| Metric | Agent, K=5 | B2 one-shot | K=10 control |
-|---|---:|---:|---:|
-| Sufficiency macro-F1 | 0.554 | Not in legacy table | 0.554 |
-| Sufficiency accuracy | 0.613 | 0.758 | 0.613 |
-| Legacy pooled QWK (superseded method) | 0.477 | 0.868 | 0.483 |
-| Conditional MAE (raw marks) | 0.64 | 0.16 | 0.70 |
-| Numeric-gold score coverage | 0.833 | Not in legacy table | Not recorded |
-| Uncited positive sentences (heuristic) | 0.00 | 1.00 (45/45) | 0.00 |
-| Repeatability, two runs | 0.968 | Not measured | Not measured |
-| Median latency / 12-page case | 46.5 s / 50.6 s | Not measured | Not recorded |
+The 13 September run (`docs/EVALUATION_live_qwen7b.md`, prompt `assessment_v2`,
+two repeats, first-pass labels) reached sufficiency accuracy 0.613 and macro-F1
+0.554, with 0.833 score coverage and a 126 s real-PDF UI run that missed the
+120 s requirement. Accuracy is now 0.767, coverage 36/38 and median latency
+33 s. Two causes: the label correction and prompt selection described above, and
+concurrent criterion calls.
 
-Source: `EVALUATION_live_qwen7b.md` and the K=10 note. These are historical measurements under `assessment_v2`, superseded by the frozen campaign above and kept only to show what changed. The old QWK pooled incompatible rubric scales, and MAE excluded abstentions while mixing raw marks. The revised harness uses within-criterion QWK and normalised MAE, and reports coverage and jointly scored samples. Do not use historical QWK values to establish superiority. M4 missed its target. The K=10 control did not improve macro-F1, which weakens a retrieval-only explanation on this small corpus; it does not establish a general causal conclusion.
+That report's pooled QWK is **not** comparable with the current figures. It
+averaged incompatible rubric scales and its MAE mixed raw marks while excluding
+abstentions. The current harness computes QWK within each rubric criterion,
+reports normalised MAE, and always carries coverage and the jointly scored
+sample size. A K=10 control from the same date did not improve macro-F1, which
+is consistent with the current finding that retrieval coverage is not the
+limiting factor.
 
-The historical real-PDF UI run took about 126 seconds on the serial build, above the 120-second target. Current code submits criterion calls concurrently, but the model server can still queue them. Current-build checks are reported separately in `docs/validation/README.md`; a smoke check does not replace the labelled campaign.
+### Software and packaging verification
 
-### Current-code verification (4 October 2026)
+Separate from model quality, and reported separately. The suite passes 128
+tests, including headless Streamlit review and export interactions, injected
+model-output faults, evaluation integrity and B3 replay. A clean clone installs
+with no step beyond the README and passes all of them with no API key and no
+network, because the fixture gateway is the default
+(`docs/validation/cleanroom_2026-10-07.md`). The built wheel ships only the
+prompts and the synthetic corpus; the group's own proposal PDF, the final-test
+corpus and its annotation workspace, and the run logs are absent. All 16 pages
+of the bundled PDF were extracted and searched for every member's name and
+student ID with no match.
 
-The final software suite passed 92 regression tests, including headless UI interactions. Offline A/B3 campaigns preserve the failed fixture macro-F1 target and are not model-quality results. The current local Qwen smoke run took 33.81 s for the decoy BM25 path, 38.29 s for the same-prompt full-context B3 path, and 61.85 s for the 16-page own-proposal PDF. The PDF yielded five valid provisional scores and one citation-rule rejection; the rejected score remains null. Each condition ran once, so these timings do not establish a speed-up, repeatability or general quality. The final run's source hashes match the current implementation. Full records and limitations are in `docs/validation/README.md`.
+Reproducibility is enforced rather than asserted. The campaign runner hashes
+the code, prompts, label file and every rubric and submission it names, then
+rechecks that manifest around every model call.
+`docs/validation/freeze_guard_2026-10-07.md` records it aborting a real run when
+a version string changed mid-campaign, and refusing to resume into the same
+directory afterwards. The change was harmless in substance; a results table
+assembled from two source trees cannot honestly report one code hash, so the
+run was discarded and restarted.
+
+Offline fixture campaigns are also kept, and their failed M4 target is retained
+rather than quietly dropped. The fixture is a descriptor-matching heuristic:
+its numbers prove the harness runs end to end and are not evidence about any
+model.
 
 ### Failure analysis and unmeasured outcomes
 
@@ -257,7 +323,48 @@ M6=0 means no uncited sentence among the detector's surviving positive statement
 
 The useful engineering result is an inspectable workflow: source locations, provisional judgements, explicit validation failures and separate human decisions. Evidence-first scoring and repair are prior work; the project must earn its contribution through reliable integration and measured behaviour on the stated use case.
 
-The main unresolved problem is evaluation validity. The first labels sometimes conflate weak writing with insufficient evidence. Independently label sufficiency and quality, preserve disagreements, then adjudicate. A well-documented weak section can have sufficient evidence and a low score. Changing prompts to fit the old labels would not resolve this issue.
+**What worked.** Restricting evidence is not just a cost control: the A-against-B3
+ablation shows it improves score error and reduces false abstentions at
+identical prompt, citation rules and validator, and the decoy case shows why.
+Retrieval itself is not the bottleneck anywhere we measured; Recall@5 is 1.000
+and the dispersed document's two scattered sentences were both retrieved and
+cited. The deterministic layer earns its place: no run produced an
+out-of-range score, an unknown evidence id or a non-finite value, and the
+bounded corrective round repaired most first-attempt citation failures while
+leaving the rest visibly rejected. Concurrency brought median latency to 33 s
+against a 120 s requirement the serial build missed.
+
+**What did not.** Sufficiency agreement is still the weak axis, and the one-shot
+baseline beats us on score error by a wide margin. We report that rather than
+reframing it. The conservative bias is reduced, not removed: 6 of A's 10 errors
+are still one step below the reference.
+
+**The sharpest lesson was about the target, not the system.** The first labels
+conflated weak writing with incomplete evidence, and so did our own prompt:
+`assessment_v2` illustrated `partial` with quality examples. Correcting the
+labels first, then the prompt, moved accuracy from 0.581 to 0.767. Had we tuned
+against the uncorrected labels we would have optimised toward the confusion and
+called it an improvement. The same discipline is why `s8_missing_method`'s
+doubtful reference label is recorded and left alone: editing a label after
+seeing model output is fitting the target to the predictions.
+
+**A trade-off worth naming.** Two prompt variants we rejected each improved one
+metric by breaking something else. v3 had the best sufficiency accuracy but
+told the model a `partial` record could omit its score, which the validator
+fail-closes, so five usable records were destroyed by a prompt sentence; it
+also stopped producing feedback and left FR14 unexercised. v5 had the fewest
+one-step-down errors but pushed four of five genuinely absent criteria to
+`sufficient`. Crediting a criterion that is not in the document is the worse
+failure, so the selected prompt is not the one with the best headline number
+(`docs/tuning/README.md`).
+
+**The main unresolved problem remains evaluation validity.** Every label so far
+is the project's own, and the dev split both selected the prompt and reported
+its accuracy. The fix is already specified and partly built: two independent
+annotators on the 27 held-back final-test pairs, agreement computed from the
+untouched originals before any discussion, then adjudication
+(`dataset/final_test/annotation/REGISTER.md`). Until that exists, the numbers
+in §7 describe this build on this corpus and nothing wider.
 
 Next, complete two independent annotation passes, run A/B2/B3 with frozen inputs and manifests, and conduct 2–3 marker sessions. Report at least three actual traces covering ordinary, dispersed/missing and decoy cases. Compare quality together with abstentions and timing. Concurrent calls can change runtime behaviour; measure rather than assume stable scores or lower latency. Claims about calibration, prompt-injection robustness or time savings remain outside the demonstrated evidence.
 
@@ -269,15 +376,30 @@ The misuse we designed against is an autonomous grade. Export is blocked while a
 
 ## 10. Team contributions and references
 
-This named allocation is proposed for team confirmation, not an assertion of completed work. The user selected Zhengyu Han to lead the core system and evaluation. Before submission every member must attach reviewed code, experiment or document evidence using `docs/TEAM_DELIVERY.md`.
+Contributions are reported from the repository rather than described.
+`docs/CONTRIBUTIONS.md` is generated by `scripts/contribution_register.py` from
+`git log` and lists, per member, the commit count, files touched, the ownership
+areas those files fall into, and every commit SHA with its date and subject. A
+marker can check any line with `git show`.
 
-| Member | Proposed substantive responsibility | Completion evidence |
+The table below is the proposed allocation. The evidence column is whatever the
+generated register actually shows, and it is not edited to look better.
+
+| Member | Proposed substantive responsibility | Committed evidence at 7 Oct 2026 |
 |---|---|---|
-| Zongjian Li | A1: rubric parser/schema, problem definition and closest-work/reference audit | Pending confirmation and evidence |
-| **Zhengyu Han** | **A4 and technical lead: model/prompt/validator/corrective loop; evaluation design and interpretation; report §§5, 7–8** | Role selected by user; implementation review and experiment ownership to be attested |
-| Yuchun Zheng | A2: PDF ingestion, provenance, export, blinded annotation coordination | Pending confirmation and evidence |
-| Yutong Liu | A3: retrieval/logging, frozen experiment execution and reproducibility checks | Pending confirmation and evidence |
-| Zhaoxinyi Zhou | A5: review UI, marker study and demo workflow | Pending confirmation and evidence |
+| Zongjian Li | A1: rubric parser/schema, problem definition and closest-work/reference audit | none in this repository |
+| **Zhengyu Han** | **A4 and technical lead: model/prompt/validator/corrective loop; evaluation design and interpretation; report §§5, 7–8** | all commits to date; see `docs/CONTRIBUTIONS.md` |
+| Yuchun Zheng | A2: PDF ingestion, provenance, export, independent annotation coordination | none in this repository |
+| Yutong Liu | A3: retrieval/logging, frozen experiment execution and reproducibility checks | none in this repository |
+| Zhaoxinyi Zhou | A5: review UI, marker study and demo workflow | none in this repository |
+
+This is the state as submitted unless it changes, and it will be restated from
+the generated register rather than from this paragraph. Work that leaves no
+commit still counts, but it has to leave a named artifact: an annotation sheet
+in `dataset/final_test/annotation/` with the annotator recorded in its
+register, a session file in `docs/sessions/` naming the facilitator, or a
+campaign manifest. `docs/TEAM_DELIVERY.md` lists, per member, which of those
+their area produces.
 
 Generative AI was used to draft repository code, tests, this draft and the evaluation harness, as recorded in `AI_USE.md`. The group remains responsible for the design, the citations and every number that is submitted. The live metrics were produced by running the local model on the dataset in this repository, not by asking a model to invent them.
 
