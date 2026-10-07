@@ -51,14 +51,44 @@ submission; the 8-minute script here is an internal rehearsal plan.
 
 ## Actual contribution register
 
-Add completed evidence here as each member reviews or produces it. A task
-assignment or AI-generated file is not evidence that the assigned person has
-already done the work. Do not manufacture commits under another person's name.
+**Do not hand-write this table.** It is generated from git history:
 
-| Member | Confirmed contribution evidence | Confirmation |
-|---|---|---|
-| Zhengyu Han | Pending member review of code, experiments and report sections | Core role requested by user; completed contribution not yet attested |
-| Zongjian Li | Pending commits, reviewed references or parser validation record | Pending |
-| Yuchun Zheng | Pending extraction/export checks and independent annotation records | Pending |
-| Yutong Liu | Pending experiment manifests, logs and replay verification | Pending |
-| Zhaoxinyi Zhou | Pending UI tests, session records and demo evidence | Pending |
+```sh
+.venv/bin/python scripts/contribution_register.py --markdown   # writes docs/CONTRIBUTIONS.md
+```
+
+`docs/CONTRIBUTIONS.md` lists, per member, the number of commits, the files
+touched, the ownership areas those files fall into, and every commit SHA with
+its date and subject. A marker can check any line of it with `git show`. This
+is the answer to the proposal comment that work was not assigned to named
+people: not a better-worded table, a verifiable one.
+
+As of 7 October 2026 the register shows **all commits under one identity,
+Zhengyu Han**. The other four members have no committed contribution evidence
+in this repository yet. That is the honest state, and it is what the report
+must say until it changes.
+
+### How each member creates evidence
+
+A task assignment is not evidence. An AI-generated file is not evidence that
+the assigned person did the work. Do not commit under another person's name.
+
+| Member | What produces verifiable evidence |
+|---|---|
+| Zhengyu Han | already recorded in `docs/CONTRIBUTIONS.md` |
+| Zongjian Li | commits to the rubric parser or `docs/RELATED_WORK.md`; a reviewed reference list with the papers actually opened |
+| Yuchun Zheng | a completed annotation sheet in `dataset/final_test/annotation/` with their name in `REGISTER.md`; commits to ingestion or export checks |
+| Yutong Liu | the campaign they executed (`manifest.json` carries the settings and hashes) plus commits to `scripts/` or the logs |
+| Zhaoxinyi Zhou | session files in `docs/sessions/` naming them as facilitator; commits to `app/` or `tests/test_ui.py`; the refreshed screenshots |
+
+Work that leaves no commit still counts, but it has to leave *some* artifact:
+an annotation sheet, a session record, a campaign manifest. Each of those names
+a person, and each is referenced from the report.
+
+### First step for the other four
+
+Each member clones the repository, configures their own `user.name` and
+`user.email`, does their piece on a branch, and pushes it. Then add their git
+identity to `MEMBERS` in `scripts/contribution_register.py` and regenerate.
+Until their identity is listed there, their commits appear under "unmapped git
+identities" rather than being silently credited to anyone.

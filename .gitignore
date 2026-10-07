@@ -10,3 +10,7 @@ runs.jsonl
 *.jsonl
 !dataset/**
 .playwright-cli/
+
+# Campaign output is committed once, complete, after a run finishes.
+docs/evaluation_*/checkpoints/
+docs/evaluation_*/*.writing
