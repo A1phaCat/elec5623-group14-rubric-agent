@@ -1,0 +1,906 @@
+{
+  "kind": "local_model_smoke_not_quality_benchmark",
+  "started_at_utc": "2026-10-04T10:06:16.940984+00:00",
+  "model": "qwen2.5:7b-instruct",
+  "model_digest": "845dbda0ea48ed749caafd9e6037047aa19acfcfd82e704d7ca97d631a0b697e",
+  "ollama": {
+    "version": "0.33.3"
+  },
+  "python": "3.14.7",
+  "temperature": 0.0,
+  "max_tokens": 700,
+  "context_length_server": 16384,
+  "context_length_note": "Server configured by operator with OLLAMA_CONTEXT_LENGTH=16384; verify for reruns.",
+  "source_sha256": {
+    "dataset/real/elec5623_business_proposal_rubric.md": "e6172058df354ccb93d062b8d4cf6142acd918eebea96e65f10d378f5ea8764a",
+    "dataset/real/group14_proposal_v2.pdf": "0d7d8ebf19a7bffe97fb95039ea9d8e85497b13939b87cf9d2d2065c8a951695",
+    "dataset/rubrics/engineering_report.md": "bea09daf1b9ead77f265d8cd607efa65193c84ffad93bd5fadefebdfb3f16799",
+    "dataset/submissions/s4_decoy_eval.txt": "adfb6e97b0a96e9c6f32d1d18c7102c5bceec08b4b37bead00c6945af997d542",
+    "prompts/assessment_v1.md": "d1b70babeda6d98d29f9ee987983937eaaa3eae7aadc690a8a18dc5899cc2517",
+    "prompts/assessment_v2.md": "7f9246e587b24daa132d5d85a20ec268a636f0509d9463921391339f0b00389e",
+    "prompts/direct_grading_v1.md": "5cb95fb2d029ec1558fc29f2753b6ed64fe69dc1881502fb7608c0f9812bcdcc",
+    "scripts/validate_local_model.py": "3053ee1724611cf9e5d1c6a2b3576c5904c7d29312b4d52dd93f111ef199afb3",
+    "src/rubric_agent/__init__.py": "21974e03ccf923f945535239764605d3ee95ecea788117162cf6ea70e4b2fada",
+    "src/rubric_agent/chunker.py": "a73c8b6ddc87d820296a262bec5e8b4e07cf7491ade0832c7b138c3ab8841968",
+    "src/rubric_agent/cli.py": "e646e9cd467bd13f4c1cd687ffeff2f0f31d7f679796f70abc0e09df308628be",
+    "src/rubric_agent/coverage.py": "f827b692836bc575be019553e47b19ce26fde9537089873214b4fc21d605c362",
+    "src/rubric_agent/errors.py": "089d79102384ef7e0d9e494b89e3c07dd3081c6013cdee2098dcc7c8eb6223ba",
+    "src/rubric_agent/eval.py": "7c7aff8e5e3f39dda044615a750e4b7fc249bc1af213300b355c65b0abc827d6",
+    "src/rubric_agent/gateway.py": "7a6d0d9e529278cfc398b70a5b6ea148803de6ff3e4f95f8832dddeadb7a0666",
+    "src/rubric_agent/pipeline.py": "af7e17c53f778d174b540094509039c032817dd42495d05652c9e5ad9d8eb9f9",
+    "src/rubric_agent/retriever.py": "8f033cbcc1e8533e112949bbf095681747b4d464dff1899416cd1feb719b96af",
+    "src/rubric_agent/review.py": "9f1539f93948d99ec070823cc4ba2ed5959e3c20df514f81bc819f15f85679be",
+    "src/rubric_agent/rubric_parser.py": "076841fe463c2e303499709a46c48992f5cf25a9fceac88a1249cf4edb3ca7d7",
+    "src/rubric_agent/schemas.py": "1c38e06ed8e920ed06c220a77546c789ef670c8e4fe977e7351081c860151bd3",
+    "src/rubric_agent/store.py": "a0b976c6fab9a1ff8afc98114119843f154436a9325284b05bef8a601f9f21f2",
+    "src/rubric_agent/text_parser.py": "19d591264c481f388dcab6841945f4d8fe8b5d1087ead2c04b51aa957f9c726d",
+    "src/rubric_agent/textutil.py": "67fb59a686fd42b815dc42a053a13a6ecb5d95ac894a225eb6ad988e12196a5a",
+    "src/rubric_agent/validator.py": "4d58714a3f93effd5f03cfb623ef3413b173148004628b10a3f0c3fcb0024580"
+  },
+  "limitations": [
+    "One run per condition; no repeatability or population-quality claim.",
+    "No independently labelled score or semantic support on the real PDF.",
+    "Validator and review code differ from the historical 13 September run.",
+    "Local server queueing and warm-up affect wall-clock latency."
+  ],
+  "runs": [
+    {
+      "case": "synthetic_decoy",
+      "evidence_mode": "bm25",
+      "pages": 6,
+      "units": 6,
+      "latency_ms": 44270.789375004824,
+      "criteria": [
+        {
+          "draft": {
+            "criterion_id": "C1",
+            "evidence_ids": [
+              "E-001",
+              "E-002"
+            ],
+            "sufficiency": "sufficient",
+            "provisional_score": 4.0,
+            "score_max": 4.0,
+            "explanation": "The problem is scoped with a specific gap [E-001] and affected users [E-002] are identified.",
+            "draft_feedback": null,
+            "flags": []
+          },
+          "accepted": true,
+          "warnings": [],
+          "claims": 1,
+          "unsupported_claims": 0
+        },
+        {
+          "draft": {
+            "criterion_id": "C2",
+            "evidence_ids": [
+              "E-003"
+            ],
+            "sufficiency": "sufficient",
+            "provisional_score": 4.0,
+            "score_max": 4.0,
+            "explanation": "The evidence [E-003] describes an incremental methodology involving a BM25 retrieval path and a fixture adapter for tests, which feed a validator. This aligns with the descriptor 'Method is incremental, testable and provider-independent' [C2].",
+            "draft_feedback": null,
+            "flags": []
+          },
+          "accepted": true,
+          "warnings": [],
+          "claims": 1,
+          "unsupported_claims": 0
+        },
+        {
+          "draft": {
+            "criterion_id": "C3",
+            "evidence_ids": [
+              "E-004"
+            ],
+            "sufficiency": "insufficient",
+            "provisional_score": null,
+            "score_max": 4.0,
+            "explanation": "The evidence [E-004] does not specify any metrics, baselines, scenarios, or labelled data for the evaluation plan. It only mentions evaluation as a keyword without providing any substantive details.",
+            "draft_feedback": null,
+            "flags": []
+          },
+          "accepted": true,
+          "warnings": [],
+          "claims": 0,
+          "unsupported_claims": 0
+        },
+        {
+          "draft": {
+            "criterion_id": "C4",
+            "evidence_ids": [
+              "E-005"
+            ],
+            "sufficiency": "insufficient",
+            "provisional_score": null,
+            "score_max": 4.0,
+            "explanation": "The evidence [E-005] only mentions that the discussion says the demo 'felt fine', which does not provide any substantive interpretation of the results against the method and limitations [C4].",
+            "draft_feedback": null,
+            "flags": []
+          },
+          "accepted": true,
+          "warnings": [],
+          "claims": 0,
+          "unsupported_claims": 0
+        },
+        {
+          "draft": {
+            "criterion_id": "C5",
+            "evidence_ids": [
+              "E-006"
+            ],
+            "sufficiency": "sufficient",
+            "provisional_score": 2.0,
+            "score_max": 2.0,
+            "explanation": "The evidence states that consistent terminology appears in headings and one figure caption [E-006], which aligns with the descriptor 'Consistent headings, captions and terminology'.",
+            "draft_feedback": null,
+            "flags": []
+          },
+          "accepted": true,
+          "warnings": [],
+          "claims": 1,
+          "unsupported_claims": 0
+        }
+      ],
+      "logs": [
+        {
+          "test_case_id": "synthetic_decoy",
+          "criterion_id": "C1",
+          "model_id": "qwen2.5:7b-instruct@127.0.0.1:11434",
+          "prompt_version": "assessment_v2",
+          "retrieval_k": 5,
+          "retrieval_method": "bm25",
+          "query": "Problem definition Problem definition Problem is scoped with affected users and a testable gap Problem is stated but not scoped",
+          "evidence_ids": [
+            "E-001",
+            "E-002"
+          ],
+          "latency_ms": 44258.3680000389,
+          "rubric_ref": "/Users/hanzhengyu/5623/rubric-marking-agent/dataset/rubrics/engineering_report.md",
+          "submission_ref": "/Users/hanzhengyu/5623/rubric-marking-agent/dataset/submissions/s4_decoy_eval.txt",
+          "sufficiency": "sufficient",
+          "provisional_score": 4.0,
+          "cited_ids": [
+            "E-001",
+            "E-002"
+          ],
+          "warnings": [],
+          "attempts": 1,
+          "first_attempt_warnings": [],
+          "created_at": "2026-10-04T10:07:01.211952+00:00"
+        },
+        {
+          "test_case_id": "synthetic_decoy",
+          "criterion_id": "C2",
+          "model_id": "qwen2.5:7b-instruct@127.0.0.1:11434",
+          "prompt_version": "assessment_v2",
+          "retrieval_k": 5,
+          "retrieval_method": "bm25",
+          "query": "Methodology Methodology Method is incremental, testable and provider-independent Method named without a sequence",
+          "evidence_ids": [
+            "E-003"
+          ],
+          "latency_ms": 25278.17608404439,
+          "rubric_ref": "/Users/hanzhengyu/5623/rubric-marking-agent/dataset/rubrics/engineering_report.md",
+          "submission_ref": "/Users/hanzhengyu/5623/rubric-marking-agent/dataset/submissions/s4_decoy_eval.txt",
+          "sufficiency": "sufficient",
+          "provisional_score": 4.0,
+          "cited_ids": [
+            "E-003"
+          ],
+          "warnings": [],
+          "attempts": 1,
+          "first_attempt_warnings": [],
+          "created_at": "2026-10-04T10:06:42.231825+00:00"
+        },
+        {
+          "test_case_id": "synthetic_decoy",
+          "criterion_id": "C3",
+          "model_id": "qwen2.5:7b-instruct@127.0.0.1:11434",
+          "prompt_version": "assessment_v2",
+          "retrieval_k": 5,
+          "retrieval_method": "bm25",
+          "query": "Evaluation plan Evaluation plan Metrics, baselines, scenarios and labelled data are specified Metrics listed without a procedure",
+          "evidence_ids": [
+            "E-004"
+          ],
+          "latency_ms": 37335.75979195302,
+          "rubric_ref": "/Users/hanzhengyu/5623/rubric-marking-agent/dataset/rubrics/engineering_report.md",
+          "submission_ref": "/Users/hanzhengyu/5623/rubric-marking-agent/dataset/submissions/s4_decoy_eval.txt",
+          "sufficiency": "insufficient",
+          "provisional_score": null,
+          "cited_ids": [
+            "E-004"
+          ],
+          "warnings": [],
+          "attempts": 1,
+          "first_attempt_warnings": [],
+          "created_at": "2026-10-04T10:06:54.289614+00:00"
+        },
+        {
+          "test_case_id": "synthetic_decoy",
+          "criterion_id": "C4",
+          "model_id": "qwen2.5:7b-instruct@127.0.0.1:11434",
+          "prompt_version": "assessment_v2",
+          "retrieval_k": 5,
+          "retrieval_method": "bm25",
+          "query": "Results and discussion Results and discussion Results are interpreted against the method and limitations Results without interpretation",
+          "evidence_ids": [
+            "E-005"
+          ],
+          "latency_ms": 31215.520708006807,
+          "rubric_ref": "/Users/hanzhengyu/5623/rubric-marking-agent/dataset/rubrics/engineering_report.md",
+          "submission_ref": "/Users/hanzhengyu/5623/rubric-marking-agent/dataset/submissions/s4_decoy_eval.txt",
+          "sufficiency": "insufficient",
+          "provisional_score": null,
+          "cited_ids": [
+            "E-005"
+          ],
+          "warnings": [],
+          "attempts": 1,
+          "first_attempt_warnings": [],
+          "created_at": "2026-10-04T10:06:48.170303+00:00"
+        },
+        {
+          "test_case_id": "synthetic_decoy",
+          "criterion_id": "C5",
+          "model_id": "qwen2.5:7b-instruct@127.0.0.1:11434",
+          "prompt_version": "assessment_v2",
+          "retrieval_k": 5,
+          "retrieval_method": "bm25",
+          "query": "Communication Communication Consistent headings, captions and terminology Headings exist but terminology drifts",
+          "evidence_ids": [
+            "E-006"
+          ],
+          "latency_ms": 17308.571000001393,
+          "rubric_ref": "/Users/hanzhengyu/5623/rubric-marking-agent/dataset/rubrics/engineering_report.md",
+          "submission_ref": "/Users/hanzhengyu/5623/rubric-marking-agent/dataset/submissions/s4_decoy_eval.txt",
+          "sufficiency": "sufficient",
+          "provisional_score": 2.0,
+          "cited_ids": [
+            "E-006"
+          ],
+          "warnings": [],
+          "attempts": 1,
+          "first_attempt_warnings": [],
+          "created_at": "2026-10-04T10:06:34.265125+00:00"
+        }
+      ]
+    },
+    {
+      "case": "synthetic_decoy_B3",
+      "evidence_mode": "full_context",
+      "pages": 6,
+      "units": 6,
+      "latency_ms": 45414.38912501326,
+      "criteria": [
+        {
+          "draft": {
+            "criterion_id": "C1",
+            "evidence_ids": [
+              "E-001",
+              "E-002"
+            ],
+            "sufficiency": "sufficient",
+            "provisional_score": 4.0,
+            "score_max": 4.0,
+            "explanation": "The problem is scoped with affected users and a testable gap [E-001, E-002].",
+            "draft_feedback": null,
+            "flags": []
+          },
+          "accepted": true,
+          "warnings": [],
+          "claims": 1,
+          "unsupported_claims": 0
+        },
+        {
+          "draft": {
+            "criterion_id": "C2",
+            "evidence_ids": [
+              "E-003"
+            ],
+            "sufficiency": "partial",
+            "provisional_score": 2.0,
+            "score_max": 4.0,
+            "explanation": "The methodology is named (incremental BM25 retrieval path and fixture adapter) [E-003]. However, it lacks a sequence or incremental steps [E-003].",
+            "draft_feedback": null,
+            "flags": []
+          },
+          "accepted": true,
+          "warnings": [],
+          "claims": 2,
+          "unsupported_claims": 0
+        },
+        {
+          "draft": {
+            "criterion_id": "C3",
+            "evidence_ids": [
+              "E-004"
+            ],
+            "sufficiency": "insufficient",
+            "provisional_score": null,
+            "score_max": 4.0,
+            "explanation": "The evidence [E-004] mentions evaluation only as a keyword without specifying metrics or a baseline. No metrics, baselines, scenarios, or labelled data are provided [E-004].",
+            "draft_feedback": "Specify the metrics, baselines, scenarios, and labelled data for your evaluation plan.",
+            "flags": [
+              "uncited_feedback_claim:1",
+              "validation_failed",
+              "revised_once"
+            ]
+          },
+          "accepted": false,
+          "warnings": [
+            "uncited_feedback_claim:1"
+          ],
+          "claims": 0,
+          "unsupported_claims": 0
+        },
+        {
+          "draft": {
+            "criterion_id": "C4",
+            "evidence_ids": [
+              "E-005"
+            ],
+            "sufficiency": "insufficient",
+            "provisional_score": null,
+            "score_max": 4.0,
+            "explanation": "The evidence provided only mentions results [E-005] as anecdotal and states that the discussion says the demo 'felt fine'. This does not provide any interpretation of the results against the method and limitations [C4: No results].",
+            "draft_feedback": null,
+            "flags": []
+          },
+          "accepted": true,
+          "warnings": [],
+          "claims": 0,
+          "unsupported_claims": 0
+        },
+        {
+          "draft": {
+            "criterion_id": "C5",
+            "evidence_ids": [
+              "E-006"
+            ],
+            "sufficiency": "sufficient",
+            "provisional_score": 2.0,
+            "score_max": 2.0,
+            "explanation": "The evidence [E-006] states that consistent terminology appears in headings and one figure caption, which aligns with the descriptor 'Consistent headings, captions and terminology' [E-006].",
+            "draft_feedback": null,
+            "flags": []
+          },
+          "accepted": true,
+          "warnings": [],
+          "claims": 1,
+          "unsupported_claims": 0
+        }
+      ],
+      "logs": [
+        {
+          "test_case_id": "synthetic_decoy_B3",
+          "criterion_id": "C1",
+          "model_id": "qwen2.5:7b-instruct@127.0.0.1:11434",
+          "prompt_version": "assessment_v2",
+          "retrieval_k": 6,
+          "retrieval_method": "full-context-v1",
+          "query": "Problem definition Problem definition Problem is scoped with affected users and a testable gap Problem is stated but not scoped",
+          "evidence_ids": [
+            "E-001",
+            "E-002",
+            "E-003",
+            "E-004",
+            "E-005",
+            "E-006"
+          ],
+          "latency_ms": 24497.113167017233,
+          "rubric_ref": "/Users/hanzhengyu/5623/rubric-marking-agent/dataset/rubrics/engineering_report.md",
+          "submission_ref": "/Users/hanzhengyu/5623/rubric-marking-agent/dataset/submissions/s4_decoy_eval.txt",
+          "sufficiency": "sufficient",
+          "provisional_score": 4.0,
+          "cited_ids": [
+            "E-001",
+            "E-002"
+          ],
+          "warnings": [],
+          "attempts": 1,
+          "first_attempt_warnings": [],
+          "created_at": "2026-10-04T10:07:25.735788+00:00"
+        },
+        {
+          "test_case_id": "synthetic_decoy_B3",
+          "criterion_id": "C2",
+          "model_id": "qwen2.5:7b-instruct@127.0.0.1:11434",
+          "prompt_version": "assessment_v2",
+          "retrieval_k": 6,
+          "retrieval_method": "full-context-v1",
+          "query": "Methodology Methodology Method is incremental, testable and provider-independent Method named without a sequence",
+          "evidence_ids": [
+            "E-001",
+            "E-002",
+            "E-003",
+            "E-004",
+            "E-005",
+            "E-006"
+          ],
+          "latency_ms": 32159.0445410111,
+          "rubric_ref": "/Users/hanzhengyu/5623/rubric-marking-agent/dataset/rubrics/engineering_report.md",
+          "submission_ref": "/Users/hanzhengyu/5623/rubric-marking-agent/dataset/submissions/s4_decoy_eval.txt",
+          "sufficiency": "partial",
+          "provisional_score": 2.0,
+          "cited_ids": [
+            "E-003"
+          ],
+          "warnings": [],
+          "attempts": 1,
+          "first_attempt_warnings": [],
+          "created_at": "2026-10-04T10:07:33.397865+00:00"
+        },
+        {
+          "test_case_id": "synthetic_decoy_B3",
+          "criterion_id": "C3",
+          "model_id": "qwen2.5:7b-instruct@127.0.0.1:11434",
+          "prompt_version": "assessment_v2",
+          "retrieval_k": 6,
+          "retrieval_method": "full-context-v1",
+          "query": "Evaluation plan Evaluation plan Metrics, baselines, scenarios and labelled data are specified Metrics listed without a procedure",
+          "evidence_ids": [
+            "E-001",
+            "E-002",
+            "E-003",
+            "E-004",
+            "E-005",
+            "E-006"
+          ],
+          "latency_ms": 45408.5272080265,
+          "rubric_ref": "/Users/hanzhengyu/5623/rubric-marking-agent/dataset/rubrics/engineering_report.md",
+          "submission_ref": "/Users/hanzhengyu/5623/rubric-marking-agent/dataset/submissions/s4_decoy_eval.txt",
+          "sufficiency": "insufficient",
+          "provisional_score": null,
+          "cited_ids": [
+            "E-004"
+          ],
+          "warnings": [
+            "uncited_feedback_claim:1"
+          ],
+          "attempts": 2,
+          "first_attempt_warnings": [
+            "uncited_feedback_claim:1"
+          ],
+          "created_at": "2026-10-04T10:07:46.647475+00:00"
+        },
+        {
+          "test_case_id": "synthetic_decoy_B3",
+          "criterion_id": "C4",
+          "model_id": "qwen2.5:7b-instruct@127.0.0.1:11434",
+          "prompt_version": "assessment_v2",
+          "retrieval_k": 6,
+          "retrieval_method": "full-context-v1",
+          "query": "Results and discussion Results and discussion Results are interpreted against the method and limitations Results without interpretation",
+          "evidence_ids": [
+            "E-001",
+            "E-002",
+            "E-003",
+            "E-004",
+            "E-005",
+            "E-006"
+          ],
+          "latency_ms": 18193.542042048648,
+          "rubric_ref": "/Users/hanzhengyu/5623/rubric-marking-agent/dataset/rubrics/engineering_report.md",
+          "submission_ref": "/Users/hanzhengyu/5623/rubric-marking-agent/dataset/submissions/s4_decoy_eval.txt",
+          "sufficiency": "insufficient",
+          "provisional_score": null,
+          "cited_ids": [
+            "E-005"
+          ],
+          "warnings": [],
+          "attempts": 1,
+          "first_attempt_warnings": [],
+          "created_at": "2026-10-04T10:07:19.432649+00:00"
+        },
+        {
+          "test_case_id": "synthetic_decoy_B3",
+          "criterion_id": "C5",
+          "model_id": "qwen2.5:7b-instruct@127.0.0.1:11434",
+          "prompt_version": "assessment_v2",
+          "retrieval_k": 6,
+          "retrieval_method": "full-context-v1",
+          "query": "Communication Communication Consistent headings, captions and terminology Headings exist but terminology drifts",
+          "evidence_ids": [
+            "E-001",
+            "E-002",
+            "E-003",
+            "E-004",
+            "E-005",
+            "E-006"
+          ],
+          "latency_ms": 39487.52320802305,
+          "rubric_ref": "/Users/hanzhengyu/5623/rubric-marking-agent/dataset/rubrics/engineering_report.md",
+          "submission_ref": "/Users/hanzhengyu/5623/rubric-marking-agent/dataset/submissions/s4_decoy_eval.txt",
+          "sufficiency": "sufficient",
+          "provisional_score": 2.0,
+          "cited_ids": [
+            "E-006"
+          ],
+          "warnings": [],
+          "attempts": 1,
+          "first_attempt_warnings": [],
+          "created_at": "2026-10-04T10:07:40.726726+00:00"
+        }
+      ]
+    },
+    {
+      "case": "own_proposal",
+      "evidence_mode": "bm25",
+      "pages": 16,
+      "units": 66,
+      "latency_ms": 100583.15175003372,
+      "criteria": [
+        {
+          "draft": {
+            "criterion_id": "R1",
+            "evidence_ids": [
+              "E-008",
+              "E-004",
+              "E-005",
+              "E-010",
+              "E-007"
+            ],
+            "sufficiency": "insufficient",
+            "provisional_score": null,
+            "score_max": 1.5,
+            "explanation": "The evidence clearly and convincingly justifies the problem and its motivation. [E-008] provides a specific problem statement and motivation, highlighting the issues of evidence-search workload, inconsistent evidence attention, weak traceability, and unsupported AI judgement. [E-004] and [E-005] provide background and evidence that the problem exists, respectively. [E-010] further explains why the problem matters, emphasizing the need for reducing low-value searching and making evidence easier to inspect. [E-007] discusses current practice and the technical motivation for the proposed solution, aligning with the need for explicit evaluation and human oversight.",
+            "draft_feedback": null,
+            "flags": [
+              "uncited_claim:1",
+              "validation_failed",
+              "revised_once"
+            ]
+          },
+          "accepted": false,
+          "warnings": [
+            "uncited_claim:1"
+          ],
+          "claims": 5,
+          "unsupported_claims": 1
+        },
+        {
+          "draft": {
+            "criterion_id": "R2",
+            "evidence_ids": [
+              "E-013",
+              "E-022",
+              "E-046"
+            ],
+            "sufficiency": "sufficient",
+            "provisional_score": 1.5,
+            "score_max": 1.5,
+            "explanation": "The submission clearly identifies target users and stakeholders [E-013], defines the project scope and boundaries [E-022], and provides functional and non-functional requirements that are coherent, measurable, and testable [E-046].",
+            "draft_feedback": null,
+            "flags": []
+          },
+          "accepted": true,
+          "warnings": [],
+          "claims": 1,
+          "unsupported_claims": 0
+        },
+        {
+          "draft": {
+            "criterion_id": "R3",
+            "evidence_ids": [
+              "E-029",
+              "E-007",
+              "E-002"
+            ],
+            "sufficiency": "sufficient",
+            "provisional_score": 2.0,
+            "score_max": 2.0,
+            "explanation": "The evidence provides a detailed technical design that includes a retrieval-grounded architecture [E-029, E-007]. The design separates evidence retrieval from scoring, ensuring traceability and accountability [E-007]. The workflow is coherent and feasible, with components exchanging data through typed JSON records [E-029]. The executive summary further clarifies the multi-step workflow and its separation of evidence retrieval from rubric judgement [E-002].",
+            "draft_feedback": null,
+            "flags": []
+          },
+          "accepted": true,
+          "warnings": [],
+          "claims": 4,
+          "unsupported_claims": 0
+        },
+        {
+          "draft": {
+            "criterion_id": "R4",
+            "evidence_ids": [
+              "E-035",
+              "E-042",
+              "E-046"
+            ],
+            "sufficiency": "partial",
+            "provisional_score": 1.0,
+            "score_max": 2.0,
+            "explanation": "The value proposition is discussed [E-035], and the evaluation plan mentions metrics and targets [E-042, E-046]. However, the analysis of alternatives or competitors is limited, and the metrics and baselines are not fully connected to project objectives.",
+            "draft_feedback": null,
+            "flags": []
+          },
+          "accepted": true,
+          "warnings": [],
+          "claims": 1,
+          "unsupported_claims": 0
+        },
+        {
+          "draft": {
+            "criterion_id": "R5",
+            "evidence_ids": [
+              "E-054",
+              "E-050",
+              "E-039"
+            ],
+            "sufficiency": "partial",
+            "provisional_score": 1.0,
+            "score_max": 1.5,
+            "explanation": "The evidence provides a basic semester plan and allocation of responsibilities [E-054], identifies major risks with mitigation strategies [E-050], and outlines a realistic adoption pathway [E-039]. However, the plan lacks detailed milestones and the risks are not fully addressed, requiring further refinement.",
+            "draft_feedback": null,
+            "flags": []
+          },
+          "accepted": true,
+          "warnings": [],
+          "claims": 1,
+          "unsupported_claims": 0
+        },
+        {
+          "draft": {
+            "criterion_id": "R6",
+            "evidence_ids": [
+              "E-004",
+              "E-060"
+            ],
+            "sufficiency": "sufficient",
+            "provisional_score": 1.5,
+            "score_max": 1.5,
+            "explanation": "The submission discusses the importance of coherent criteria and relevant referencing in rubrics [E-004, E-060]. The references provided are from credible sources and are relevant to the discussion [E-060].",
+            "draft_feedback": null,
+            "flags": []
+          },
+          "accepted": true,
+          "warnings": [],
+          "claims": 2,
+          "unsupported_claims": 0
+        }
+      ],
+      "logs": [
+        {
+          "test_case_id": "own_proposal",
+          "criterion_id": "R1",
+          "model_id": "qwen2.5:7b-instruct@127.0.0.1:11434",
+          "prompt_version": "assessment_v2",
+          "retrieval_k": 5,
+          "retrieval_method": "bm25",
+          "query": "Problem, Background and Motivation Problem, Background and Motivation The problem is specific, meaningful and well scoped; background is supported by credible evidence; the motivation and identified gap are compelling; the need for GenAI is clearly and convincingly justified. The problem and motivation are clear and relevant; background is generally well supported; the role of GenAI is appropriately justified, with only minor gaps in evidence or argument.",
+          "evidence_ids": [
+            "E-008",
+            "E-004",
+            "E-005",
+            "E-010",
+            "E-007"
+          ],
+          "latency_ms": 100221.41250001732,
+          "rubric_ref": "/Users/hanzhengyu/5623/rubric-marking-agent/dataset/real/elec5623_business_proposal_rubric.md",
+          "submission_ref": "/Users/hanzhengyu/5623/rubric-marking-agent/dataset/real/group14_proposal_v2.pdf",
+          "sufficiency": "insufficient",
+          "provisional_score": null,
+          "cited_ids": [
+            "E-008",
+            "E-004",
+            "E-005",
+            "E-010",
+            "E-007"
+          ],
+          "warnings": [
+            "uncited_claim:1"
+          ],
+          "attempts": 2,
+          "first_attempt_warnings": [
+            "uncited_claim:1"
+          ],
+          "created_at": "2026-10-04T10:09:27.236370+00:00"
+        },
+        {
+          "test_case_id": "own_proposal",
+          "criterion_id": "R2",
+          "model_id": "qwen2.5:7b-instruct@127.0.0.1:11434",
+          "prompt_version": "assessment_v2",
+          "retrieval_k": 5,
+          "retrieval_method": "bm25",
+          "query": "Requirements Engineering and Project Definition Requirements Engineering and Project Definition Target users and stakeholders are clearly identified; project scope and boundaries are precise; use cases are appropriate; functional and non-functional requirements are coherent, measurable and testable. Users, scope, use cases and requirements are mostly well defined; requirements are generally testable and aligned with the proposed system, with minor omissions or ambiguities.",
+          "evidence_ids": [
+            "E-017",
+            "E-013",
+            "E-022",
+            "E-046",
+            "E-021"
+          ],
+          "latency_ms": 74317.33420898672,
+          "rubric_ref": "/Users/hanzhengyu/5623/rubric-marking-agent/dataset/real/elec5623_business_proposal_rubric.md",
+          "submission_ref": "/Users/hanzhengyu/5623/rubric-marking-agent/dataset/real/group14_proposal_v2.pdf",
+          "sufficiency": "sufficient",
+          "provisional_score": 1.5,
+          "cited_ids": [
+            "E-013",
+            "E-022",
+            "E-046"
+          ],
+          "warnings": [],
+          "attempts": 1,
+          "first_attempt_warnings": [],
+          "created_at": "2026-10-04T10:09:01.333362+00:00"
+        },
+        {
+          "test_case_id": "own_proposal",
+          "criterion_id": "R3",
+          "model_id": "qwen2.5:7b-instruct@127.0.0.1:11434",
+          "prompt_version": "assessment_v2",
+          "retrieval_k": 5,
+          "retrieval_method": "bm25",
+          "query": "Proposed Product, Methodology and Technical Design Proposed Product, Methodology and Technical Design The proposed solution is technically credible and clearly defined; the role of GenAI is explicit and necessary; methodology, architecture and workflow are coherent and sufficiently detailed; components and integrations form a feasible semester-scale system. The technical approach is sound and mostly well explained; GenAI plays a meaningful role; architecture and workflow are appropriate, although some implementation details or technical relationships require refinement.",
+          "evidence_ids": [
+            "E-029",
+            "E-007",
+            "E-066",
+            "E-037",
+            "E-002"
+          ],
+          "latency_ms": 61266.56283298507,
+          "rubric_ref": "/Users/hanzhengyu/5623/rubric-marking-agent/dataset/real/elec5623_business_proposal_rubric.md",
+          "submission_ref": "/Users/hanzhengyu/5623/rubric-marking-agent/dataset/real/group14_proposal_v2.pdf",
+          "sufficiency": "sufficient",
+          "provisional_score": 2.0,
+          "cited_ids": [
+            "E-029",
+            "E-007",
+            "E-002"
+          ],
+          "warnings": [],
+          "attempts": 1,
+          "first_attempt_warnings": [],
+          "created_at": "2026-10-04T10:08:48.284228+00:00"
+        },
+        {
+          "test_case_id": "own_proposal",
+          "criterion_id": "R4",
+          "model_id": "qwen2.5:7b-instruct@127.0.0.1:11434",
+          "prompt_version": "assessment_v2",
+          "retrieval_k": 5,
+          "retrieval_method": "bm25",
+          "query": "Product/Business Analysis and Evaluation Plan Product/Business Analysis and Evaluation Plan The target users and value proposition are compelling; relevant alternatives or competitors are critically considered; evaluation includes clear success criteria, appropriate baselines, meaningful metrics and credible evidence collection. Product value and relevant alternatives are clearly discussed; the proposed evaluation is generally appropriate and includes useful metrics and success criteria, with minor gaps.",
+          "evidence_ids": [
+            "E-035",
+            "E-011",
+            "E-042",
+            "E-031",
+            "E-046"
+          ],
+          "latency_ms": 11177.066707983613,
+          "rubric_ref": "/Users/hanzhengyu/5623/rubric-marking-agent/dataset/real/elec5623_business_proposal_rubric.md",
+          "submission_ref": "/Users/hanzhengyu/5623/rubric-marking-agent/dataset/real/group14_proposal_v2.pdf",
+          "sufficiency": "partial",
+          "provisional_score": 1.0,
+          "cited_ids": [
+            "E-035",
+            "E-042",
+            "E-046"
+          ],
+          "warnings": [],
+          "attempts": 1,
+          "first_attempt_warnings": [],
+          "created_at": "2026-10-04T10:07:58.194812+00:00"
+        },
+        {
+          "test_case_id": "own_proposal",
+          "criterion_id": "R5",
+          "model_id": "qwen2.5:7b-instruct@127.0.0.1:11434",
+          "prompt_version": "assessment_v2",
+          "retrieval_k": 5,
+          "retrieval_method": "bm25",
+          "query": "Feasibility, Risk, Semester Plan and Team Roles Feasibility, Risk, Semester Plan and Team Roles Scope is realistic and appropriately constrained; major technical and project risks are clearly identified with credible mitigation strategies; milestones are achievable and team responsibilities are clearly allocated. A basic semester plan and allocation of responsibilities are provided; feasibility is plausible but scope, risks or milestones require further refinement.",
+          "evidence_ids": [
+            "E-054",
+            "E-050",
+            "E-039",
+            "E-051",
+            "E-036"
+          ],
+          "latency_ms": 87119.46691700723,
+          "rubric_ref": "/Users/hanzhengyu/5623/rubric-marking-agent/dataset/real/elec5623_business_proposal_rubric.md",
+          "submission_ref": "/Users/hanzhengyu/5623/rubric-marking-agent/dataset/real/group14_proposal_v2.pdf",
+          "sufficiency": "partial",
+          "provisional_score": 1.0,
+          "cited_ids": [
+            "E-054",
+            "E-050",
+            "E-039"
+          ],
+          "warnings": [],
+          "attempts": 1,
+          "first_attempt_warnings": [],
+          "created_at": "2026-10-04T10:09:14.138269+00:00"
+        },
+        {
+          "test_case_id": "own_proposal",
+          "criterion_id": "R6",
+          "model_id": "qwen2.5:7b-instruct@127.0.0.1:11434",
+          "prompt_version": "assessment_v2",
+          "retrieval_k": 5,
+          "retrieval_method": "bm25",
+          "query": "Communication, Professionalism and References Communication, Professionalism and References The proposal is clear, concise, coherent and professionally presented; figures and tables are effective where appropriate; external claims are supported by relevant and credible sources with consistent referencing. The proposal is understandable but contains organisational, writing or presentation issues; references are present but may be limited, inconsistently formatted or weakly connected to claims.",
+          "evidence_ids": [
+            "E-020",
+            "E-004",
+            "E-060",
+            "E-008",
+            "E-001"
+          ],
+          "latency_ms": 22683.02950001089,
+          "rubric_ref": "/Users/hanzhengyu/5623/rubric-marking-agent/dataset/real/elec5623_business_proposal_rubric.md",
+          "submission_ref": "/Users/hanzhengyu/5623/rubric-marking-agent/dataset/real/group14_proposal_v2.pdf",
+          "sufficiency": "sufficient",
+          "provisional_score": 1.5,
+          "cited_ids": [
+            "E-004",
+            "E-060"
+          ],
+          "warnings": [],
+          "attempts": 1,
+          "first_attempt_warnings": [],
+          "created_at": "2026-10-04T10:08:09.703111+00:00"
+        }
+      ]
+    }
+  ],
+  "B2_decoy": [
+    {
+      "criterion_id": "C1",
+      "evidence_ids": [],
+      "sufficiency": "sufficient",
+      "provisional_score": 4.0,
+      "score_max": 4.0,
+      "explanation": "The problem is scoped with affected users and a testable gap.",
+      "draft_feedback": null,
+      "flags": []
+    },
+    {
+      "criterion_id": "C2",
+      "evidence_ids": [],
+      "sufficiency": "sufficient",
+      "provisional_score": 4.0,
+      "score_max": 4.0,
+      "explanation": "The methodology is incremental, testable, and provider-independent.",
+      "draft_feedback": null,
+      "flags": []
+    },
+    {
+      "criterion_id": "C3",
+      "evidence_ids": [],
+      "sufficiency": "insufficient",
+      "provisional_score": null,
+      "score_max": 4.0,
+      "explanation": "No evaluation plan is specified, including metrics, baselines, scenarios, or labelled data.",
+      "draft_feedback": null,
+      "flags": []
+    },
+    {
+      "criterion_id": "C4",
+      "evidence_ids": [],
+      "sufficiency": "insufficient",
+      "provisional_score": null,
+      "score_max": 4.0,
+      "explanation": "No results and discussion are provided, and the submission only contains anecdotal information.",
+      "draft_feedback": null,
+      "flags": []
+    },
+    {
+      "criterion_id": "C5",
+      "evidence_ids": [],
+      "sufficiency": "sufficient",
+      "provisional_score": 2.0,
+      "score_max": 2.0,
+      "explanation": "Consistent terminology appears in headings and one figure caption.",
+      "draft_feedback": null,
+      "flags": []
+    }
+  ],
+  "completed_at_utc": "2026-10-04T10:09:47.204009+00:00"
+}

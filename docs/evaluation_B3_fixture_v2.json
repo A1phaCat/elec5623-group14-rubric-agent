@@ -1,0 +1,5830 @@
+{
+  "schema_version": 2,
+  "generated_with": {
+    "gateway": "fixture-descriptor-v2",
+    "prompt_version": "assessment_v2",
+    "k": 5,
+    "repeats": 3,
+    "split": "all",
+    "evidence_mode": "full_context",
+    "created_at_utc": "2026-10-04T10:16:34.751657+00:00",
+    "evidence_kind": "fixture_regression",
+    "gateway_class": "FixtureGateway",
+    "model_config": {},
+    "git_commit": "a0852ee72f2963765a569165ee37c062d34fa4d0",
+    "git_dirty": true,
+    "code": {
+      "sha256": "ff771e0ee7b7a6a582db885bfba86ec84b20897d5322117968ffd42208da3444",
+      "files": {
+        "src/rubric_agent/__init__.py": "21974e03ccf923f945535239764605d3ee95ecea788117162cf6ea70e4b2fada",
+        "src/rubric_agent/chunker.py": "a73c8b6ddc87d820296a262bec5e8b4e07cf7491ade0832c7b138c3ab8841968",
+        "src/rubric_agent/cli.py": "e646e9cd467bd13f4c1cd687ffeff2f0f31d7f679796f70abc0e09df308628be",
+        "src/rubric_agent/coverage.py": "f827b692836bc575be019553e47b19ce26fde9537089873214b4fc21d605c362",
+        "src/rubric_agent/errors.py": "089d79102384ef7e0d9e494b89e3c07dd3081c6013cdee2098dcc7c8eb6223ba",
+        "src/rubric_agent/eval.py": "bd0f1ac71c0196458d6b8a280848c89d22ede95c432ee5c9d81ef572a164fa7a",
+        "src/rubric_agent/gateway.py": "7a6d0d9e529278cfc398b70a5b6ea148803de6ff3e4f95f8832dddeadb7a0666",
+        "src/rubric_agent/pipeline.py": "af7e17c53f778d174b540094509039c032817dd42495d05652c9e5ad9d8eb9f9",
+        "src/rubric_agent/retriever.py": "8f033cbcc1e8533e112949bbf095681747b4d464dff1899416cd1feb719b96af",
+        "src/rubric_agent/review.py": "9f1539f93948d99ec070823cc4ba2ed5959e3c20df514f81bc819f15f85679be",
+        "src/rubric_agent/rubric_parser.py": "076841fe463c2e303499709a46c48992f5cf25a9fceac88a1249cf4edb3ca7d7",
+        "src/rubric_agent/schemas.py": "1c38e06ed8e920ed06c220a77546c789ef670c8e4fe977e7351081c860151bd3",
+        "src/rubric_agent/store.py": "a0b976c6fab9a1ff8afc98114119843f154436a9325284b05bef8a601f9f21f2",
+        "src/rubric_agent/text_parser.py": "19d591264c481f388dcab6841945f4d8fe8b5d1087ead2c04b51aa957f9c726d",
+        "src/rubric_agent/textutil.py": "67fb59a686fd42b815dc42a053a13a6ecb5d95ac894a225eb6ad988e12196a5a",
+        "src/rubric_agent/validator.py": "f969dfcb04742deb7ddab6b8762d28e3582c7798676352957814eaa92673af64"
+      }
+    },
+    "prompts": {
+      "sha256": "2cc65ad20a639c6225ece946c41b713d846508a8d34176f2a2db9b822ad8a286",
+      "files": {
+        "assessment_v1.md": "d1b70babeda6d98d29f9ee987983937eaaa3eae7aadc690a8a18dc5899cc2517",
+        "assessment_v2.md": "7f9246e587b24daa132d5d85a20ec268a636f0509d9463921391339f0b00389e",
+        "direct_grading_v1.md": "5cb95fb2d029ec1558fc29f2753b6ed64fe69dc1881502fb7608c0f9812bcdcc"
+      }
+    },
+    "dataset": {
+      "sha256": "3d5e00486dc2baf1483f08a5385038b29c4cfe591d65aac64ebdd6a06690ea51",
+      "files": {
+        "labels.json": "b300cf666379098a4cc0cb5de92e4309a97e45a99b022b3d86e5b0acd5f0bea1",
+        "rubrics/engineering_report.md": "bea09daf1b9ead77f265d8cd607efa65193c84ffad93bd5fadefebdfb3f16799",
+        "rubrics/proposal_rubric.md": "2e33e02538287f0514b880b9c581d223854872842e4dbabd6461cd07e3af0c3d",
+        "submissions/p1_strong.txt": "e4671d19f2f057564b28fc3530fc3af5f8560777a200b5fda50649657ea2ba8e",
+        "submissions/p2_gaps.txt": "4d733c0c51486d8a33f72de73ad6be4486dc8d248ec54e390fb27b6e9b8f728b",
+        "submissions/p3_decoy.txt": "f5d0374d1a9e45710b6e56e5d3c2105c5e3f851d3c42dfb1265a5c3dd60face9",
+        "submissions/s10_all_partial.txt": "4b3f340f3f9e9798d3254daca2b5d650b1062bb98dda9a78110e2c0b22c9d1b4",
+        "submissions/s1_standard.txt": "641e65616e87f76862ba9d219aa4e967f3791006b4ff44e7191b1700f2b15fd5",
+        "submissions/s2_dispersed.txt": "61b717672fa8a8d572837a43be9913334e594f4d1b6b98524c5e0a23bcdf9652",
+        "submissions/s3_missing_eval.txt": "12dd6820902564f270f00354b445ac8a5e2a32385d92ba4907a333cb7b9ec890",
+        "submissions/s4_decoy_eval.txt": "adfb6e97b0a96e9c6f32d1d18c7102c5bceec08b4b37bead00c6945af997d542",
+        "submissions/s5_long.txt": "077b06ff355465add0a2f18919abd855f51f9faaaa36fb849c86560061ffc2ed",
+        "submissions/s6_weak_problem.txt": "3cc8af90b32647f70ba7829c36581852eed78d2a36e61aeefb1842b102c308da",
+        "submissions/s7_partial_results.txt": "090da6f3b391f52fb42c3f0bb4f0cd02b5f106195bce3eeacf93cca2e22ea04f",
+        "submissions/s8_missing_method.txt": "c9447d2a6f211fb31108ae3420f341133c8abad03b107e2f522260c3a6844b02",
+        "submissions/s9_strong_eval_weak_comm.txt": "e91c5ef86e55b01a71cc87c9ff1631429ca70cd34da4eb36ea87ddb6f51ab699"
+      }
+    },
+    "runtime": {
+      "python": "3.14.7",
+      "platform": "macOS-27.0-arm64-arm-64bit-Mach-O",
+      "pydantic": "2.13.5",
+      "pypdf": "6.18.1"
+    },
+    "label_validation": "Independent annotation is not verified by this harness; see EVALUATION_PROTOCOL.md.",
+    "latency_scope": "first agent run per rubric/submission; wall-clock including parsing, retrieval, calls and validation",
+    "workers": "pipeline default (one worker per criterion)",
+    "corrective_rounds_max": 1
+  },
+  "pairs": 62,
+  "submissions": 13,
+  "rubrics": 2,
+  "metrics": {
+    "M1_rubric_criteria": 1.0,
+    "M2_locator_complete": 1.0,
+    "M3_recall_at_k": 1.0,
+    "M3_precision_at_k": 0.16152094717668486,
+    "M4_sufficiency_macro_f1": 0.40450660450660453,
+    "M4_sufficiency_accuracy": 0.4838709677419355,
+    "M4_B2_sufficiency_macro_f1": null,
+    "M4_B2_sufficiency_accuracy": null,
+    "M5_citation_exists": 1.0,
+    "M5_citation_supports_proxy": 0.6129032258064516,
+    "M6_unsupported_rate": 0.0,
+    "M6_unsupported_rate_B2": null,
+    "M6_relative_reduction_vs_B2": null,
+    "M7_score_range_validity": 1.0,
+    "M8_agent_qwk": 0.11428571428571428,
+    "M8_agent_mae": 0.926829268292683,
+    "M8_agent_normalised_mae": 0.23780487804878048,
+    "M8_agent_score_coverage": 0.7592592592592593,
+    "M8_B2_qwk": null,
+    "M8_B2_mae": null,
+    "M8_B2_normalised_mae": null,
+    "M8_B2_score_coverage": null,
+    "M12_repeatability": 1.0,
+    "M13_median_latency_ms": 7.6955840340815485,
+    "M13_s5_latency_ms": 47.63924999861047,
+    "M16_export_completeness": 1.0,
+    "M17_feedback_grounding": 1.0
+  },
+  "targets": {
+    "M1_rubric_criteria": 0.95,
+    "M2_locator_complete": 1.0,
+    "M3_recall_at_k": 0.85,
+    "M4_sufficiency_macro_f1": 0.75,
+    "M5_citation_exists": 0.95,
+    "M6_unsupported_rate": 0.05,
+    "M6_relative_reduction_vs_B2": 0.3,
+    "M7_score_range_validity": 1.0,
+    "M12_repeatability": 0.9,
+    "M13_median_latency_ms": 120000,
+    "M13_s5_latency_ms": 120000,
+    "M16_export_completeness": 1.0,
+    "M17_feedback_grounding": 1.0
+  },
+  "pass": {
+    "M1_rubric_criteria": true,
+    "M2_locator_complete": true,
+    "M3_recall_at_k": true,
+    "M4_sufficiency_macro_f1": false,
+    "M5_citation_exists": true,
+    "M6_unsupported_rate": true,
+    "M6_relative_reduction_vs_B2": null,
+    "M7_score_range_validity": true,
+    "M12_repeatability": true,
+    "M13_median_latency_ms": true,
+    "M13_s5_latency_ms": true,
+    "M16_export_completeness": true,
+    "M17_feedback_grounding": true
+  },
+  "agent": {
+    "sufficiency_accuracy": 0.4838709677419355,
+    "sufficiency_macro_f1": 0.40450660450660453,
+    "sufficiency_pairs": 62,
+    "claims": 88,
+    "unsupported_claims": 0,
+    "unsupported_rate": 0.0,
+    "score_qwk": 0.11428571428571428,
+    "qwk_defined_groups": 5,
+    "qwk_scored_pairs": 35,
+    "score_mae": 0.926829268292683,
+    "score_normalised_mae": 0.23780487804878048,
+    "score_coverage": 0.7592592592592593,
+    "scored_pairs": 41,
+    "gold_scored_pairs": 54,
+    "abstained_on_gold_scored": 13
+  },
+  "paired_scoring": null,
+  "run_outputs": [
+    {
+      "rubric_id": "engineering_report",
+      "submission_id": "s10_all_partial",
+      "agent_runs": [
+        {
+          "run_index": 0,
+          "latency_ms": 6.015499995555729,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address problem definition.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address methodology.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address evaluation plan.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address results and discussion.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 2.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address communication.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            }
+          ]
+        },
+        {
+          "run_index": 1,
+          "latency_ms": 4.8321670037694275,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address problem definition.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address methodology.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address evaluation plan.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address results and discussion.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 2.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address communication.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            }
+          ]
+        },
+        {
+          "run_index": 2,
+          "latency_ms": 7.931291998829693,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address problem definition.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address methodology.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address evaluation plan.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address results and discussion.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 2.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address communication.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            }
+          ]
+        }
+      ],
+      "baseline_B2": null
+    },
+    {
+      "rubric_id": "engineering_report",
+      "submission_id": "s1_standard",
+      "agent_runs": [
+        {
+          "run_index": 0,
+          "latency_ms": 9.377416979987174,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-002",
+                  "E-001"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 4.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses problem definition in [E-002] [E-001]. The evidence best matches the level 'Problem is scoped with affected users and a testable gap' [E-002] [E-001].",
+                "draft_feedback": "For problem definition, build on [E-002] [E-001]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-004",
+                  "E-006",
+                  "E-002"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 4.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses methodology in [E-004] [E-006] [E-002]. The evidence best matches the level 'Method is incremental, testable and provider-independent' [E-004] [E-006] [E-002].",
+                "draft_feedback": "For methodology, build on [E-004] [E-006] [E-002]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [
+                  "E-005",
+                  "E-007"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 4.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses evaluation plan in [E-005] [E-007]. The evidence best matches the level 'Metrics, baselines, scenarios and labelled data are specified' [E-005] [E-007].",
+                "draft_feedback": "For evaluation plan, build on [E-005] [E-007]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [
+                  "E-006",
+                  "E-007"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 4.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses results and discussion in [E-006] [E-007]. The evidence best matches the level 'Results are interpreted against the method and limitations' [E-006] [E-007].",
+                "draft_feedback": "For results and discussion, build on [E-006] [E-007]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [
+                  "E-008"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 2.0,
+                "explanation": "The submission addresses communication in [E-008]. The evidence best matches the level 'Consistent headings, captions and terminology' [E-008].",
+                "draft_feedback": "For communication, build on [E-008]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            }
+          ]
+        },
+        {
+          "run_index": 1,
+          "latency_ms": 11.319416051264852,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-002",
+                  "E-001"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 4.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses problem definition in [E-002] [E-001]. The evidence best matches the level 'Problem is scoped with affected users and a testable gap' [E-002] [E-001].",
+                "draft_feedback": "For problem definition, build on [E-002] [E-001]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-004",
+                  "E-006",
+                  "E-002"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 4.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses methodology in [E-004] [E-006] [E-002]. The evidence best matches the level 'Method is incremental, testable and provider-independent' [E-004] [E-006] [E-002].",
+                "draft_feedback": "For methodology, build on [E-004] [E-006] [E-002]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [
+                  "E-005",
+                  "E-007"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 4.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses evaluation plan in [E-005] [E-007]. The evidence best matches the level 'Metrics, baselines, scenarios and labelled data are specified' [E-005] [E-007].",
+                "draft_feedback": "For evaluation plan, build on [E-005] [E-007]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [
+                  "E-006",
+                  "E-007"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 4.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses results and discussion in [E-006] [E-007]. The evidence best matches the level 'Results are interpreted against the method and limitations' [E-006] [E-007].",
+                "draft_feedback": "For results and discussion, build on [E-006] [E-007]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [
+                  "E-008"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 2.0,
+                "explanation": "The submission addresses communication in [E-008]. The evidence best matches the level 'Consistent headings, captions and terminology' [E-008].",
+                "draft_feedback": "For communication, build on [E-008]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            }
+          ]
+        },
+        {
+          "run_index": 2,
+          "latency_ms": 6.853958999272436,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-002",
+                  "E-001"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 4.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses problem definition in [E-002] [E-001]. The evidence best matches the level 'Problem is scoped with affected users and a testable gap' [E-002] [E-001].",
+                "draft_feedback": "For problem definition, build on [E-002] [E-001]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-004",
+                  "E-006",
+                  "E-002"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 4.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses methodology in [E-004] [E-006] [E-002]. The evidence best matches the level 'Method is incremental, testable and provider-independent' [E-004] [E-006] [E-002].",
+                "draft_feedback": "For methodology, build on [E-004] [E-006] [E-002]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [
+                  "E-005",
+                  "E-007"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 4.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses evaluation plan in [E-005] [E-007]. The evidence best matches the level 'Metrics, baselines, scenarios and labelled data are specified' [E-005] [E-007].",
+                "draft_feedback": "For evaluation plan, build on [E-005] [E-007]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [
+                  "E-006",
+                  "E-007"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 4.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses results and discussion in [E-006] [E-007]. The evidence best matches the level 'Results are interpreted against the method and limitations' [E-006] [E-007].",
+                "draft_feedback": "For results and discussion, build on [E-006] [E-007]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [
+                  "E-008"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 2.0,
+                "explanation": "The submission addresses communication in [E-008]. The evidence best matches the level 'Consistent headings, captions and terminology' [E-008].",
+                "draft_feedback": "For communication, build on [E-008]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            }
+          ]
+        }
+      ],
+      "baseline_B2": null
+    },
+    {
+      "rubric_id": "engineering_report",
+      "submission_id": "s2_dispersed",
+      "agent_runs": [
+        {
+          "run_index": 0,
+          "latency_ms": 18.66495900321752,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008",
+              "E-009",
+              "E-010",
+              "E-011",
+              "E-012"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008",
+              "E-009",
+              "E-010",
+              "E-011",
+              "E-012"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008",
+              "E-009",
+              "E-010",
+              "E-011",
+              "E-012"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008",
+              "E-009",
+              "E-010",
+              "E-011",
+              "E-012"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008",
+              "E-009",
+              "E-010",
+              "E-011",
+              "E-012"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001",
+                  "E-007"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 4.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses problem definition in [E-001] [E-007]. The evidence best matches the level 'Problem is scoped with affected users and a testable gap' [E-001] [E-007].",
+                "draft_feedback": "For problem definition, build on [E-001] [E-007]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-002",
+                  "E-005",
+                  "E-008"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses methodology in [E-002] [E-005] [E-008]. The evidence best matches the level 'Method named without a sequence' [E-002] [E-005] [E-008].",
+                "draft_feedback": "For methodology, build on [E-002] [E-005] [E-008] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [
+                  "E-009",
+                  "E-011"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 4.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses evaluation plan in [E-009] [E-011]. The evidence best matches the level 'Metrics, baselines, scenarios and labelled data are specified' [E-009] [E-011].",
+                "draft_feedback": "For evaluation plan, build on [E-009] [E-011]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [
+                  "E-002",
+                  "E-005",
+                  "E-008"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 4.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses results and discussion in [E-002] [E-005] [E-008]. The evidence best matches the level 'Results are interpreted against the method and limitations' [E-002] [E-005] [E-008].",
+                "draft_feedback": "For results and discussion, build on [E-002] [E-005] [E-008]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [
+                  "E-012"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 2.0,
+                "explanation": "The submission addresses communication in [E-012]. The evidence best matches the level 'Consistent headings, captions and terminology' [E-012].",
+                "draft_feedback": "For communication, build on [E-012]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            }
+          ]
+        },
+        {
+          "run_index": 1,
+          "latency_ms": 12.963582994416356,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008",
+              "E-009",
+              "E-010",
+              "E-011",
+              "E-012"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008",
+              "E-009",
+              "E-010",
+              "E-011",
+              "E-012"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008",
+              "E-009",
+              "E-010",
+              "E-011",
+              "E-012"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008",
+              "E-009",
+              "E-010",
+              "E-011",
+              "E-012"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008",
+              "E-009",
+              "E-010",
+              "E-011",
+              "E-012"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001",
+                  "E-007"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 4.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses problem definition in [E-001] [E-007]. The evidence best matches the level 'Problem is scoped with affected users and a testable gap' [E-001] [E-007].",
+                "draft_feedback": "For problem definition, build on [E-001] [E-007]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-002",
+                  "E-005",
+                  "E-008"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses methodology in [E-002] [E-005] [E-008]. The evidence best matches the level 'Method named without a sequence' [E-002] [E-005] [E-008].",
+                "draft_feedback": "For methodology, build on [E-002] [E-005] [E-008] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [
+                  "E-009",
+                  "E-011"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 4.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses evaluation plan in [E-009] [E-011]. The evidence best matches the level 'Metrics, baselines, scenarios and labelled data are specified' [E-009] [E-011].",
+                "draft_feedback": "For evaluation plan, build on [E-009] [E-011]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [
+                  "E-002",
+                  "E-005",
+                  "E-008"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 4.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses results and discussion in [E-002] [E-005] [E-008]. The evidence best matches the level 'Results are interpreted against the method and limitations' [E-002] [E-005] [E-008].",
+                "draft_feedback": "For results and discussion, build on [E-002] [E-005] [E-008]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [
+                  "E-012"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 2.0,
+                "explanation": "The submission addresses communication in [E-012]. The evidence best matches the level 'Consistent headings, captions and terminology' [E-012].",
+                "draft_feedback": "For communication, build on [E-012]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            }
+          ]
+        },
+        {
+          "run_index": 2,
+          "latency_ms": 12.163917010184377,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008",
+              "E-009",
+              "E-010",
+              "E-011",
+              "E-012"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008",
+              "E-009",
+              "E-010",
+              "E-011",
+              "E-012"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008",
+              "E-009",
+              "E-010",
+              "E-011",
+              "E-012"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008",
+              "E-009",
+              "E-010",
+              "E-011",
+              "E-012"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008",
+              "E-009",
+              "E-010",
+              "E-011",
+              "E-012"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001",
+                  "E-007"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 4.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses problem definition in [E-001] [E-007]. The evidence best matches the level 'Problem is scoped with affected users and a testable gap' [E-001] [E-007].",
+                "draft_feedback": "For problem definition, build on [E-001] [E-007]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-002",
+                  "E-005",
+                  "E-008"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses methodology in [E-002] [E-005] [E-008]. The evidence best matches the level 'Method named without a sequence' [E-002] [E-005] [E-008].",
+                "draft_feedback": "For methodology, build on [E-002] [E-005] [E-008] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [
+                  "E-009",
+                  "E-011"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 4.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses evaluation plan in [E-009] [E-011]. The evidence best matches the level 'Metrics, baselines, scenarios and labelled data are specified' [E-009] [E-011].",
+                "draft_feedback": "For evaluation plan, build on [E-009] [E-011]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [
+                  "E-002",
+                  "E-005",
+                  "E-008"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 4.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses results and discussion in [E-002] [E-005] [E-008]. The evidence best matches the level 'Results are interpreted against the method and limitations' [E-002] [E-005] [E-008].",
+                "draft_feedback": "For results and discussion, build on [E-002] [E-005] [E-008]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [
+                  "E-012"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 2.0,
+                "explanation": "The submission addresses communication in [E-012]. The evidence best matches the level 'Consistent headings, captions and terminology' [E-012].",
+                "draft_feedback": "For communication, build on [E-012]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            }
+          ]
+        }
+      ],
+      "baseline_B2": null
+    },
+    {
+      "rubric_id": "engineering_report",
+      "submission_id": "s3_missing_eval",
+      "agent_runs": [
+        {
+          "run_index": 0,
+          "latency_ms": 4.750624997541308,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001",
+                  "E-002"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 4.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses problem definition in [E-001] [E-002]. The evidence best matches the level 'Problem is scoped with affected users and a testable gap' [E-001] [E-002].",
+                "draft_feedback": "For problem definition, build on [E-001] [E-002]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-003",
+                  "E-005"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses methodology in [E-003] [E-005]. The evidence best matches the level 'Method named without a sequence' [E-003] [E-005].",
+                "draft_feedback": "For methodology, build on [E-003] [E-005] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address evaluation plan.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [
+                  "E-003"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses results and discussion in [E-003]. The evidence best matches the level 'Results without interpretation' [E-003].",
+                "draft_feedback": "For results and discussion, build on [E-003] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [
+                  "E-005"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 2.0,
+                "explanation": "The submission addresses communication in [E-005]. The evidence best matches the level 'Consistent headings, captions and terminology' [E-005].",
+                "draft_feedback": "For communication, build on [E-005]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            }
+          ]
+        },
+        {
+          "run_index": 1,
+          "latency_ms": 8.459832984954119,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001",
+                  "E-002"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 4.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses problem definition in [E-001] [E-002]. The evidence best matches the level 'Problem is scoped with affected users and a testable gap' [E-001] [E-002].",
+                "draft_feedback": "For problem definition, build on [E-001] [E-002]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-003",
+                  "E-005"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses methodology in [E-003] [E-005]. The evidence best matches the level 'Method named without a sequence' [E-003] [E-005].",
+                "draft_feedback": "For methodology, build on [E-003] [E-005] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address evaluation plan.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [
+                  "E-003"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses results and discussion in [E-003]. The evidence best matches the level 'Results without interpretation' [E-003].",
+                "draft_feedback": "For results and discussion, build on [E-003] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [
+                  "E-005"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 2.0,
+                "explanation": "The submission addresses communication in [E-005]. The evidence best matches the level 'Consistent headings, captions and terminology' [E-005].",
+                "draft_feedback": "For communication, build on [E-005]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            }
+          ]
+        },
+        {
+          "run_index": 2,
+          "latency_ms": 6.496875023003668,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001",
+                  "E-002"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 4.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses problem definition in [E-001] [E-002]. The evidence best matches the level 'Problem is scoped with affected users and a testable gap' [E-001] [E-002].",
+                "draft_feedback": "For problem definition, build on [E-001] [E-002]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-003",
+                  "E-005"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses methodology in [E-003] [E-005]. The evidence best matches the level 'Method named without a sequence' [E-003] [E-005].",
+                "draft_feedback": "For methodology, build on [E-003] [E-005] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address evaluation plan.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [
+                  "E-003"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses results and discussion in [E-003]. The evidence best matches the level 'Results without interpretation' [E-003].",
+                "draft_feedback": "For results and discussion, build on [E-003] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [
+                  "E-005"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 2.0,
+                "explanation": "The submission addresses communication in [E-005]. The evidence best matches the level 'Consistent headings, captions and terminology' [E-005].",
+                "draft_feedback": "For communication, build on [E-005]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            }
+          ]
+        }
+      ],
+      "baseline_B2": null
+    },
+    {
+      "rubric_id": "engineering_report",
+      "submission_id": "s4_decoy_eval",
+      "agent_runs": [
+        {
+          "run_index": 0,
+          "latency_ms": 5.8398330002091825,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001",
+                  "E-002"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 4.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses problem definition in [E-001] [E-002]. The evidence best matches the level 'Problem is scoped with affected users and a testable gap' [E-001] [E-002].",
+                "draft_feedback": "For problem definition, build on [E-001] [E-002]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-003"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 1.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses methodology in [E-003]. The evidence best matches the level '' [E-003].",
+                "draft_feedback": "For methodology, build on [E-003] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address evaluation plan.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address results and discussion.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [
+                  "E-006"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 2.0,
+                "explanation": "The submission addresses communication in [E-006]. The evidence best matches the level 'Consistent headings, captions and terminology' [E-006].",
+                "draft_feedback": "For communication, build on [E-006]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            }
+          ]
+        },
+        {
+          "run_index": 1,
+          "latency_ms": 7.278500008396804,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001",
+                  "E-002"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 4.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses problem definition in [E-001] [E-002]. The evidence best matches the level 'Problem is scoped with affected users and a testable gap' [E-001] [E-002].",
+                "draft_feedback": "For problem definition, build on [E-001] [E-002]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-003"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 1.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses methodology in [E-003]. The evidence best matches the level '' [E-003].",
+                "draft_feedback": "For methodology, build on [E-003] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address evaluation plan.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address results and discussion.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [
+                  "E-006"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 2.0,
+                "explanation": "The submission addresses communication in [E-006]. The evidence best matches the level 'Consistent headings, captions and terminology' [E-006].",
+                "draft_feedback": "For communication, build on [E-006]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            }
+          ]
+        },
+        {
+          "run_index": 2,
+          "latency_ms": 6.505707977339625,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001",
+                  "E-002"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 4.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses problem definition in [E-001] [E-002]. The evidence best matches the level 'Problem is scoped with affected users and a testable gap' [E-001] [E-002].",
+                "draft_feedback": "For problem definition, build on [E-001] [E-002]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-003"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 1.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses methodology in [E-003]. The evidence best matches the level '' [E-003].",
+                "draft_feedback": "For methodology, build on [E-003] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address evaluation plan.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address results and discussion.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [
+                  "E-006"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 2.0,
+                "explanation": "The submission addresses communication in [E-006]. The evidence best matches the level 'Consistent headings, captions and terminology' [E-006].",
+                "draft_feedback": "For communication, build on [E-006]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            }
+          ]
+        }
+      ],
+      "baseline_B2": null
+    },
+    {
+      "rubric_id": "engineering_report",
+      "submission_id": "s5_long",
+      "agent_runs": [
+        {
+          "run_index": 0,
+          "latency_ms": 47.63924999861047,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008",
+              "E-009",
+              "E-010",
+              "E-011",
+              "E-012",
+              "E-013",
+              "E-014",
+              "E-015",
+              "E-016",
+              "E-017",
+              "E-018"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008",
+              "E-009",
+              "E-010",
+              "E-011",
+              "E-012",
+              "E-013",
+              "E-014",
+              "E-015",
+              "E-016",
+              "E-017",
+              "E-018"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008",
+              "E-009",
+              "E-010",
+              "E-011",
+              "E-012",
+              "E-013",
+              "E-014",
+              "E-015",
+              "E-016",
+              "E-017",
+              "E-018"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008",
+              "E-009",
+              "E-010",
+              "E-011",
+              "E-012",
+              "E-013",
+              "E-014",
+              "E-015",
+              "E-016",
+              "E-017",
+              "E-018"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008",
+              "E-009",
+              "E-010",
+              "E-011",
+              "E-012",
+              "E-013",
+              "E-014",
+              "E-015",
+              "E-016",
+              "E-017",
+              "E-018"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-002",
+                  "E-001"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 4.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses problem definition in [E-002] [E-001]. The evidence best matches the level 'Problem is scoped with affected users and a testable gap' [E-002] [E-001].",
+                "draft_feedback": "For problem definition, build on [E-002] [E-001]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-002",
+                  "E-003"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 1.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses methodology in [E-002] [E-003]. The evidence best matches the level '' [E-002] [E-003].",
+                "draft_feedback": "For methodology, build on [E-002] [E-003] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [
+                  "E-004"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 1.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses evaluation plan in [E-004]. The evidence best matches the level '' [E-004].",
+                "draft_feedback": "For evaluation plan, build on [E-004] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address results and discussion.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [
+                  "E-006"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 2.0,
+                "explanation": "The submission addresses communication in [E-006]. The evidence best matches the level 'Consistent headings, captions and terminology' [E-006].",
+                "draft_feedback": "For communication, build on [E-006]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            }
+          ]
+        },
+        {
+          "run_index": 1,
+          "latency_ms": 54.56829100148752,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008",
+              "E-009",
+              "E-010",
+              "E-011",
+              "E-012",
+              "E-013",
+              "E-014",
+              "E-015",
+              "E-016",
+              "E-017",
+              "E-018"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008",
+              "E-009",
+              "E-010",
+              "E-011",
+              "E-012",
+              "E-013",
+              "E-014",
+              "E-015",
+              "E-016",
+              "E-017",
+              "E-018"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008",
+              "E-009",
+              "E-010",
+              "E-011",
+              "E-012",
+              "E-013",
+              "E-014",
+              "E-015",
+              "E-016",
+              "E-017",
+              "E-018"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008",
+              "E-009",
+              "E-010",
+              "E-011",
+              "E-012",
+              "E-013",
+              "E-014",
+              "E-015",
+              "E-016",
+              "E-017",
+              "E-018"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008",
+              "E-009",
+              "E-010",
+              "E-011",
+              "E-012",
+              "E-013",
+              "E-014",
+              "E-015",
+              "E-016",
+              "E-017",
+              "E-018"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-002",
+                  "E-001"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 4.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses problem definition in [E-002] [E-001]. The evidence best matches the level 'Problem is scoped with affected users and a testable gap' [E-002] [E-001].",
+                "draft_feedback": "For problem definition, build on [E-002] [E-001]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-002",
+                  "E-003"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 1.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses methodology in [E-002] [E-003]. The evidence best matches the level '' [E-002] [E-003].",
+                "draft_feedback": "For methodology, build on [E-002] [E-003] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [
+                  "E-004"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 1.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses evaluation plan in [E-004]. The evidence best matches the level '' [E-004].",
+                "draft_feedback": "For evaluation plan, build on [E-004] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address results and discussion.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [
+                  "E-006"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 2.0,
+                "explanation": "The submission addresses communication in [E-006]. The evidence best matches the level 'Consistent headings, captions and terminology' [E-006].",
+                "draft_feedback": "For communication, build on [E-006]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            }
+          ]
+        },
+        {
+          "run_index": 2,
+          "latency_ms": 53.26850002165884,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008",
+              "E-009",
+              "E-010",
+              "E-011",
+              "E-012",
+              "E-013",
+              "E-014",
+              "E-015",
+              "E-016",
+              "E-017",
+              "E-018"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008",
+              "E-009",
+              "E-010",
+              "E-011",
+              "E-012",
+              "E-013",
+              "E-014",
+              "E-015",
+              "E-016",
+              "E-017",
+              "E-018"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008",
+              "E-009",
+              "E-010",
+              "E-011",
+              "E-012",
+              "E-013",
+              "E-014",
+              "E-015",
+              "E-016",
+              "E-017",
+              "E-018"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008",
+              "E-009",
+              "E-010",
+              "E-011",
+              "E-012",
+              "E-013",
+              "E-014",
+              "E-015",
+              "E-016",
+              "E-017",
+              "E-018"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008",
+              "E-009",
+              "E-010",
+              "E-011",
+              "E-012",
+              "E-013",
+              "E-014",
+              "E-015",
+              "E-016",
+              "E-017",
+              "E-018"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-002",
+                  "E-001"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 4.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses problem definition in [E-002] [E-001]. The evidence best matches the level 'Problem is scoped with affected users and a testable gap' [E-002] [E-001].",
+                "draft_feedback": "For problem definition, build on [E-002] [E-001]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-002",
+                  "E-003"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 1.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses methodology in [E-002] [E-003]. The evidence best matches the level '' [E-002] [E-003].",
+                "draft_feedback": "For methodology, build on [E-002] [E-003] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [
+                  "E-004"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 1.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses evaluation plan in [E-004]. The evidence best matches the level '' [E-004].",
+                "draft_feedback": "For evaluation plan, build on [E-004] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address results and discussion.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [
+                  "E-006"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 2.0,
+                "explanation": "The submission addresses communication in [E-006]. The evidence best matches the level 'Consistent headings, captions and terminology' [E-006].",
+                "draft_feedback": "For communication, build on [E-006]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            }
+          ]
+        }
+      ],
+      "baseline_B2": null
+    },
+    {
+      "rubric_id": "engineering_report",
+      "submission_id": "s6_weak_problem",
+      "agent_runs": [
+        {
+          "run_index": 0,
+          "latency_ms": 14.769000001251698,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address problem definition.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-002"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 1.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses methodology in [E-002]. The evidence best matches the level '' [E-002].",
+                "draft_feedback": "For methodology, build on [E-002] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [
+                  "E-003"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 1.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses evaluation plan in [E-003]. The evidence best matches the level '' [E-003].",
+                "draft_feedback": "For evaluation plan, build on [E-003] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address results and discussion.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [
+                  "E-005"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 2.0,
+                "explanation": "The submission addresses communication in [E-005]. The evidence best matches the level 'Consistent headings, captions and terminology' [E-005].",
+                "draft_feedback": "For communication, build on [E-005]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            }
+          ]
+        },
+        {
+          "run_index": 1,
+          "latency_ms": 12.815875001251698,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address problem definition.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-002"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 1.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses methodology in [E-002]. The evidence best matches the level '' [E-002].",
+                "draft_feedback": "For methodology, build on [E-002] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [
+                  "E-003"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 1.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses evaluation plan in [E-003]. The evidence best matches the level '' [E-003].",
+                "draft_feedback": "For evaluation plan, build on [E-003] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address results and discussion.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [
+                  "E-005"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 2.0,
+                "explanation": "The submission addresses communication in [E-005]. The evidence best matches the level 'Consistent headings, captions and terminology' [E-005].",
+                "draft_feedback": "For communication, build on [E-005]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            }
+          ]
+        },
+        {
+          "run_index": 2,
+          "latency_ms": 12.315166008193046,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address problem definition.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-002"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 1.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses methodology in [E-002]. The evidence best matches the level '' [E-002].",
+                "draft_feedback": "For methodology, build on [E-002] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [
+                  "E-003"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 1.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses evaluation plan in [E-003]. The evidence best matches the level '' [E-003].",
+                "draft_feedback": "For evaluation plan, build on [E-003] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address results and discussion.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [
+                  "E-005"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 2.0,
+                "explanation": "The submission addresses communication in [E-005]. The evidence best matches the level 'Consistent headings, captions and terminology' [E-005].",
+                "draft_feedback": "For communication, build on [E-005]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            }
+          ]
+        }
+      ],
+      "baseline_B2": null
+    },
+    {
+      "rubric_id": "engineering_report",
+      "submission_id": "s7_partial_results",
+      "agent_runs": [
+        {
+          "run_index": 0,
+          "latency_ms": 13.516957988031209,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses problem definition in [E-001]. The evidence best matches the level 'Problem is stated but not scoped' [E-001].",
+                "draft_feedback": "For problem definition, build on [E-001] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-002"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses methodology in [E-002]. The evidence best matches the level 'Method named without a sequence' [E-002].",
+                "draft_feedback": "For methodology, build on [E-002] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [
+                  "E-003"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses evaluation plan in [E-003]. The evidence best matches the level 'Metrics listed without a procedure' [E-003].",
+                "draft_feedback": "For evaluation plan, build on [E-003] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [
+                  "E-002"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses results and discussion in [E-002]. The evidence best matches the level 'Results without interpretation' [E-002].",
+                "draft_feedback": "For results and discussion, build on [E-002] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [
+                  "E-005"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 2.0,
+                "explanation": "The submission addresses communication in [E-005]. The evidence best matches the level 'Consistent headings, captions and terminology' [E-005].",
+                "draft_feedback": "For communication, build on [E-005]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            }
+          ]
+        },
+        {
+          "run_index": 1,
+          "latency_ms": 5.823084036819637,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses problem definition in [E-001]. The evidence best matches the level 'Problem is stated but not scoped' [E-001].",
+                "draft_feedback": "For problem definition, build on [E-001] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-002"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses methodology in [E-002]. The evidence best matches the level 'Method named without a sequence' [E-002].",
+                "draft_feedback": "For methodology, build on [E-002] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [
+                  "E-003"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses evaluation plan in [E-003]. The evidence best matches the level 'Metrics listed without a procedure' [E-003].",
+                "draft_feedback": "For evaluation plan, build on [E-003] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [
+                  "E-002"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses results and discussion in [E-002]. The evidence best matches the level 'Results without interpretation' [E-002].",
+                "draft_feedback": "For results and discussion, build on [E-002] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [
+                  "E-005"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 2.0,
+                "explanation": "The submission addresses communication in [E-005]. The evidence best matches the level 'Consistent headings, captions and terminology' [E-005].",
+                "draft_feedback": "For communication, build on [E-005]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            }
+          ]
+        },
+        {
+          "run_index": 2,
+          "latency_ms": 7.594166963826865,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses problem definition in [E-001]. The evidence best matches the level 'Problem is stated but not scoped' [E-001].",
+                "draft_feedback": "For problem definition, build on [E-001] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-002"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses methodology in [E-002]. The evidence best matches the level 'Method named without a sequence' [E-002].",
+                "draft_feedback": "For methodology, build on [E-002] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [
+                  "E-003"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses evaluation plan in [E-003]. The evidence best matches the level 'Metrics listed without a procedure' [E-003].",
+                "draft_feedback": "For evaluation plan, build on [E-003] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [
+                  "E-002"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses results and discussion in [E-002]. The evidence best matches the level 'Results without interpretation' [E-002].",
+                "draft_feedback": "For results and discussion, build on [E-002] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [
+                  "E-005"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 2.0,
+                "explanation": "The submission addresses communication in [E-005]. The evidence best matches the level 'Consistent headings, captions and terminology' [E-005].",
+                "draft_feedback": "For communication, build on [E-005]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            }
+          ]
+        }
+      ],
+      "baseline_B2": null
+    },
+    {
+      "rubric_id": "engineering_report",
+      "submission_id": "s8_missing_method",
+      "agent_runs": [
+        {
+          "run_index": 0,
+          "latency_ms": 7.177416002377868,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses problem definition in [E-001]. The evidence best matches the level 'Problem is stated but not scoped' [E-001].",
+                "draft_feedback": "For problem definition, build on [E-001] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-006"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses methodology in [E-006]. The evidence best matches the level 'Method named without a sequence' [E-006].",
+                "draft_feedback": "For methodology, build on [E-006] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [
+                  "E-003"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses evaluation plan in [E-003]. The evidence best matches the level 'Metrics listed without a procedure' [E-003].",
+                "draft_feedback": "For evaluation plan, build on [E-003] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [
+                  "E-006"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses results and discussion in [E-006]. The evidence best matches the level 'Results without interpretation' [E-006].",
+                "draft_feedback": "For results and discussion, build on [E-006] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [
+                  "E-005"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 2.0,
+                "explanation": "The submission addresses communication in [E-005]. The evidence best matches the level 'Consistent headings, captions and terminology' [E-005].",
+                "draft_feedback": "For communication, build on [E-005]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            }
+          ]
+        },
+        {
+          "run_index": 1,
+          "latency_ms": 13.085582992061973,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses problem definition in [E-001]. The evidence best matches the level 'Problem is stated but not scoped' [E-001].",
+                "draft_feedback": "For problem definition, build on [E-001] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-006"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses methodology in [E-006]. The evidence best matches the level 'Method named without a sequence' [E-006].",
+                "draft_feedback": "For methodology, build on [E-006] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [
+                  "E-003"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses evaluation plan in [E-003]. The evidence best matches the level 'Metrics listed without a procedure' [E-003].",
+                "draft_feedback": "For evaluation plan, build on [E-003] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [
+                  "E-006"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses results and discussion in [E-006]. The evidence best matches the level 'Results without interpretation' [E-006].",
+                "draft_feedback": "For results and discussion, build on [E-006] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [
+                  "E-005"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 2.0,
+                "explanation": "The submission addresses communication in [E-005]. The evidence best matches the level 'Consistent headings, captions and terminology' [E-005].",
+                "draft_feedback": "For communication, build on [E-005]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            }
+          ]
+        },
+        {
+          "run_index": 2,
+          "latency_ms": 71.10420800745487,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses problem definition in [E-001]. The evidence best matches the level 'Problem is stated but not scoped' [E-001].",
+                "draft_feedback": "For problem definition, build on [E-001] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-006"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses methodology in [E-006]. The evidence best matches the level 'Method named without a sequence' [E-006].",
+                "draft_feedback": "For methodology, build on [E-006] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [
+                  "E-003"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses evaluation plan in [E-003]. The evidence best matches the level 'Metrics listed without a procedure' [E-003].",
+                "draft_feedback": "For evaluation plan, build on [E-003] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [
+                  "E-006"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses results and discussion in [E-006]. The evidence best matches the level 'Results without interpretation' [E-006].",
+                "draft_feedback": "For results and discussion, build on [E-006] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [
+                  "E-005"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 2.0,
+                "explanation": "The submission addresses communication in [E-005]. The evidence best matches the level 'Consistent headings, captions and terminology' [E-005].",
+                "draft_feedback": "For communication, build on [E-005]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            }
+          ]
+        }
+      ],
+      "baseline_B2": null
+    },
+    {
+      "rubric_id": "engineering_report",
+      "submission_id": "s9_strong_eval_weak_comm",
+      "agent_runs": [
+        {
+          "run_index": 0,
+          "latency_ms": 10.94229199225083,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses problem definition in [E-001]. The evidence best matches the level 'Problem is stated but not scoped' [E-001].",
+                "draft_feedback": "For problem definition, build on [E-001] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-002"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 1.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses methodology in [E-002]. The evidence best matches the level '' [E-002].",
+                "draft_feedback": "For methodology, build on [E-002] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [
+                  "E-002"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 1.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses evaluation plan in [E-002]. The evidence best matches the level '' [E-002].",
+                "draft_feedback": "For evaluation plan, build on [E-002] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address results and discussion.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 2.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address communication.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            }
+          ]
+        },
+        {
+          "run_index": 1,
+          "latency_ms": 8.588625001721084,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses problem definition in [E-001]. The evidence best matches the level 'Problem is stated but not scoped' [E-001].",
+                "draft_feedback": "For problem definition, build on [E-001] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-002"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 1.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses methodology in [E-002]. The evidence best matches the level '' [E-002].",
+                "draft_feedback": "For methodology, build on [E-002] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [
+                  "E-002"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 1.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses evaluation plan in [E-002]. The evidence best matches the level '' [E-002].",
+                "draft_feedback": "For evaluation plan, build on [E-002] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address results and discussion.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 2.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address communication.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            }
+          ]
+        },
+        {
+          "run_index": 2,
+          "latency_ms": 9.708874975331128,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses problem definition in [E-001]. The evidence best matches the level 'Problem is stated but not scoped' [E-001].",
+                "draft_feedback": "For problem definition, build on [E-001] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-002"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 1.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses methodology in [E-002]. The evidence best matches the level '' [E-002].",
+                "draft_feedback": "For methodology, build on [E-002] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [
+                  "E-002"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 1.0,
+                "score_max": 4.0,
+                "explanation": "The submission addresses evaluation plan in [E-002]. The evidence best matches the level '' [E-002].",
+                "draft_feedback": "For evaluation plan, build on [E-002] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address results and discussion.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 2.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address communication.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            }
+          ]
+        }
+      ],
+      "baseline_B2": null
+    },
+    {
+      "rubric_id": "proposal_rubric",
+      "submission_id": "p1_strong",
+      "agent_runs": [
+        {
+          "run_index": 0,
+          "latency_ms": 5.682500021066517,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 5.0,
+                "score_max": 5.0,
+                "explanation": "The submission addresses problem and motivation in [E-001]. The evidence best matches the level 'Problem, stakeholders and evidence of need are all explicit' [E-001].",
+                "draft_feedback": "For problem and motivation, build on [E-001]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-002",
+                  "E-004"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 5.0,
+                "score_max": 5.0,
+                "explanation": "The submission addresses requirements in [E-002] [E-004]. The evidence best matches the level 'Prioritised requirements with measurable acceptance criteria' [E-002] [E-004].",
+                "draft_feedback": "For requirements, build on [E-002] [E-004]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [
+                  "E-003",
+                  "E-004"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 5.0,
+                "score_max": 5.0,
+                "explanation": "The submission addresses methodology in [E-003] [E-004]. The evidence best matches the level 'Incremental iterations with automated tests and a fixture model' [E-003] [E-004].",
+                "draft_feedback": "For methodology, build on [E-003] [E-004]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [
+                  "E-004"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 5.0,
+                "score_max": 5.0,
+                "explanation": "The submission addresses feasibility and risks in [E-004]. The evidence best matches the level 'Weekly timeline with a risk register and mitigations' [E-004].",
+                "draft_feedback": "For feasibility and risks, build on [E-004]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            }
+          ]
+        },
+        {
+          "run_index": 1,
+          "latency_ms": 4.699499986600131,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 5.0,
+                "score_max": 5.0,
+                "explanation": "The submission addresses problem and motivation in [E-001]. The evidence best matches the level 'Problem, stakeholders and evidence of need are all explicit' [E-001].",
+                "draft_feedback": "For problem and motivation, build on [E-001]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-002",
+                  "E-004"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 5.0,
+                "score_max": 5.0,
+                "explanation": "The submission addresses requirements in [E-002] [E-004]. The evidence best matches the level 'Prioritised requirements with measurable acceptance criteria' [E-002] [E-004].",
+                "draft_feedback": "For requirements, build on [E-002] [E-004]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [
+                  "E-003",
+                  "E-004"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 5.0,
+                "score_max": 5.0,
+                "explanation": "The submission addresses methodology in [E-003] [E-004]. The evidence best matches the level 'Incremental iterations with automated tests and a fixture model' [E-003] [E-004].",
+                "draft_feedback": "For methodology, build on [E-003] [E-004]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [
+                  "E-004"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 5.0,
+                "score_max": 5.0,
+                "explanation": "The submission addresses feasibility and risks in [E-004]. The evidence best matches the level 'Weekly timeline with a risk register and mitigations' [E-004].",
+                "draft_feedback": "For feasibility and risks, build on [E-004]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            }
+          ]
+        },
+        {
+          "run_index": 2,
+          "latency_ms": 7.056541973724961,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 5.0,
+                "score_max": 5.0,
+                "explanation": "The submission addresses problem and motivation in [E-001]. The evidence best matches the level 'Problem, stakeholders and evidence of need are all explicit' [E-001].",
+                "draft_feedback": "For problem and motivation, build on [E-001]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-002",
+                  "E-004"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 5.0,
+                "score_max": 5.0,
+                "explanation": "The submission addresses requirements in [E-002] [E-004]. The evidence best matches the level 'Prioritised requirements with measurable acceptance criteria' [E-002] [E-004].",
+                "draft_feedback": "For requirements, build on [E-002] [E-004]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [
+                  "E-003",
+                  "E-004"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 5.0,
+                "score_max": 5.0,
+                "explanation": "The submission addresses methodology in [E-003] [E-004]. The evidence best matches the level 'Incremental iterations with automated tests and a fixture model' [E-003] [E-004].",
+                "draft_feedback": "For methodology, build on [E-003] [E-004]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [
+                  "E-004"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 5.0,
+                "score_max": 5.0,
+                "explanation": "The submission addresses feasibility and risks in [E-004]. The evidence best matches the level 'Weekly timeline with a risk register and mitigations' [E-004].",
+                "draft_feedback": "For feasibility and risks, build on [E-004]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            }
+          ]
+        }
+      ],
+      "baseline_B2": null
+    },
+    {
+      "rubric_id": "proposal_rubric",
+      "submission_id": "p2_gaps",
+      "agent_runs": [
+        {
+          "run_index": 0,
+          "latency_ms": 7.6955840340815485,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 5.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address problem and motivation.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 5.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address requirements.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 5.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address methodology.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 5.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address feasibility and risks.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            }
+          ]
+        },
+        {
+          "run_index": 1,
+          "latency_ms": 7.88108300184831,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 5.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address problem and motivation.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 5.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address requirements.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 5.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address methodology.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 5.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address feasibility and risks.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            }
+          ]
+        },
+        {
+          "run_index": 2,
+          "latency_ms": 3.312624990940094,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 5.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address problem and motivation.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 5.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address requirements.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 5.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address methodology.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 5.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address feasibility and risks.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            }
+          ]
+        }
+      ],
+      "baseline_B2": null
+    },
+    {
+      "rubric_id": "proposal_rubric",
+      "submission_id": "p3_decoy",
+      "agent_runs": [
+        {
+          "run_index": 0,
+          "latency_ms": 4.882915993221104,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 5.0,
+                "score_max": 5.0,
+                "explanation": "The submission addresses problem and motivation in [E-001]. The evidence best matches the level 'Problem, stakeholders and evidence of need are all explicit' [E-001].",
+                "draft_feedback": "For problem and motivation, build on [E-001]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-004"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.5,
+                "score_max": 5.0,
+                "explanation": "The submission addresses requirements in [E-004]. The evidence best matches the level 'Requirements listed without priority or acceptance criteria' [E-004].",
+                "draft_feedback": "For requirements, build on [E-004] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 5.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address methodology.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [
+                  "E-004"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 5.0,
+                "score_max": 5.0,
+                "explanation": "The submission addresses feasibility and risks in [E-004]. The evidence best matches the level 'Weekly timeline with a risk register and mitigations' [E-004].",
+                "draft_feedback": "For feasibility and risks, build on [E-004]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            }
+          ]
+        },
+        {
+          "run_index": 1,
+          "latency_ms": 7.612832996528596,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 5.0,
+                "score_max": 5.0,
+                "explanation": "The submission addresses problem and motivation in [E-001]. The evidence best matches the level 'Problem, stakeholders and evidence of need are all explicit' [E-001].",
+                "draft_feedback": "For problem and motivation, build on [E-001]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-004"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.5,
+                "score_max": 5.0,
+                "explanation": "The submission addresses requirements in [E-004]. The evidence best matches the level 'Requirements listed without priority or acceptance criteria' [E-004].",
+                "draft_feedback": "For requirements, build on [E-004] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 5.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address methodology.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [
+                  "E-004"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 5.0,
+                "score_max": 5.0,
+                "explanation": "The submission addresses feasibility and risks in [E-004]. The evidence best matches the level 'Weekly timeline with a risk register and mitigations' [E-004].",
+                "draft_feedback": "For feasibility and risks, build on [E-004]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            }
+          ]
+        },
+        {
+          "run_index": 2,
+          "latency_ms": 4.090957983862609,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 5.0,
+                "score_max": 5.0,
+                "explanation": "The submission addresses problem and motivation in [E-001]. The evidence best matches the level 'Problem, stakeholders and evidence of need are all explicit' [E-001].",
+                "draft_feedback": "For problem and motivation, build on [E-001]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-004"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.5,
+                "score_max": 5.0,
+                "explanation": "The submission addresses requirements in [E-004]. The evidence best matches the level 'Requirements listed without priority or acceptance criteria' [E-004].",
+                "draft_feedback": "For requirements, build on [E-004] and address the higher-level descriptor.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 5.0,
+                "explanation": "Insufficient evidence: the retrieved units do not address methodology.",
+                "draft_feedback": null,
+                "flags": [
+                  "insufficient_evidence"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [
+                  "E-004"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 5.0,
+                "score_max": 5.0,
+                "explanation": "The submission addresses feasibility and risks in [E-004]. The evidence best matches the level 'Weekly timeline with a risk register and mitigations' [E-004].",
+                "draft_feedback": "For feasibility and risks, build on [E-004]",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            }
+          ]
+        }
+      ],
+      "baseline_B2": null
+    }
+  ],
+  "denominators": {
+    "labelled_pairs": 62,
+    "gold_numeric_scores": 54,
+    "agent_scored_pairs": 41,
+    "B2_scored_pairs": null,
+    "retrieval_pairs_with_relevant_units": 61,
+    "retrieval_pairs_without_relevant_units": 1,
+    "evidence_units": 94,
+    "citations": 62,
+    "agent_positive_claims": 88,
+    "B2_positive_claims": null,
+    "range_checked_outputs": 62,
+    "repeatability_criteria": 62,
+    "latency_submissions": 13,
+    "s5_latency_submissions": 1,
+    "export_rows": 62,
+    "feedback_outputs": 44
+  },
+  "metric_notes": {
+    "M3": "Macro average over pairs with at least one phrase-matched relevant unit; empty gold sets excluded and counted.",
+    "M6": "Legacy unsupported keys count uncited positive sentences only, not semantic hallucinations. B2 is not asked for evidence IDs.",
+    "M8": "MAE/QWK are conditional on emitted scores with numeric gold. QWK is pair-weighted across defined rubric/criterion groups; no mixed-scale pooling.",
+    "M12": "Requires at least two runs; one run is unmeasured. Stable abstention counts as repeatability, not quality.",
+    "M17": "Checks only that feedback citation IDs are allowed; does not establish semantic grounding."
+  },
+  "per_scenario": {
+    "S1": {
+      "pairs": 34,
+      "sufficiency_accuracy": 0.4117647058823529,
+      "sufficiency_macro_f1": 0.34542124542124536,
+      "sufficiency_pairs": 34,
+      "claims": 50,
+      "unsupported_claims": 0,
+      "unsupported_rate": 0.0,
+      "score_qwk": 0.10526315789473684,
+      "qwk_defined_groups": 5,
+      "qwk_scored_pairs": 19,
+      "score_mae": 1.0869565217391304,
+      "score_normalised_mae": 0.2826086956521739,
+      "score_coverage": 0.7666666666666667,
+      "scored_pairs": 23,
+      "gold_scored_pairs": 30,
+      "abstained_on_gold_scored": 7
+    },
+    "S2": {
+      "pairs": 5,
+      "sufficiency_accuracy": 0.8,
+      "sufficiency_macro_f1": 0.29629629629629634,
+      "sufficiency_pairs": 5,
+      "claims": 10,
+      "unsupported_claims": 0,
+      "unsupported_rate": 0.0,
+      "score_qwk": 0.0,
+      "qwk_defined_groups": 1,
+      "qwk_scored_pairs": 1,
+      "score_mae": 0.4,
+      "score_normalised_mae": 0.1,
+      "score_coverage": 1.0,
+      "scored_pairs": 5,
+      "gold_scored_pairs": 5,
+      "abstained_on_gold_scored": 0
+    },
+    "S3": {
+      "pairs": 9,
+      "sufficiency_accuracy": 0.4444444444444444,
+      "sufficiency_macro_f1": 0.47301587301587306,
+      "sufficiency_pairs": 9,
+      "claims": 8,
+      "unsupported_claims": 0,
+      "unsupported_rate": 0.0,
+      "score_qwk": 0.0,
+      "qwk_defined_groups": 1,
+      "qwk_scored_pairs": 1,
+      "score_mae": 0.5,
+      "score_normalised_mae": 0.125,
+      "score_coverage": 0.5,
+      "scored_pairs": 4,
+      "gold_scored_pairs": 8,
+      "abstained_on_gold_scored": 4
+    },
+    "S4": {
+      "pairs": 9,
+      "sufficiency_accuracy": 0.6666666666666666,
+      "sufficiency_macro_f1": 0.5185185185185185,
+      "sufficiency_pairs": 9,
+      "claims": 12,
+      "unsupported_claims": 0,
+      "unsupported_rate": 0.0,
+      "score_qwk": 0.0,
+      "qwk_defined_groups": 1,
+      "qwk_scored_pairs": 1,
+      "score_mae": 0.6,
+      "score_normalised_mae": 0.15,
+      "score_coverage": 0.8333333333333334,
+      "scored_pairs": 5,
+      "gold_scored_pairs": 6,
+      "abstained_on_gold_scored": 1
+    },
+    "S5": {
+      "pairs": 5,
+      "sufficiency_accuracy": 0.4,
+      "sufficiency_macro_f1": 0.1904761904761905,
+      "sufficiency_pairs": 5,
+      "claims": 8,
+      "unsupported_claims": 0,
+      "unsupported_rate": 0.0,
+      "score_qwk": 0.0,
+      "qwk_defined_groups": 2,
+      "qwk_scored_pairs": 2,
+      "score_mae": 1.5,
+      "score_normalised_mae": 0.375,
+      "score_coverage": 0.8,
+      "scored_pairs": 4,
+      "gold_scored_pairs": 5,
+      "abstained_on_gold_scored": 1
+    }
+  },
+  "validator_warnings": {},
+  "first_attempt_warnings": {},
+  "revision_rate": 0.0,
+  "baseline_B2": null,
+  "requires_marker_session": [
+    "M9",
+    "M10",
+    "M11",
+    "M14",
+    "M15 (data audit)",
+    "M5 human support judgement"
+  ]
+}
