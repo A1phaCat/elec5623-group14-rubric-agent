@@ -1,6 +1,79 @@
 # Changelog
 
-## 2026-10-04 — A2 and proposal-feedback improvements (working tree)
+## 1.0.0 — 7 Oct 2026, frozen for the final campaign
+
+Tag `v1.0.0-frozen`. Configuration, digests and the rules for what would break
+the freeze are in `docs/FREEZE.md`.
+
+### The target was wrong before the prompt was
+
+The first-pass labels assigned sufficiency by quality band, which contradicts
+`dataset/LABELLING_GUIDE.md` rule 4 and matches the one-step-down bias recorded
+in `docs/EVALUATION_NOTES.md` §2. Tuning against them would have optimised
+toward that confusion, so the labels were corrected first:
+`scripts/build_labels_v2.py` declares each change with a reason and refuses to
+run if the source no longer matches. Seven of eight dev `partial` pairs became
+`sufficient`; one was reviewed and kept. `labels.json` is untouched and the 19
+heldout pairs are byte-identical.
+
+That correction exposed a corpus property rather than hiding it: corrected dev
+holds a single `partial` pair, so one third of macro-F1 now rests on one
+judgement. The evaluator reports per-class precision, recall, F1 with gold
+supports and the full confusion matrix so the mean is never read alone.
+
+### Prompt selection, dev split only
+
+`prompts/assessment_v4.md`, chosen from four variants in `docs/tuning/README.md`.
+`assessment_v2` had the same quality/evidence conflation in its rule 2.
+Separating the two questions cut one-step-down errors from 16 to 4 and raised
+accuracy from 0.581 to 0.837 (v3), but v3 also told the model a `partial`
+record could omit the score — which the validator fail-closes — destroying five
+usable records, and it stopped producing draft feedback, leaving FR14
+unexercised. v4 states the contract the validator enforces and requires
+feedback: `missing_score` disappears, M17 returns to 1.00, score coverage is
+the best of the four at 36/38, accuracy settles at 0.767. v5 is kept as a
+recorded rejection for pushing four of five genuinely absent criteria to
+`sufficient`.
+
+`RMA_PROMPT_VERSION` selects a prompt for comparison runs; the active value is
+recorded in every report's provenance.
+
+### Evidence infrastructure
+
+- `evaluate_corpus` takes `labels_path`, and `run_campaign.py` takes
+  `--corpus`/`--labels`/`--split`, so the frozen final test runs through the
+  same code as the development corpus. A corpus with no labels fails with a
+  pointer to the annotation procedure.
+- Annotation workspace for the 27 final-test pairs: blank per-annotator sheets,
+  Cohen's kappa, three-class confusion, score agreement, and an adjudication
+  step kept separate so agreement is computed before anyone discusses a
+  disagreement. Nothing accepts an incomplete sheet.
+- Marker-session kit with the proposal's own questionnaire items and a
+  summariser that returns `null` plus a reason for every metric it lacks data
+  for. M10 needs a timed manual arm or it stays unmeasured.
+- `docs/CONTRIBUTIONS.md` is generated from git history; a member with no
+  commits appears with zero rather than a description of intent.
+
+### Verification
+
+Clean clone installs with no steps beyond the README and passes 128 tests with
+no API key and no network (`docs/validation/cleanroom_2026-10-07.md`). The wheel
+ships no private document, and the bundled proposal PDF was text-extracted and
+searched for every name and student ID with no match.
+
+`docs/validation/freeze_guard_2026-10-07.md` records the freeze guard aborting a
+real campaign after a version string changed mid-run, and refusing to resume
+into the same directory. The change was harmless; the guard cannot know that,
+and a results table assembled from two source trees cannot honestly report one
+code hash.
+
+### Still unmeasured
+
+M9, M10, M11, M14 need real marker sessions. M3 is unmeasured on final_test,
+whose labels carry no `must_contain`. The final-test campaign is blocked until
+the independent annotation exists.
+
+## 2026-10-04 — A2 and proposal-feedback improvements
 
 - Correct novelty positioning against EFS, GradeAgentOps and RULERS; explicit evaluation protocol and named proposed delivery, with Zhengyu Han leading GenAI/evaluation.
 - Reject non-finite/model-grid/feedback quote failures; prevent accepting invalid suggestions or exporting stale invalid edits.

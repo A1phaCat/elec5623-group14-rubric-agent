@@ -1,49 +1,84 @@
-# Status — 4 October 2026
+# Status — 7 October 2026
 
-The user supplied the proposal result **6.5/10**, marked by **Haolin Jin**.
-`docs/MARKER_RESPONSE.md` maps each deduction to current work. The saved A2 brief
-allocates 4 implementation + 4 GenAI engineering + 4 evaluation + 3 novelty +
-2 track alignment + 2 workflow + 1 documentation marks. This is not an estimated grade.
+Frozen at tag **`v1.0.0-frozen`** (`docs/FREEZE.md`). 27 days to the Project
+Development deadline, 3 November 2026 23:59; presentation and Q&A 4 November.
 
-## Implemented in this revision
+The proposal scored **6.5/10**, marked by **Haolin Jin**.
+`docs/MARKER_RESPONSE.md` maps each deduction to the work it requires and to
+the A2 weights: 4 implementation + 4 GenAI engineering + 4 evaluation +
+3 novelty + 2 track alignment + 2 workflow + 1 documentation. None of that is
+an estimated grade.
 
-- Same Track A rubric-marking product and existing FR/NFR remain in place.
-- `AGENTS.md` records the user's instruction to apply the tutor's actual feedback in future 5623 work.
-- `docs/RELATED_WORK.md` and report §3 compare Evidence-First Scoring, GradeAgentOps, RULERS and RAG; evidence-first is not claimed as an invention.
-- `docs/TEAM_DELIVERY.md` names proposed owners. **Zhengyu Han leads core GenAI engineering and evaluation design/interpretation.** Roles are not completed-contribution claims.
-- Model scores reject non-finite values, wrong criteria, wrong range/grid and invalid cited quotes in feedback as well as explanations.
-- Invalid/absent AI scores cannot be accepted. Human edits follow rubric range/grid. Invalid UI edits clear stale confirmation; export rechecks all decisions.
-- B3 full-context ablation uses the same criterion prompt, citations, validator and correction budget, and is supported by logging/replay and CLI.
-- Evaluation reports include denominators, A/B2 macro-F1, score coverage, conditional normalised MAE, per-criterion QWK, shared scored subsets, hashes and individual repeated outputs. One run cannot pass repeatability; empty denominators remain unmeasured.
+## Done since 4 October
 
-## Verification and evidence limits
+- **Dev label correction.** The first-pass labels assigned sufficiency by
+  quality band, contradicting `dataset/LABELLING_GUIDE.md` rule 4. Seven of
+  eight dev `partial` pairs were corrected with written reasons and one was
+  reviewed and kept (`dataset/LABELS_V2_CHANGES.md`). `labels.json` is
+  untouched; heldout is byte-identical.
+- **Prompt selection, dev split only.** Four variants, recorded in
+  `docs/tuning/README.md`. `assessment_v4` selected. Sufficiency accuracy
+  0.767 against the previous build's 0.581, one-step-down errors 16 → 6, score
+  coverage 36/38, FR14 exercised again. v3 scored higher on accuracy but
+  destroyed five records through a prompt sentence the validator rejects and
+  stopped producing feedback; v5 is recorded as rejected for pushing four of
+  five absent criteria to `sufficient`.
+- **Freeze.** Model, decoding, prompts, retrieval, budgets and repeats fixed
+  with manifest digests, dated before annotation begins.
+- **Annotation workspace.** Blank sheets for the 27 final-test pairs, plus
+  agreement and adjudication tooling that refuses incomplete input
+  (`dataset/final_test/annotation/REGISTER.md`).
+- **Marker-session kit.** Protocol, verbatim consent note, the proposal's own
+  questionnaire items, and a summariser that reports unmeasured metrics as
+  `null` with a reason (`docs/MARKER_SESSIONS.md`).
+- **Contribution register from git.** `docs/CONTRIBUTIONS.md`, generated.
+- **Clean-clone rehearsal and packaging audit.**
+  `docs/validation/cleanroom_2026-10-07.md`: 128 tests pass from a fresh clone
+  with no key and no network; the wheel ships no private document; the bundled
+  proposal PDF contains no name or student ID.
+- **Campaign runner** takes `--corpus`, so the frozen final test runs through
+  the same code path as the development corpus.
 
-`docs/validation/README.md` records actual current checks and local-model smoke
-runs. `EVALUATION_fixture_v2.md` and `EVALUATION_B3_fixture_v2.md` are offline
-harness checks, **not LLM-quality evidence**. Their M4 failure is retained.
+## Blocked on people, not code
 
-The 13 September reports remain historical snapshots. Their pooled QWK is
-superseded by a scale-aware implementation and must not be compared directly
-with new QWK. A citation's existence does not establish semantic support; M6
-counts uncited detected sentences only. B2 was not instructed to cite.
+These are the remaining marks and none of them can be produced by running
+something.
 
-Current local-model smoke checks use the existing Qwen2.5-7B installation; they
-do not constitute a full labelled campaign or independent validation. The
-prototype can reject a record and leave its score empty; a successful HTTP
-call is not automatically a usable score.
+1. **Independent annotation of the 27 final-test pairs.** Two people, each
+   working alone, then agreement computed from the untouched originals, then
+   adjudication. Procedure and the two likely mistakes are in
+   `dataset/final_test/annotation/REGISTER.md`. Until this exists,
+   `dataset/final_test/labels.json` does not exist and the final campaign
+   refuses to run.
+2. **Two to three marker sessions, each with a manual arm.** Without the
+   timed rubric-only arm, M10 cannot be measured at all.
+3. **The other four members' contribution evidence.** The register currently
+   shows every commit under one identity. `docs/TEAM_DELIVERY.md` lists what
+   each member can do that leaves a verifiable artifact.
 
-## Remaining human/evidence work
+## Measurement state
 
-1. Confirm proposed roles and record each member's actual reviewed contribution.
-2. Complete independent annotation before adjudication, preserve both originals, and compute agreement.
-3. Execute the frozen A/B2/B3 protocol on the fresh heldout corpus. Existing dev/heldout data have both been inspected.
-4. Conduct 2–3 real marker sessions and record timing, overrides and usability observations.
-5. Integrate final results, inspect report length/layout, verify the source package runs on the demo machine and rehearse without AI.
+| Metric | Where it stands |
+|---|---|
+| M1, M2, M5, M7, M16 | pass on every run |
+| M3 Recall@5 | 1.000 on the dev corpus; **unmeasured on final_test**, whose labels carry no `must_contain` |
+| M4 sufficiency macro-F1 | below target on dev for a structural reason: corrected dev holds one `partial` pair, so a third of the metric rests on it. Settled on final_test, where `f02`/`f05` give the class a real denominator |
+| M6 uncited positive claims | 0.000 in every run; B2's rate reflects its output format, not hallucination |
+| M8, M12, M13 | current frozen development-corpus campaign in progress |
+| M9, M10, M11, M14 | **not measured**; need the sessions above |
+| M15 audit | the packaging and personal-data audit is done; the marker-session half is not |
 
-## Course facts and history
+## Honest limits
 
-From the local A2 brief: source code plus one final report, suggested 8–12 pages
-excluding references/appendices, due **3 November 2026, 23:59**; presentation
-and Q&A on **4 November 2026**, with AI prohibited during the live assessment.
-The separate presentation-format brief is not verified here. Older Week 8
-updates are historical; this task did not refresh Canvas.
+The fixture is a descriptor-matching heuristic; its numbers are not model
+evidence. The 13 September reports are historical snapshots whose pooled QWK
+is superseded and must not be compared with current QWK. All labels so far are
+synthetic and reviewed by the project itself, not independent ground truth. A
+citation that exists does not establish semantic support.
+
+## Next
+
+Annotation, then the frozen final-test campaign, then sessions, then integrate
+`docs/FINAL_REPORT_DRAFT.md` and refresh the screenshots in `docs/img/`, which
+predate `assessment_v4`. Recheck Canvas for the separately released
+presentation brief.
