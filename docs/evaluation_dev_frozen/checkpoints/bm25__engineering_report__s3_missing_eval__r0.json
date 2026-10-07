@@ -1,0 +1,479 @@
+{
+  "completed_at_utc": "2026-10-07T01:45:28.548582+00:00",
+  "result": {
+    "rubric": {
+      "id": "engineering_report",
+      "title": "Engineering report rubric",
+      "criteria": [
+        {
+          "id": "C1",
+          "name": "Problem definition",
+          "max_mark": 4.0,
+          "granularity": 1.0,
+          "descriptors": [
+            {
+              "score": 0.0,
+              "text": "Problem is missing or unrecognisable"
+            },
+            {
+              "score": 2.0,
+              "text": "Problem is stated but not scoped"
+            },
+            {
+              "score": 4.0,
+              "text": "Problem is scoped with affected users and a testable gap"
+            }
+          ]
+        },
+        {
+          "id": "C2",
+          "name": "Methodology",
+          "max_mark": 4.0,
+          "granularity": 1.0,
+          "descriptors": [
+            {
+              "score": 0.0,
+              "text": "No method"
+            },
+            {
+              "score": 2.0,
+              "text": "Method named without a sequence"
+            },
+            {
+              "score": 4.0,
+              "text": "Method is incremental, testable and provider-independent"
+            }
+          ]
+        },
+        {
+          "id": "C3",
+          "name": "Evaluation plan",
+          "max_mark": 4.0,
+          "granularity": 1.0,
+          "descriptors": [
+            {
+              "score": 0.0,
+              "text": "No evaluation"
+            },
+            {
+              "score": 2.0,
+              "text": "Metrics listed without a procedure"
+            },
+            {
+              "score": 4.0,
+              "text": "Metrics, baselines, scenarios and labelled data are specified"
+            }
+          ]
+        },
+        {
+          "id": "C4",
+          "name": "Results and discussion",
+          "max_mark": 4.0,
+          "granularity": 1.0,
+          "descriptors": [
+            {
+              "score": 0.0,
+              "text": "No results"
+            },
+            {
+              "score": 2.0,
+              "text": "Results without interpretation"
+            },
+            {
+              "score": 4.0,
+              "text": "Results are interpreted against the method and limitations"
+            }
+          ]
+        },
+        {
+          "id": "C5",
+          "name": "Communication",
+          "max_mark": 2.0,
+          "granularity": 1.0,
+          "descriptors": [
+            {
+              "score": 0.0,
+              "text": "Unreadable structure"
+            },
+            {
+              "score": 1.0,
+              "text": "Headings exist but terminology drifts"
+            },
+            {
+              "score": 2.0,
+              "text": "Consistent headings, captions and terminology"
+            }
+          ]
+        }
+      ],
+      "source_format": "block"
+    },
+    "pages": [
+      {
+        "page": 1,
+        "text": "# Problem\n\nThe scoped marking-workload gap is unverifiable AI scores on long reports.",
+        "section": "body"
+      },
+      {
+        "page": 2,
+        "text": "# Users\n\nAffected users are markers who must still make the final decision.",
+        "section": "Problem"
+      },
+      {
+        "page": 3,
+        "text": "# Methodology\n\nThe incremental method uses BM25 retrieval and a fixture adapter for tests plus a validator that rejects unknown IDs.",
+        "section": "Users"
+      },
+      {
+        "page": 4,
+        "text": "# Results\n\nNarrative results describe a working parser; the discussion admits there is no measurement section.",
+        "section": "Methodology"
+      },
+      {
+        "page": 5,
+        "text": "# Communication\n\nHeadings are consistent and the only figure caption names the parser.",
+        "section": "Results"
+      }
+    ],
+    "assessments": [
+      {
+        "draft": {
+          "criterion_id": "C1",
+          "evidence_ids": [
+            "E-001",
+            "E-002"
+          ],
+          "sufficiency": "sufficient",
+          "provisional_score": 4.0,
+          "score_max": 4.0,
+          "explanation": "The problem is stated as the scoped marking-workload gap [E-001], and affected users are identified as markers who must make the final decision [E-002]. This evidence matches the descriptor 'Problem is scoped with affected users and a testable gap' [C1:4.0].",
+          "draft_feedback": "Ensure the problem statement and user identification are clear and concise.",
+          "flags": []
+        },
+        "accepted": true,
+        "warnings": [],
+        "claims": 1,
+        "unsupported_claims": 0
+      },
+      {
+        "draft": {
+          "criterion_id": "C2",
+          "evidence_ids": [
+            "E-003"
+          ],
+          "sufficiency": "sufficient",
+          "provisional_score": 4.0,
+          "score_max": 4.0,
+          "explanation": "The evidence states that the incremental method uses BM25 retrieval and a fixture adapter for tests, which is provider-independent [E-003]. Additionally, it mentions a validator that rejects unknown IDs, indicating that the method is testable [E-003].",
+          "draft_feedback": "Ensure the methodology is clearly documented and that all components are tested and validated appropriately.",
+          "flags": [
+            "revised_once"
+          ]
+        },
+        "accepted": true,
+        "warnings": [],
+        "claims": 2,
+        "unsupported_claims": 0
+      },
+      {
+        "draft": {
+          "criterion_id": "C3",
+          "evidence_ids": [],
+          "sufficiency": "insufficient",
+          "provisional_score": null,
+          "score_max": 4.0,
+          "explanation": "No evidence provided for an evaluation plan [C3].",
+          "draft_feedback": null,
+          "flags": []
+        },
+        "accepted": true,
+        "warnings": [],
+        "claims": 0,
+        "unsupported_claims": 0
+      },
+      {
+        "draft": {
+          "criterion_id": "C4",
+          "evidence_ids": [
+            "E-004"
+          ],
+          "sufficiency": "sufficient",
+          "provisional_score": 2.0,
+          "score_max": 4.0,
+          "explanation": "The evidence states that the narrative results describe a working parser, but there is no measurement section [E-004]. This matches the descriptor 'Results without interpretation' (2 marks).",
+          "draft_feedback": "Include a measurement section to interpret the results against the method and limitations.",
+          "flags": []
+        },
+        "accepted": true,
+        "warnings": [],
+        "claims": 1,
+        "unsupported_claims": 0
+      },
+      {
+        "draft": {
+          "criterion_id": "C5",
+          "evidence_ids": [
+            "E-005"
+          ],
+          "sufficiency": "sufficient",
+          "provisional_score": 2.0,
+          "score_max": 2.0,
+          "explanation": "The evidence states that 'Communication Headings are consistent and the only figure caption names the parser' [E-005]. This aligns with the descriptor 'Consistent headings, captions and terminology' [C5:2].",
+          "draft_feedback": "Ensure all headings and captions are consistent throughout the document.",
+          "flags": []
+        },
+        "accepted": true,
+        "warnings": [],
+        "claims": 1,
+        "unsupported_claims": 0
+      }
+    ],
+    "units": [
+      {
+        "id": "E-001",
+        "text": "Problem The scoped marking-workload gap is unverifiable AI scores on long reports.",
+        "page": 1,
+        "section": "Problem",
+        "paragraph": 0,
+        "adjacent_before": "",
+        "adjacent_after": ""
+      },
+      {
+        "id": "E-002",
+        "text": "Users Affected users are markers who must still make the final decision.",
+        "page": 2,
+        "section": "Users",
+        "paragraph": 0,
+        "adjacent_before": "",
+        "adjacent_after": ""
+      },
+      {
+        "id": "E-003",
+        "text": "Methodology The incremental method uses BM25 retrieval and a fixture adapter for tests plus a validator that rejects unknown IDs.",
+        "page": 3,
+        "section": "Methodology",
+        "paragraph": 0,
+        "adjacent_before": "",
+        "adjacent_after": ""
+      },
+      {
+        "id": "E-004",
+        "text": "Results Narrative results describe a working parser; the discussion admits there is no measurement section.",
+        "page": 4,
+        "section": "Results",
+        "paragraph": 0,
+        "adjacent_before": "",
+        "adjacent_after": ""
+      },
+      {
+        "id": "E-005",
+        "text": "Communication Headings are consistent and the only figure caption names the parser.",
+        "page": 5,
+        "section": "Communication",
+        "paragraph": 0,
+        "adjacent_before": "",
+        "adjacent_after": ""
+      }
+    ],
+    "retrieved": {
+      "C1": [
+        {
+          "id": "E-001",
+          "text": "Problem The scoped marking-workload gap is unverifiable AI scores on long reports.",
+          "page": 1,
+          "section": "Problem",
+          "paragraph": 0,
+          "adjacent_before": "",
+          "adjacent_after": ""
+        },
+        {
+          "id": "E-002",
+          "text": "Users Affected users are markers who must still make the final decision.",
+          "page": 2,
+          "section": "Users",
+          "paragraph": 0,
+          "adjacent_before": "",
+          "adjacent_after": ""
+        }
+      ],
+      "C2": [
+        {
+          "id": "E-003",
+          "text": "Methodology The incremental method uses BM25 retrieval and a fixture adapter for tests plus a validator that rejects unknown IDs.",
+          "page": 3,
+          "section": "Methodology",
+          "paragraph": 0,
+          "adjacent_before": "",
+          "adjacent_after": ""
+        },
+        {
+          "id": "E-005",
+          "text": "Communication Headings are consistent and the only figure caption names the parser.",
+          "page": 5,
+          "section": "Communication",
+          "paragraph": 0,
+          "adjacent_before": "",
+          "adjacent_after": ""
+        }
+      ],
+      "C3": [],
+      "C4": [
+        {
+          "id": "E-004",
+          "text": "Results Narrative results describe a working parser; the discussion admits there is no measurement section.",
+          "page": 4,
+          "section": "Results",
+          "paragraph": 0,
+          "adjacent_before": "",
+          "adjacent_after": ""
+        },
+        {
+          "id": "E-003",
+          "text": "Methodology The incremental method uses BM25 retrieval and a fixture adapter for tests plus a validator that rejects unknown IDs.",
+          "page": 3,
+          "section": "Methodology",
+          "paragraph": 0,
+          "adjacent_before": "",
+          "adjacent_after": ""
+        }
+      ],
+      "C5": [
+        {
+          "id": "E-005",
+          "text": "Communication Headings are consistent and the only figure caption names the parser.",
+          "page": 5,
+          "section": "Communication",
+          "paragraph": 0,
+          "adjacent_before": "",
+          "adjacent_after": ""
+        }
+      ]
+    },
+    "logs": [
+      {
+        "test_case_id": "s3_missing_eval:0",
+        "criterion_id": "C1",
+        "model_id": "qwen2.5:7b-instruct@127.0.0.1:11434",
+        "prompt_version": "assessment_v4",
+        "retrieval_k": 5,
+        "retrieval_method": "bm25",
+        "query": "Problem definition Problem definition Problem is scoped with affected users and a testable gap Problem is stated but not scoped",
+        "evidence_ids": [
+          "E-001",
+          "E-002"
+        ],
+        "latency_ms": 24653.37862499291,
+        "rubric_ref": "/Users/hanzhengyu/5623/rubric-marking-agent/dataset/rubrics/engineering_report.md",
+        "submission_ref": "/Users/hanzhengyu/5623/rubric-marking-agent/dataset/submissions/s3_missing_eval.txt",
+        "sufficiency": "sufficient",
+        "provisional_score": 4.0,
+        "cited_ids": [
+          "E-001",
+          "E-002"
+        ],
+        "warnings": [],
+        "attempts": 1,
+        "first_attempt_warnings": [],
+        "created_at": "2026-10-07T01:45:15.773304+00:00"
+      },
+      {
+        "test_case_id": "s3_missing_eval:0",
+        "criterion_id": "C2",
+        "model_id": "qwen2.5:7b-instruct@127.0.0.1:11434",
+        "prompt_version": "assessment_v4",
+        "retrieval_k": 5,
+        "retrieval_method": "bm25",
+        "query": "Methodology Methodology Method is incremental, testable and provider-independent Method named without a sequence",
+        "evidence_ids": [
+          "E-003",
+          "E-005"
+        ],
+        "latency_ms": 37416.30924999481,
+        "rubric_ref": "/Users/hanzhengyu/5623/rubric-marking-agent/dataset/rubrics/engineering_report.md",
+        "submission_ref": "/Users/hanzhengyu/5623/rubric-marking-agent/dataset/submissions/s3_missing_eval.txt",
+        "sufficiency": "sufficient",
+        "provisional_score": 4.0,
+        "cited_ids": [
+          "E-003"
+        ],
+        "warnings": [],
+        "attempts": 2,
+        "first_attempt_warnings": [
+          "uncited_claim:1"
+        ],
+        "created_at": "2026-10-07T01:45:28.536468+00:00"
+      },
+      {
+        "test_case_id": "s3_missing_eval:0",
+        "criterion_id": "C3",
+        "model_id": "qwen2.5:7b-instruct@127.0.0.1:11434",
+        "prompt_version": "assessment_v4",
+        "retrieval_k": 5,
+        "retrieval_method": "bm25",
+        "query": "Evaluation plan Evaluation plan Metrics, baselines, scenarios and labelled data are specified Metrics listed without a procedure",
+        "evidence_ids": [],
+        "latency_ms": 4267.133624991402,
+        "rubric_ref": "/Users/hanzhengyu/5623/rubric-marking-agent/dataset/rubrics/engineering_report.md",
+        "submission_ref": "/Users/hanzhengyu/5623/rubric-marking-agent/dataset/submissions/s3_missing_eval.txt",
+        "sufficiency": "insufficient",
+        "provisional_score": null,
+        "cited_ids": [],
+        "warnings": [],
+        "attempts": 1,
+        "first_attempt_warnings": [],
+        "created_at": "2026-10-07T01:44:55.387818+00:00"
+      },
+      {
+        "test_case_id": "s3_missing_eval:0",
+        "criterion_id": "C4",
+        "model_id": "qwen2.5:7b-instruct@127.0.0.1:11434",
+        "prompt_version": "assessment_v4",
+        "retrieval_k": 5,
+        "retrieval_method": "bm25",
+        "query": "Results and discussion Results and discussion Results are interpreted against the method and limitations Results without interpretation",
+        "evidence_ids": [
+          "E-004",
+          "E-003"
+        ],
+        "latency_ms": 10779.479874996468,
+        "rubric_ref": "/Users/hanzhengyu/5623/rubric-marking-agent/dataset/rubrics/engineering_report.md",
+        "submission_ref": "/Users/hanzhengyu/5623/rubric-marking-agent/dataset/submissions/s3_missing_eval.txt",
+        "sufficiency": "sufficient",
+        "provisional_score": 2.0,
+        "cited_ids": [
+          "E-004"
+        ],
+        "warnings": [],
+        "attempts": 1,
+        "first_attempt_warnings": [],
+        "created_at": "2026-10-07T01:45:01.900620+00:00"
+      },
+      {
+        "test_case_id": "s3_missing_eval:0",
+        "criterion_id": "C5",
+        "model_id": "qwen2.5:7b-instruct@127.0.0.1:11434",
+        "prompt_version": "assessment_v4",
+        "retrieval_k": 5,
+        "retrieval_method": "bm25",
+        "query": "Communication Communication Consistent headings, captions and terminology Headings exist but terminology drifts",
+        "evidence_ids": [
+          "E-005"
+        ],
+        "latency_ms": 17146.17795799859,
+        "rubric_ref": "/Users/hanzhengyu/5623/rubric-marking-agent/dataset/rubrics/engineering_report.md",
+        "submission_ref": "/Users/hanzhengyu/5623/rubric-marking-agent/dataset/submissions/s3_missing_eval.txt",
+        "sufficiency": "sufficient",
+        "provisional_score": 2.0,
+        "cited_ids": [
+          "E-005"
+        ],
+        "warnings": [],
+        "attempts": 1,
+        "first_attempt_warnings": [],
+        "created_at": "2026-10-07T01:45:08.267643+00:00"
+      }
+    ],
+    "latency_ms": 37418.263790998026,
+    "model_id": "qwen2.5:7b-instruct@127.0.0.1:11434"
+  }
+}

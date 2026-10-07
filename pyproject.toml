@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "rubric-marking-agent"
-version = "0.3.0"
+version = "1.0.0"
 description = "ELEC5623 Group 14 Track A prototype: evidence-first rubric marking assistant"
 readme = "README.md"
 requires-python = ">=3.11"

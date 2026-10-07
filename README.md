@@ -1,6 +1,6 @@
 # AI-Assisted Rubric Marking Agent
 
-ELEC5623 Group 14 · Track A · semester project prototype (v0.3.0).
+ELEC5623 Group 14 · Track A · semester project prototype (v1.0.0, frozen 7 Oct 2026).
 
 A decision-support tool for human markers: it parses an analytic rubric and a
 long text submission, retrieves evidence per criterion, asks a model for an

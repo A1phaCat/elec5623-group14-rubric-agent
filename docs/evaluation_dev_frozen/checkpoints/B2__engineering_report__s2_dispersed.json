@@ -1,0 +1,163 @@
+{
+  "completed_at_utc": "2026-10-07T01:44:51.114020+00:00",
+  "rubric": {
+    "id": "engineering_report",
+    "title": "Engineering report rubric",
+    "criteria": [
+      {
+        "id": "C1",
+        "name": "Problem definition",
+        "max_mark": 4.0,
+        "granularity": 1.0,
+        "descriptors": [
+          {
+            "score": 0.0,
+            "text": "Problem is missing or unrecognisable"
+          },
+          {
+            "score": 2.0,
+            "text": "Problem is stated but not scoped"
+          },
+          {
+            "score": 4.0,
+            "text": "Problem is scoped with affected users and a testable gap"
+          }
+        ]
+      },
+      {
+        "id": "C2",
+        "name": "Methodology",
+        "max_mark": 4.0,
+        "granularity": 1.0,
+        "descriptors": [
+          {
+            "score": 0.0,
+            "text": "No method"
+          },
+          {
+            "score": 2.0,
+            "text": "Method named without a sequence"
+          },
+          {
+            "score": 4.0,
+            "text": "Method is incremental, testable and provider-independent"
+          }
+        ]
+      },
+      {
+        "id": "C3",
+        "name": "Evaluation plan",
+        "max_mark": 4.0,
+        "granularity": 1.0,
+        "descriptors": [
+          {
+            "score": 0.0,
+            "text": "No evaluation"
+          },
+          {
+            "score": 2.0,
+            "text": "Metrics listed without a procedure"
+          },
+          {
+            "score": 4.0,
+            "text": "Metrics, baselines, scenarios and labelled data are specified"
+          }
+        ]
+      },
+      {
+        "id": "C4",
+        "name": "Results and discussion",
+        "max_mark": 4.0,
+        "granularity": 1.0,
+        "descriptors": [
+          {
+            "score": 0.0,
+            "text": "No results"
+          },
+          {
+            "score": 2.0,
+            "text": "Results without interpretation"
+          },
+          {
+            "score": 4.0,
+            "text": "Results are interpreted against the method and limitations"
+          }
+        ]
+      },
+      {
+        "id": "C5",
+        "name": "Communication",
+        "max_mark": 2.0,
+        "granularity": 1.0,
+        "descriptors": [
+          {
+            "score": 0.0,
+            "text": "Unreadable structure"
+          },
+          {
+            "score": 1.0,
+            "text": "Headings exist but terminology drifts"
+          },
+          {
+            "score": 2.0,
+            "text": "Consistent headings, captions and terminology"
+          }
+        ]
+      }
+    ],
+    "source_format": "block"
+  },
+  "drafts": [
+    {
+      "criterion_id": "C1",
+      "evidence_ids": [],
+      "sufficiency": "sufficient",
+      "provisional_score": 4.0,
+      "score_max": 4.0,
+      "explanation": "The problem is scoped with affected users (human markers) and a testable gap (repeated evidence search across a 15-page report).",
+      "draft_feedback": null,
+      "flags": []
+    },
+    {
+      "criterion_id": "C2",
+      "evidence_ids": [],
+      "sufficiency": "sufficient",
+      "provisional_score": 4.0,
+      "score_max": 4.0,
+      "explanation": "The method is incremental (BM25 retrieval path), testable, and provider-independent (fixture adapter for tests).",
+      "draft_feedback": null,
+      "flags": []
+    },
+    {
+      "criterion_id": "C3",
+      "evidence_ids": [],
+      "sufficiency": "sufficient",
+      "provisional_score": 4.0,
+      "score_max": 4.0,
+      "explanation": "Evaluation plan includes metrics (Recall@5 and citation accuracy), baselines (manual and direct-LLM), scenarios (labelled evaluation set), and a procedure (validator rejects unknown IDs).",
+      "draft_feedback": null,
+      "flags": []
+    },
+    {
+      "criterion_id": "C4",
+      "evidence_ids": [],
+      "sufficiency": "partial",
+      "provisional_score": 2.0,
+      "score_max": 4.0,
+      "explanation": "Results are present but not interpreted against the method and limitations (retrieved spans from three non-adjacent method sections).",
+      "draft_feedback": null,
+      "flags": []
+    },
+    {
+      "criterion_id": "C5",
+      "evidence_ids": [],
+      "sufficiency": "sufficient",
+      "provisional_score": 2.0,
+      "score_max": 2.0,
+      "explanation": "Consistent headings, captions, and terminology are used (numbered headings and a single figure caption).",
+      "draft_feedback": null,
+      "flags": []
+    }
+  ],
+  "latency_ms": 14479.92612500093
+}

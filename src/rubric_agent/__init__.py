@@ -2,7 +2,7 @@
 
 import os
 
-__version__ = "0.3.0"
+__version__ = "1.0.0"
 
 # The declared prompt for this build. RMA_PROMPT_VERSION overrides it so a
 # dev-split comparison does not need a code edit between runs; whichever value
