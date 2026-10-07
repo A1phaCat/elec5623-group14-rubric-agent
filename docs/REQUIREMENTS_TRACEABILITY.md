@@ -1,7 +1,10 @@
 # Requirements traceability
 
 Proposal v2 §4.5–4.8 → code → test → metric. Owner codes A1–A5 are the
-responsibility areas from proposal §10.2. Named owners below are proposed, pending team confirmation; they do not assert past authorship. Zhengyu Han leads the core GenAI system and evaluation design (see `TEAM_DELIVERY.md`).
+responsibility areas from proposal §10.2. Named owners below are proposed, pending team confirmation; they do not assert past authorship. Zhengyu Han leads the core GenAI system and evaluation design (see `TEAM_DELIVERY.md`). Who has actually committed what is generated from git history in `CONTRIBUTIONS.md`, not asserted here.
+
+Current measurement state is in `../STATUS.md`; the frozen configuration these
+results belong to is `FREEZE.md`.
 
 | ID | Priority | Requirement (short) | Implemented in | Test | Metric | Owner |
 |---|---|---|---|---|---|---|
@@ -18,12 +21,12 @@ responsibility areas from proposal §10.2. Named owners below are proposed, pend
 | FR11 | Must | Flag weak evidence / validation failure | `validator` (fail-closed), one corrective round via `gateway.revise` then re-validation, UI warning | `test_fr11_s6_validator_fails_closed` (4 modes), `test_live_gateway_corrective_round_after_validator_rejection` | M6, M7 | A4 — Zhengyu Han |
 | FR12 | Must | Accept provisional score | `ReviewSession.decide("accepted")` | `test_fr12_fr13_fr15_nfr5_*` | M16 | A5 — Zhaoxinyi Zhou |
 | FR13 | Must | Edit score + comment; AI value retained | `decide("edited")`, range check; export keeps both | same, `test_fr13_edited_score_must_be_in_range` | M9, M16 | A5 — Zhaoxinyi Zhou |
-| FR14 | Should | Optional draft feedback | gateway `draft_feedback`; validator checks its citations | `test_corpus_harness_targets` (M17) | M17 | A4 — Zhengyu Han |
+| FR14 | Should | Draft feedback, required unless `insufficient` | gateway `draft_feedback`; `assessment_v4` rule 7 requires it for scored records; validator checks its citations | `test_corpus_harness_targets` (M17) | M17 | A4 — Zhengyu Han |
 | FR15 | Should | Structured export | `export_record/export_json/export_csv`, `EXPORT_FIELDS` | `test_fr12_fr13_fr15_nfr5_*` | M16 | A2 — Yuchun Zheng |
 | FR16 | Should | Log every model call | `RunLogEntry` (incl. `attempts`, `first_attempt_warnings`), `RunLogger`; Run-log page | `test_fr16_nfr7_run_log_and_replay` | M12 | A3 — Yutong Liu |
 | NFR1 | — | Traceability ≥95% | validator + eval M5 | `test_corpus_harness_targets` | M5 | A4 — Zhengyu Han |
 | NFR2 | — | Reliability across 3 runs | `eval` repeats, `store.replay_entry` | same + replay test | M12 | A3 — Yutong Liu |
-| NFR3 | — | ≤120 s for 10–20 pages | `eval` M13 on S5; measured with the local 7B model in `docs/EVALUATION_live_qwen7b.md` | same | M13 | A2 — Yuchun Zheng |
+| NFR3 | — | ≤120 s for 10–20 pages | `eval` M13; concurrent criterion calls. **Met**: median 33.1 s over 9 submissions in `docs/evaluation_dev_frozen/`, against 126 s on the September serial build | same | M13 | A2 — Yuchun Zheng |
 | NFR4 | — | No prompt writing, ≤1 intervention | Streamlit flow; `ReviewSession.summary()` records duration, overrides, interventions | `test_ui.py` (headless S8) | M10, M11, M14 (session) | A5 — Zhaoxinyi Zhou |
 | NFR5 | — | Export blocked until all confirmed | `ReviewSession.export_record` raises `ExportBlocked` | `test_fr12_fr13_fr15_nfr5_*`, `test_ui.py` | M15 | A5 — Zhaoxinyi Zhou |
 | NFR6 | — | No real student data to any model | synthetic corpus + our own proposal only (`dataset/real/README.md`); local Ollama keeps text on the machine; hosted gateway opt-in via env | `test_build_gateway_from_env_*` | M15 (audit) | all |
@@ -44,9 +47,18 @@ responsibility areas from proposal §10.2. Named owners below are proposed, pend
 
 ## Not covered by software
 
-M9–M11 and M14 need two to three real marker sessions (proposal Week 12).
+M9–M11 and M14 need two to three real marker sessions, each including a timed
+rubric-only arm or M10 cannot be computed at all. Protocol and recording kit:
+`docs/MARKER_SESSIONS.md`; `scripts/summarise_sessions.py` reports each metric
+as `null` with a reason until the data exists, and currently reports all four
+that way.
+
 M5's "human judged to support the claim" is approximated by phrase overlap
 (`M5_citation_supports_proxy`) until the annotation round.
+
+M3 is measured on the development corpus only. The final-test labels built by
+`scripts/adjudicate_annotations.py` carry no `must_contain` phrases, so
+retrieval relevance is **unmeasured** there rather than inherited.
 
 ## 4 October integrity extensions
 
