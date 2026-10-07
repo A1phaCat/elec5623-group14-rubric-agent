@@ -36,3 +36,10 @@ Update this file whenever an AI tool contributes to a change.
 - **Verified by tools:** offline tests/lint, fixture A/B3 runs, and actual local Qwen2.5-7B smoke runs (synthetic decoy and own de-identified PDF). Exact records are in `docs/validation/README.md` and companion JSON. A smoke check is not a full labelled quality study.
 - **Not completed by AI:** independent human annotation, participant timings, teammate acceptance of proposed roles, actual-member contribution attestations, or the live assessed Q&A. No grades were submitted and no Canvas write was performed.
 - **Human review:** still required before submission. AI-generated code or text must not be claimed as independently authored or already reviewed by every teammate.
+
+## 7 October 2026 — Codex GitHub readability update
+
+- **Produced:** a Chinese-first project homepage, an English technical reference preserved from the previous README, and a task-based documentation index. Updated the Chinese walkthrough to match the new navigation and distinguish historical screenshots from current experiments.
+- **Scope:** documentation only; no source, prompts, labels, model configuration or experiment results were changed. No new model accuracy or timing claims were made.
+- **Verification:** local documentation links, whitespace checks and the existing freeze guard. No new model evaluation or human study was conducted.
+- **Human review:** the documentation change is submitted for review; teammate approval and coursework submission are not claimed.

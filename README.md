@@ -1,130 +1,88 @@
-# AI-Assisted Rubric Marking Agent
+# AI 辅助报告评分工具
 
-第一次打开这个仓库，先看中文说明：[docs/看懂这个仓库.md](docs/看懂这个仓库.md)。那一页用普通话说清这个工具做什么、首页截图的每一块是什么、每个文件夹该不该点开。下面这一页是给改代码和交作业用的英文说明。
+**上传评分表和报告，让 AI 找出处、给建议，再由人确认每一项分数。**
 
-ELEC5623 Group 14 · Track A · semester project prototype (v1.0.0, frozen 7 Oct 2026).
+ELEC5623 · Group 14 · Track A · 课程项目原型
 
-A decision-support tool for human markers: it parses an analytic rubric and a
-long text submission, retrieves evidence per criterion, asks a model for an
-**evidence-constrained** provisional score, validates the answer (and sends the
-validator's findings back to the model once if it broke a rule), and lets the
-marker accept, edit or reject each criterion before anything is exported. It
-is not an autonomous grader (Constraint C1).
+[看懂界面](docs/看懂这个仓库.md) · [全部文档](docs/README.md) · [English / 技术说明](README_EN.md) · [小组分工](docs/TEAM_DELIVERY.md)
 
-![Review UI — our proposal on the official rubric, local Qwen 7B](docs/img/review_ui_live.png)
+## 它解决什么问题？
 
-*Review page on the real case with the local 7B model, 7 October 2026: 16 pages
-become 66 evidence units, six criteria complete in 98 s, two records were
-repaired after the validator fed its findings back, and two are held as failing
-validation and cannot be accepted. The grounding audit reads 5/5 claims
-carrying an evidence id. Every score is `pending` until the marker decides.*
+批一份十几页的报告，要反复对照评分表、翻找相关段落。这个工具把**评分要求、报告原文、AI 建议和人工决定**放在一起，方便批阅者核对。
 
-![Evidence in context](docs/img/review_ui_evidence.png)
+例如，评分表要求“说明如何验证方案”，工具会找出报告里讲测试的段落，显示页码，再给出有出处的评分建议。找不到足够依据时，会提示证据不足。
 
-*The same criterion, scrolled to the evidence: five units retrieved, five
-cited, each with its page and section, shown next to the explanation that cites
-it (FR7).*
+它能帮忙找和整理依据；**最终分数由人决定，目前也没有独立研究证明它比人工更准或更快。**
 
-```
-rubric + submission → parse → chunk (E-001…) → BM25 top-K per criterion
-        → model gateway (criterion + evidence only) → validator (fail-closed, 1 corrective round)
-        → marker review (accept / edit / reject) → export JSON/CSV + run log → replay
-```
+## 用起来是什么样？
 
-## Quick start
+![批阅界面：左边核对报告证据，右边接受、改分或拒绝 AI 建议](docs/img/review_ui_live.png)
 
-```bash
-cd rubric-marking-agent
-python3 -m venv .venv && source .venv/bin/activate
-pip install -e '.[dev]'
-python scripts/generate_dataset.py        # regenerates synthetic inputs; preserve manual edits first
-pytest -q                                 # offline regression tests
-ruff check src tests app scripts          # lint (also in CI)
-rma demo --submission s4_decoy_eval       # agent path on the keyword-decoy case
-rma baseline --submission s4_decoy_eval   # B2: whole-document grading, for contrast
-rma eval --report docs/EVALUATION.md      # M1–M17 harness on 62 labelled pairs
-rma demo --log runs.jsonl && rma replay --log runs.jsonl   # M12 reproducibility
-streamlit run app/streamlit_app.py        # marker UI + Evaluation + Run log pages
-python scripts/export_second_pass.py      # blank 62-row sheet; do not copy the first labels
-```
+*已有演示截图：使用本地模型读取小组自己的 proposal。截图早于当前 `assessment_v4` 提示词，仅用于说明界面；图中分数和耗时不是当前版本的保证。*
 
-### The real case
+1. **选材料**：上传评分表和报告，或选择仓库自带示例。
+2. **看建议和出处**：每条评分标准旁边都有相关原文、位置和 AI 解释。
+3. **自己决定**：接受建议、修改分数，或拒绝建议。检查不合格的 AI 分数不能直接接受。
+4. **导出记录**：每项都处理后，下载 JSON 或 CSV；AI 原分和人工决定分别保留。
 
-The first example in the UI (and the command below) runs the agent over **our
-own 16-page proposal PDF against the official Canvas marking rubric** (six
-criteria, 10 marks, level descriptors verbatim). It is the only real document
-in the repository; we own it and the cover page with names and IDs is removed.
-See `dataset/real/README.md`.
+<details>
+<summary>展开看：报告原文和出处怎样显示</summary>
+
+![证据展示：每段带编号、页码和所在章节，方便与 AI 解释逐项核对](docs/img/review_ui_evidence.png)
+
+`E-008` 这样的编号对应报告中的一段原文。有出处不代表 AI 理解一定正确，批阅者仍需核对。
+
+</details>
+
+## 先跑起来
+
+需要 **Python 3.11 或以上版本**。在终端执行：
 
 ```bash
-rma demo --rubric dataset/real/elec5623_business_proposal_rubric.md \
-         --submission dataset/real/group14_proposal_v2.pdf
+git clone https://github.com/hanzhengyu202305-arch/elec5623-group14-rubric-agent.git
+cd elec5623-group14-rubric-agent
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -e '.[dev]'
+python -m streamlit run app/streamlit_app.py
 ```
 
-### Models
+Windows 激活虚拟环境时，将 `source .venv/bin/activate` 换成 `.venv\Scripts\Activate.ps1`（PowerShell）。
 
-| Gateway | How to select | Use |
+打开终端显示的本地网址，在左侧 **Example** 选择 `s1_standard (S1 baseline)`，点击 **Run review**。
+
+**默认是 fixture 演示模式**：不需要 API key，也不会调用真实 AI，适合先走通操作。要看真实模型效果，可使用本地 Ollama，或配置托管模型；具体见 [模型配置](README_EN.md#models)。托管模型会把所选内容发往配置的服务。
+
+## 目前做到哪一步？
+
+| 状态 | 人话说明 | 去哪里核对 |
 |---|---|---|
-| **fixture** (default) | `--gateway fixture` before the subcommand | deterministic offline stand-in; tests, CI, fault injection |
-| **local Ollama** | run `ollama serve`, then `rma --gateway ollama:qwen2.5:7b-instruct demo` (the UI lists running models automatically) | real model, no key, nothing leaves the machine — this is candidate (b) of proposal §6.3 |
-| **hosted / Azure** | `RMA_MODEL_ENDPOINT`, `RMA_MODEL`, `RMA_MODEL_API_KEY` (+ `RMA_API_KEY_HEADER=api-key`, `RMA_API_VERSION` for Azure), then `rma --gateway live demo` | candidate (a); see `docs/GOVERNANCE.md` for secret handling |
+| 已实现 | 读取评分表和报告、找原文、生成建议、检查回答、人工改分和导出 | [代码与需求对应表](docs/REQUIREMENTS_TRACEABILITY.md) |
+| 已有模型实验 | 本地 Qwen 7B 已在开发数据上运行；包含完整结果和未达标项 | [实验结果解读](docs/EVALUATION_dev_frozen_notes.md) |
+| 尚未完成 | 独立人工打分、真实使用者计时、最终测试集评价 | [项目状态](STATUS.md) |
 
-Live evaluation with the local model: `rma --gateway ollama:qwen2.5:7b-instruct eval --repeats 2 --report docs/EVALUATION_live_qwen7b.md --json docs/evaluation_live_qwen7b.json`
-(about 50 min on an M2 Pro; results committed under `docs/`).
+**能跑通，不等于评分已经可靠。** 当前开发数据主要是合成报告；“引用编号存在”只能证明格式与编号检查通过，不能证明引用真的支持结论。模型也未达到所有既定目标。
 
-## What is in the box
+## 按你想做的事找入口
 
-| Path | Purpose |
+| 你想做什么 | 从这里开始 |
 |---|---|
-| `src/rubric_agent/` | Package: parsers, chunker, retriever, gateway, validator, review, store, eval, CLI |
-| `app/streamlit_app.py`, `app/review.py`, `app/evaluation.py`, `app/run_log.py` | Marker UI (review · B2 comparison · export), Evaluation dashboard, Run-log viewer with replay |
-| `prompts/` | Versioned prompts (`assessment_v4` current, `v1`–`v3` and `v5` kept so `docs/tuning/` can be re-run, `direct_grading_v1` for B2) |
-| `dataset/` | 3 synthetic rubrics (block, table, numbered), 13 submissions, 62 labelled pairs, labelling guide |
-| `dataset/real/` | Official Canvas rubric (transcribed) + our proposal PDF |
-| `tests/` | Acceptance tests mapped to FR/NFR IDs and scenarios S1–S8, plus headless UI tests |
-| `docs/ARCHITECTURE.md` | Context and container diagrams, module table, failure handling |
-| `docs/REQUIREMENTS_TRACEABILITY.md` | FR/NFR → code → test → metric → owner |
-| `docs/EVALUATION.md`, `docs/EVALUATION_live_qwen7b.md` | Generated metric reports: fixture and local 7B model |
-| `docs/EVALUATION_NOTES.md` | What the numbers mean: agent vs B2, the label/sufficiency finding, k=10 control run, latency |
-| `docs/GOVERNANCE.md` | Oversight, privacy, secrets, limitations, risk register status |
-| `docs/DEMO_SCRIPT.md` | Week 13 demo run-sheet and Q&A prep |
-| `CONTRIBUTING.md` | Branch/PR rules and area ownership A1–A5 |
-| `STATUS.md` | What is done, what needs people, what needs the tutor |
-| `AI_USE.md` | Generative AI disclosure |
+| 不懂代码，先看懂这个项目 | [中文界面说明](docs/看懂这个仓库.md) |
+| 看实验做了什么、结果如何 | [结果解读](docs/EVALUATION_dev_frozen_notes.md) |
+| 准备报告和展示 | [报告草稿](docs/FINAL_REPORT_DRAFT.md) · [演示讲稿](docs/DEMO_SCRIPT.md) |
+| 找自己的小组任务 | [分工与交付](docs/TEAM_DELIVERY.md) |
+| 修改代码或运行测试 | [技术说明](README_EN.md) · [贡献指南](CONTRIBUTING.md) |
+| 查某份文档 | [文档导航](docs/README.md) |
 
-## Current development and assessment alignment (4 October 2026)
+## 文件夹不用全看
 
-The proposal scored **6.5/10**, per feedback supplied by the user. The final
-project retains the same Track A problem; evidence-first scoring is established
-prior work, not an invention claimed here. Start with:
+| 目录 | 放什么 |
+|---|---|
+| [`app/`](app/) | 你实际操作的网页界面 |
+| [`src/rubric_agent/`](src/rubric_agent/) | 读取材料、找证据、调用模型和检查结果的程序 |
+| [`prompts/`](prompts/) | 给 AI 的指令，当前评分用 `assessment_v4` |
+| [`dataset/`](dataset/) | 合成测试材料，以及去掉封面的本组 proposal 示例 |
+| [`tests/`](tests/) | 检查程序是否正常工作的自动测试 |
+| [`docs/`](docs/) | 设计、实验、报告和协作说明 |
 
-- `docs/MARKER_RESPONSE.md`: each deduction mapped to a concrete response.
-- `docs/RELATED_WORK.md`: Evidence-First Scoring, GradeAgentOps, RULERS and RAG comparison with verified primary sources.
-- `docs/EVALUATION_PROTOCOL.md`: fixed model/configuration, A/B2/B3 controls, metric definitions and independent-study plan.
-- `docs/TEAM_DELIVERY.md`: named proposed ownership; **Zhengyu Han leads the core GenAI system and evaluation**.
-- `docs/FINAL_REPORT_DRAFT.md`: the ten-section working report; contribution evidence and human studies remain incomplete.
-- `docs/validation/README.md`: current-source checks, separate from the historical model-quality reports.
-
-B3 changes only context selection/order while retaining the criterion prompt,
-citations, validation and revision budget:
-
-```bash
-rma --gateway fixture demo --submission s4_decoy_eval --evidence-mode full_context
-rma --gateway fixture eval --evidence-mode full_context --no-baseline --report docs/EVALUATION_B3_fixture_v2.md --json docs/evaluation_B3_fixture_v2.json
-```
-
-Review now refuses direct acceptance of an invalid or absent AI score. Manual
-scores must obey the rubric range and step. Invalid edits block export. Model
-values must be finite; quoted feedback cannot bypass the evidence checks.
-
-**Evidence limits:** M6 counts uncited positive sentences, not semantic
-hallucinations. MAE/QWK exclude abstentions and must be read with score coverage.
-Historical pooled QWK is not comparable with the revised within-criterion
-metric. Fixture results demonstrate software behaviour only. Independent labels,
-user timings and a full current-model campaign are still needed.
-
-The local `ELEC5623_A2.pdf` specifies source code plus one final report (suggested
-8–12 pages excluding references/appendices), due 3 November 2026 at 23:59;
-presentation/Q&A is 4 November. Dates are from the saved brief, not a fresh
-Canvas check. Live presentation/Q&A prohibits AI. The older Week 8 notes are
-historical course material.
+项目固定的实验配置见 [Freeze record](docs/FREEZE.md)；AI 辅助开发记录见 [AI_USE.md](AI_USE.md)。
