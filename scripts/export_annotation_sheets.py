@@ -112,8 +112,9 @@ def export_sheets(annotators: list[str], corpus: Path = CORPUS, force: bool = Fa
     for name in annotators:
         path = workspace / f"annotator_{name}.csv"
         if path.exists() and not force and any(
-            row["sufficiency"] or row["score"] or row["rationale"]
-            for row in csv.DictReader(path.open(encoding="utf-8"))
+            # utf-8-sig so an Excel-saved sheet with a BOM is still seen as filled in.
+            row.get("sufficiency") or row.get("score") or row.get("rationale")
+            for row in csv.DictReader(path.read_text(encoding="utf-8-sig").splitlines())
         ):
             raise SystemExit(f"{path} already has annotations; refusing to overwrite. Pass --force to discard them.")
         with path.open("w", encoding="utf-8", newline="") as handle:

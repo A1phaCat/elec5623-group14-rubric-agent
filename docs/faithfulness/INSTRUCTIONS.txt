@@ -1,0 +1,45 @@
+Manual faithfulness check — instructions
+
+What you are judging
+--------------------
+For each row you see one sentence the system wrote (claim_sentence) and the
+full text of the evidence unit it cited (cited_unit_text). Answer one question:
+
+    Does the cited passage support this claim?
+
+Fill `supported` with exactly one of:
+
+  yes     - the cited passage states or directly entails the claim
+  partial - the passage is about the right thing but does not establish what
+            the claim asserts (e.g. the claim adds a judgement, a quantity or a
+            property the passage does not contain)
+  no      - the passage does not support the claim, or is about something else
+
+Put anything worth remembering in `note`, and your name in `judge`.
+
+Rules that matter
+-----------------
+1. Judge support, not quality. A claim can be well written and unsupported.
+2. Judge ONLY against the passage shown. Do not use the rest of the document,
+   your own knowledge, or whether the claim seems true. Faithfulness asks
+   whether the evidence supports the claim; it does not ask whether the
+   evidence is correct.
+3. A claim that merely names the rubric descriptor ("this matches the 2-mark
+   descriptor") is a judgement about the rubric, not a factual claim about the
+   submission. Mark those `partial` and say so in the note.
+4. Do not change any other column.
+5. If you are unsure, use `partial` and write why. An honest `partial` is more
+   useful than a guessed `yes`.
+
+Do not let an AI fill this in. The entire point is that it is a human reading
+the passage. An AI judging its own citation would be the system marking its own
+homework.
+
+When you are done
+-----------------
+Run:
+
+    .venv/bin/python scripts/sample_faithfulness.py --score <your-sheet.csv>
+
+It reports the supported rate with its denominator and refuses to score a
+partially filled sheet.

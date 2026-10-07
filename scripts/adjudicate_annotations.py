@@ -48,10 +48,42 @@ def _key(row: dict) -> tuple[str, str, str]:
     return row["rubric_id"], row["submission_id"], row["criterion_id"]
 
 
-def read_sheet(path: Path) -> dict[tuple[str, str, str], dict]:
+REQUIRED_COLUMNS = ("pair", "rubric_id", "submission_id", "criterion_id", "max_mark", "granularity")
+
+
+def read_csv_rows(path: Path) -> list[dict]:
+    """Read an annotator's sheet tolerantly, because they arrive from Excel.
+
+    Excel's "CSV UTF-8" writes a byte-order mark, which makes the first column
+    name `\ufeffpair` under plain utf-8 and turns every lookup of `pair` into a
+    KeyError. utf-8-sig strips a BOM when present and is a no-op otherwise.
+    Anything that is not UTF-8 at all gets an explanation rather than a
+    traceback, since the person who saved it has to fix it.
+    """
     if not path.is_file():
         raise SystemExit(f"Missing annotation sheet: {path}")
-    rows = list(csv.DictReader(path.open(encoding="utf-8")))
+    try:
+        text = path.read_text(encoding="utf-8-sig")
+    except UnicodeDecodeError as exc:
+        raise SystemExit(
+            f"{path.name} is not UTF-8 (byte {exc.start}: {exc.reason}). Excel's plain 'CSV' uses a "
+            "regional encoding. Re-save it as 'CSV UTF-8 (Comma delimited)' and upload again."
+        ) from exc
+    rows = list(csv.DictReader(text.splitlines()))
+    if not rows:
+        raise SystemExit(f"{path.name} has a header but no rows.")
+    missing = [column for column in REQUIRED_COLUMNS if column not in rows[0]]
+    if missing:
+        raise SystemExit(
+            f"{path.name} is missing the column(s) {', '.join(missing)}. Found: "
+            f"{', '.join(rows[0])}. Do not rename, reorder or delete columns; fill only "
+            "sufficiency, score and rationale."
+        )
+    return rows
+
+
+def read_sheet(path: Path) -> dict[tuple[str, str, str], dict]:
+    rows = read_csv_rows(path)
     parsed: dict[tuple[str, str, str], dict] = {}
     for row in rows:
         sufficiency = (row.get("sufficiency") or "").strip().lower()

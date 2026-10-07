@@ -1,0 +1,11 @@
+{
+  "created_at_utc": "2026-10-07T03:06:45.632266+00:00",
+  "protocol": "docs/EVALUATION_PROTOCOL.md Addendum A.6",
+  "source": "docs/evaluation_dev_frozen/A.json, first run of each rubric/submission",
+  "population_cited_claims": 47,
+  "sample_size": 30,
+  "seed": 20261007,
+  "status": "blank; not measured until a named person scores it",
+  "sampling": "candidates sorted by (submission, criterion, unit, sentence) then random.Random(seed).sample, so the draw is reproducible",
+  "prohibition": "An AI must not fill this in; that would not be human evidence."
+}

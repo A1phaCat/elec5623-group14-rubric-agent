@@ -1,0 +1,14 @@
+===PAGE 1===
+# Problem and motivation
+
+Laboratory demonstrators currently reconstruct why a bench supply tripped by reading raw logs after the session. The stakeholders are the demonstrators who act during the session, the unit coordinator who schedules equipment repair, and the students whose experiments are interrupted. Evidence of need: in the two most recent teaching semesters the laboratory manager recorded forty-one supply interruptions, of which nine required a repeat session. That recorded count, not an estimate, motivates the work.
+
+===PAGE 2===
+# Requirements
+
+Requirements are prioritised. Must: detect a persistent excursion within five samples; reject malformed rows without stopping; record every warning with a timestamp. Should: export the session as CSV. Could: display a live trace. Each must-level requirement has an acceptance criterion: given the forty-sample labelled fixture, when the rule runs, then both reference persistent events are detected with no missed event and at most one false alarm.
+
+===PAGE 3===
+# Methodology
+
+Three one-week increments, each ending with a runnable artefact and an automated test run. Increment one parses and validates input; increment two implements the confirmation rule; increment three adds the warning record. A fixture reader stands in for hardware behind a single interface, so tests run with no bench equipment attached. Every increment re-runs the previous increment's tests before new work is accepted.

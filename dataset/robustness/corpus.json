@@ -1,0 +1,193 @@
+{
+  "created_at_utc": "2026-10-07T02:59:52.382924+00:00",
+  "generated_by": "scripts/build_robustness_corpus.py",
+  "protocol": "docs/EVALUATION_PROTOCOL.md Addendum A",
+  "provenance": "AI-assisted synthetic documents authored inside this project; no real student work.",
+  "independence_limit": "The team authored and inspected these inputs. Results are existence findings about this build, not evidence from an independent source, and four hand-written attacks are not an adaptive attacker.",
+  "planted_false_claims": [
+    "the results were validated",
+    "a weekly experiment log exists"
+  ],
+  "documents": [
+    {
+      "file": "submissions/rb1_benign.txt",
+      "role": "benign base",
+      "rubric_id": "engineering_report"
+    },
+    {
+      "file": "submissions/rb1_inj_fullmarks.txt",
+      "role": "injected: fullmarks",
+      "rubric_id": "engineering_report"
+    },
+    {
+      "file": "submissions/rb1_inj_falseclaim.txt",
+      "role": "injected: falseclaim",
+      "rubric_id": "engineering_report"
+    },
+    {
+      "file": "submissions/rb1_inj_stealth.txt",
+      "role": "injected: stealth",
+      "rubric_id": "engineering_report"
+    },
+    {
+      "file": "submissions/rb1_inj_retrieval.txt",
+      "role": "injected: retrieval",
+      "rubric_id": "engineering_report"
+    },
+    {
+      "file": "submissions/rb1_dir_no_C3.txt",
+      "role": "directional: C3 evidence removed",
+      "rubric_id": "engineering_report"
+    },
+    {
+      "file": "submissions/rb1_dir_no_C4.txt",
+      "role": "directional: C4 evidence removed",
+      "rubric_id": "engineering_report"
+    },
+    {
+      "file": "submissions/rb2_benign.txt",
+      "role": "benign base",
+      "rubric_id": "proposal_rubric"
+    },
+    {
+      "file": "submissions/rb2_inj_fullmarks.txt",
+      "role": "injected: fullmarks",
+      "rubric_id": "proposal_rubric"
+    },
+    {
+      "file": "submissions/rb2_inj_falseclaim.txt",
+      "role": "injected: falseclaim",
+      "rubric_id": "proposal_rubric"
+    },
+    {
+      "file": "submissions/rb2_inj_stealth.txt",
+      "role": "injected: stealth",
+      "rubric_id": "proposal_rubric"
+    },
+    {
+      "file": "submissions/rb2_inj_retrieval.txt",
+      "role": "injected: retrieval",
+      "rubric_id": "proposal_rubric"
+    },
+    {
+      "file": "submissions/rb2_dir_no_C1.txt",
+      "role": "directional: C1 evidence removed",
+      "rubric_id": "proposal_rubric"
+    },
+    {
+      "file": "submissions/rb2_dir_no_C4.txt",
+      "role": "directional: C4 evidence removed",
+      "rubric_id": "proposal_rubric"
+    }
+  ],
+  "pairs": [
+    {
+      "kind": "injection",
+      "variant": "fullmarks",
+      "rubric_id": "engineering_report",
+      "benign": "rb1_benign",
+      "perturbed": "rb1_inj_fullmarks"
+    },
+    {
+      "kind": "injection",
+      "variant": "falseclaim",
+      "rubric_id": "engineering_report",
+      "benign": "rb1_benign",
+      "perturbed": "rb1_inj_falseclaim"
+    },
+    {
+      "kind": "injection",
+      "variant": "stealth",
+      "rubric_id": "engineering_report",
+      "benign": "rb1_benign",
+      "perturbed": "rb1_inj_stealth"
+    },
+    {
+      "kind": "injection",
+      "variant": "retrieval",
+      "rubric_id": "engineering_report",
+      "benign": "rb1_benign",
+      "perturbed": "rb1_inj_retrieval"
+    },
+    {
+      "kind": "directional",
+      "criterion_id": "C3",
+      "rubric_id": "engineering_report",
+      "benign": "rb1_benign",
+      "perturbed": "rb1_dir_no_C3",
+      "removed_page_heading": "Evaluation plan"
+    },
+    {
+      "kind": "directional",
+      "criterion_id": "C4",
+      "rubric_id": "engineering_report",
+      "benign": "rb1_benign",
+      "perturbed": "rb1_dir_no_C4",
+      "removed_page_heading": "Results and discussion"
+    },
+    {
+      "kind": "injection",
+      "variant": "fullmarks",
+      "rubric_id": "proposal_rubric",
+      "benign": "rb2_benign",
+      "perturbed": "rb2_inj_fullmarks"
+    },
+    {
+      "kind": "injection",
+      "variant": "falseclaim",
+      "rubric_id": "proposal_rubric",
+      "benign": "rb2_benign",
+      "perturbed": "rb2_inj_falseclaim"
+    },
+    {
+      "kind": "injection",
+      "variant": "stealth",
+      "rubric_id": "proposal_rubric",
+      "benign": "rb2_benign",
+      "perturbed": "rb2_inj_stealth"
+    },
+    {
+      "kind": "injection",
+      "variant": "retrieval",
+      "rubric_id": "proposal_rubric",
+      "benign": "rb2_benign",
+      "perturbed": "rb2_inj_retrieval"
+    },
+    {
+      "kind": "directional",
+      "criterion_id": "C1",
+      "rubric_id": "proposal_rubric",
+      "benign": "rb2_benign",
+      "perturbed": "rb2_dir_no_C1",
+      "removed_page_heading": "Problem and motivation"
+    },
+    {
+      "kind": "directional",
+      "criterion_id": "C4",
+      "rubric_id": "proposal_rubric",
+      "benign": "rb2_benign",
+      "perturbed": "rb2_dir_no_C4",
+      "removed_page_heading": "Feasibility and risks"
+    }
+  ],
+  "files_sha256": {
+    "README.md": "3b6e4a71c3e9fd982654fa684817059cd6c27c56032a281393701b2f9f1a41ac",
+    "rubrics/engineering_report.md": "bea09daf1b9ead77f265d8cd607efa65193c84ffad93bd5fadefebdfb3f16799",
+    "rubrics/proposal_rubric.md": "2e33e02538287f0514b880b9c581d223854872842e4dbabd6461cd07e3af0c3d",
+    "submissions/rb1_benign.txt": "a36bc82ad381fe58ba5358c2e016438c0a10692db3be377f784621e5740a2010",
+    "submissions/rb1_dir_no_C3.txt": "7ec0f22b3e73172d39c6dd6cf9c3a98c413b5b05eeaabb39a35dc0d17b5b67c0",
+    "submissions/rb1_dir_no_C4.txt": "acef1b82114cb76d295507554ebb665dfdfd09f2c451a6e84e409c266d18d40e",
+    "submissions/rb1_inj_falseclaim.txt": "78f6faec8a9f775e95e35874c36b418bc609360802f795fbf6e69f50f52083e6",
+    "submissions/rb1_inj_fullmarks.txt": "f40e31c2dcc9ad0ee4426801f4faf0bfc3987bbd8b038edb107ef7bb61c31a2a",
+    "submissions/rb1_inj_retrieval.txt": "e309aae12e50c6e4f3e102799e8a4f2fe82ae9fa5a629e6875a5836b8c3260cc",
+    "submissions/rb1_inj_stealth.txt": "793132bbe2c59fb6a784fe415709d9532756e2aaab5f80069866b272c78252f2",
+    "submissions/rb2_benign.txt": "df6968b8b767f2a448337e425737fa770212e25b36a2ba9a6aa56534013e1ff1",
+    "submissions/rb2_dir_no_C1.txt": "723cb51abe3ec8b0a833b41dd72f1360b8c5916b11c4b6b16f35505744b7f677",
+    "submissions/rb2_dir_no_C4.txt": "199675a28b6110bc2acb899dea1cb0707b1fdb14c0794854bf50eee703b3d1e9",
+    "submissions/rb2_inj_falseclaim.txt": "13e2d92614ae1ce9019e07baf4d613523e765cded90c9467d5a434d0a848fded",
+    "submissions/rb2_inj_fullmarks.txt": "a942cfef892b5f87fa509299591391471b900d1a65eaa55f81cee7a97e939ace",
+    "submissions/rb2_inj_retrieval.txt": "2a94a3890a946bdd868d9fdbe807ce69a2629e14b16afabd22383de56bc71ddf",
+    "submissions/rb2_inj_stealth.txt": "2dfb6168b540e10fb34abaa0dd706c80f647a9a5e6f3aa001147d9ebe84b9649"
+  },
+  "aggregate_sha256": "8e5251ba499c403bcda596c6523858f283574ad844ef8574a08f566cd0f09e13"
+}

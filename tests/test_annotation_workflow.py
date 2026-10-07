@@ -13,7 +13,7 @@ import json
 from pathlib import Path
 
 import pytest
-from scripts.adjudicate_annotations import CLASSES, agreement, cohens_kappa, read_sheet
+from scripts.adjudicate_annotations import CLASSES, agreement, cohens_kappa, read_csv_rows, read_sheet
 from scripts.export_annotation_sheets import FIELDS, export_sheets
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -156,6 +156,47 @@ def test_confusion_matrix_covers_every_class_pair_and_totals_the_pairs(tmp_path)
     assert confusion["partial|sufficient"] == 1
 
 
+def test_excel_utf8_bom_is_tolerated(tmp_path):
+    """Excel's "CSV UTF-8" writes a BOM; a teammate's upload must still parse.
+
+    Under plain utf-8 the first column name becomes "\ufeffpair" and every
+    lookup of "pair" raises KeyError, which would have failed at adjudication
+    after the annotation work was already done.
+    """
+    path = _sheet(tmp_path / "bom.csv", _answers("sufficient", LOW))
+    path.write_bytes(b"\xef\xbb\xbf" + path.read_bytes())
+    rows = read_csv_rows(path)
+    assert "pair" in rows[0] and "\ufeffpair" not in rows[0]
+    assert len(read_sheet(path)) == 27
+
+
+def test_non_utf8_sheet_explains_how_to_re_save(tmp_path):
+    """Excel's plain "CSV" uses a regional encoding, which is not decodable here."""
+    path = tmp_path / "latin1.csv"
+    header = ",".join(FIELDS)
+    row = ",".join(["1", "engineering_report", "f01", "ordinary", "C1", "caf\u00e9",
+                    "4.0", "1.0", "d", "t", "sufficient", "1.0", "r"])
+    path.write_bytes(f"{header}\n{row}\n".encode("latin-1"))
+    with pytest.raises(SystemExit, match="CSV UTF-8"):
+        read_csv_rows(path)
+
+
+def test_renamed_or_dropped_columns_are_named_in_the_error(tmp_path):
+    path = _sheet(tmp_path / "renamed.csv", _answers("sufficient", LOW))
+    lines = path.read_text(encoding="utf-8").splitlines()
+    lines[0] = lines[0].replace("criterion_id", "criterion")
+    path.write_text("\n".join(lines), encoding="utf-8")
+    with pytest.raises(SystemExit, match="criterion_id"):
+        read_csv_rows(path)
+
+
+def test_header_only_sheet_is_rejected(tmp_path):
+    path = tmp_path / "empty.csv"
+    path.write_text(",".join(FIELDS) + "\n", encoding="utf-8")
+    with pytest.raises(SystemExit, match="no rows"):
+        read_csv_rows(path)
+
+
 def test_mismatched_sheets_are_rejected(tmp_path):
     full = _sheet(tmp_path / "a.csv", _answers("sufficient", LOW))
     rows = list(csv.DictReader(full.open(encoding="utf-8")))[:-1]
@@ -168,15 +209,45 @@ def test_mismatched_sheets_are_rejected(tmp_path):
         agreement({"A": full, "B": short})
 
 
-def test_real_annotation_sheets_remain_unfilled():
-    """Until real people fill these in, no label may appear in them."""
+def test_real_annotation_sheets_are_blank_or_valid():
+    """A sheet must be either untouched or correctly filled in — never half-done.
+
+    This runs in CI while real annotation is in progress, so it must not punish
+    a teammate for doing the work. A blank sheet is the starting state; a
+    completed sheet must parse under the same rules the adjudicator applies, so
+    a sheet that was filled in wrongly (bad label, off-grid score, a score on an
+    `insufficient` row, an Excel BOM) fails here rather than at adjudication.
+    """
     for name in ("A", "B"):
         path = CORPUS / "annotation" / f"annotator_{name}.csv"
-        rows = list(csv.DictReader(path.open(encoding="utf-8")))
-        assert len(rows) == 27
-        assert all(not row["sufficiency"] and not row["score"] for row in rows), (
-            f"{path.name} contains labels; agreement must be recomputed and the corpus labels rebuilt"
+        rows = list(csv.DictReader(path.read_text(encoding="utf-8-sig").splitlines()))
+        assert len(rows) == 27, f"{path.name} should keep all 27 pairs"
+        filled = [row for row in rows if row["sufficiency"] or row["score"]]
+        if not filled:
+            continue
+        assert len(filled) == 27, (
+            f"{path.name} is partially filled ({len(filled)}/27). Finish it or clear it; "
+            "a partial sheet cannot support an agreement statistic."
         )
-    assert not (CORPUS / "labels.json").exists(), (
-        "final_test/labels.json exists but the annotation sheets are blank; labels must come from the sheets"
-    )
+        # Raises SystemExit with a specific message if anything is inconsistent.
+        parsed = read_sheet(path)
+        assert len(parsed) == 27
+
+
+def test_corpus_labels_only_exist_once_both_sheets_are_complete():
+    """final_test/labels.json must be derived from completed sheets, not authored."""
+    sheets = {}
+    for name in ("A", "B"):
+        path = CORPUS / "annotation" / f"annotator_{name}.csv"
+        rows = list(csv.DictReader(path.read_text(encoding="utf-8-sig").splitlines()))
+        sheets[name] = any(row["sufficiency"] or row["score"] for row in rows)
+    if (CORPUS / "labels.json").exists():
+        assert all(sheets.values()), (
+            "final_test/labels.json exists but an annotation sheet is still blank; "
+            "labels must come from two completed independent sheets via "
+            "scripts/adjudicate_annotations.py build"
+        )
+        assert (CORPUS / "annotation" / "agreement.json").exists(), (
+            "labels.json exists without agreement.json; agreement must be computed from the "
+            "untouched originals before adjudication"
+        )
