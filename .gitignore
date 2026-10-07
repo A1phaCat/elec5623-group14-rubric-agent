@@ -11,9 +11,11 @@ runs.jsonl
 !dataset/**
 .playwright-cli/
 
-# Campaign output is committed once, complete, after a run finishes.
+# Campaign output joins the repository once, complete, with the reports it
+# supports. Per-unit checkpoints are resume state and are fully reproduced by
+# run_outputs in A.json/B3.json, so they stay local; the raw provider capture
+# is kept because it is what makes a reported number auditable.
 docs/evaluation_*/checkpoints/
 docs/evaluation_*/*.writing
-docs/evaluation_*/manifest.json
-docs/evaluation_*/progress.jsonl
-docs/evaluation_*/provider_responses.jsonl
+!docs/evaluation_*/progress.jsonl
+!docs/evaluation_*/provider_responses.jsonl

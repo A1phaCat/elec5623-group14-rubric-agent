@@ -111,6 +111,67 @@ The scored corpus contains two labelled rubrics, 13 submissions and 62 criterion
 
 The controls are B2, same-model one-shot grading, and B3, the same criterion prompt, citation rules, validator and correction budget with all indexed units instead of BM25 top five. B3 changes evidence selection and order. B2 is not asked to cite and cannot establish a factual-correctness advantage from citation counts. Neither control reproduces EFS, GradeAgentOps or RULERS. Current reports preserve code/prompt/input hashes, configuration, denominators and individual outputs.
 
+### Current results: frozen campaign, local 7B, 7 October 2026
+
+All three systems, one model, one set of inputs and labels, under the frozen
+configuration in `docs/FREEZE.md`. 43 criterion pairs over 9 submissions and 2
+rubrics, corrected labels `dataset/labels_v2.json`, three repeats for A and B3
+and one for B2. Artifacts and per-call records are in
+`docs/evaluation_dev_frozen/`; the reading below is `docs/EVALUATION_dev_frozen_notes.md`.
+
+| | A (BM25 k=5) | B2 one-shot | B3 full context |
+|---|---:|---:|---:|
+| Sufficiency macro-F1 (target 0.75) | 0.439 | 0.434 | 0.401 |
+| Sufficiency accuracy | **0.767** | 0.721 | 0.744 |
+| Conditional normalised MAE | 0.222 | **0.050** | 0.318 |
+| Numeric score coverage | **36/38** | 30/38 | 33/38 |
+| False-insufficient pairs | **2** | 8 | 5 |
+| Uncited positive claim rate | **0.000** | 1.000 | **0.000** |
+| Repeatability, 3 runs | **1.000** | not measured | **1.000** |
+| Median latency per submission | 33.1 s | 11.0 s | 41.0 s |
+
+On the pairs where both systems emitted a number: A 0.219 against B3 0.313
+(32 pairs), and A 0.259 against B2 0.034 (29 pairs).
+
+Three results follow, and they do not all favour the product.
+
+**Restricting evidence helps.** A and B3 differ only in context selection;
+prompt, citation rules, validator and correction budget are identical. A is
+better on score error, on false-insufficient decisions and on accuracy, and it
+is faster. The clearest case is the keyword decoy `s4_decoy_eval` C3, where A
+and B3 cite the *same* unit and B3 reads a sentence that announces itself as a
+decoy as "Metrics listed without a procedure", scoring 2.0 where the reference
+is `insufficient`. Per-submission accuracy there is A 1.000 against B3 0.400.
+The extra context did not supply a better passage; it supplied confidence to
+over-read the one already retrieved.
+
+**The one-shot baseline agrees better on scores and cannot be audited.** B2's
+conditional normalised MAE is 0.050 against A's 0.222, and on the jointly
+scored subset 0.034 against 0.259. That is reported as a real result. B2 also
+has no evidence pointer on any positive claim, abstains wrongly four times as
+often as A, and produced nothing scorable on `p2_gaps`. B2 is not asked to
+cite, so its uncited rate describes its output format rather than proving
+hallucination; what it establishes is that a marker cannot check a B2 score.
+
+**Two previously open targets now pass.** Repeatability is 1.000 over three
+runs at temperature 0, where the September report measured 0.968 over two. The
+median latency of 33.1 s meets NFR3's 120 s, against the 126 s serial UI run
+that missed it.
+
+M4 remains below target at 0.439 for a structural reason declared before the
+run: corrected dev holds one `partial` pair, so a third of macro-F1 rests on a
+single judgement, and A's F1 for `partial` is 0.000. macro-F1 therefore cannot
+exceed 0.667 on this split regardless of the other classes. Per class, A scores
+F1 0.873 on `sufficient` (support 37) and 0.444 on `insufficient` (support 5).
+Accuracy, 0.767, describes the same 43 decisions without that distortion. M4 is
+settled on `dataset/final_test/`, where `f02` and `f05` give `partial` a real
+denominator.
+
+Two limits belong with every number above. The dev split is the split the
+prompt was selected on, so A's figures here are not an unbiased estimate. The
+labels are the project's own corrected judgements rather than independent
+ground truth.
+
 ### Historical results (local 7B, 13 September 2026)
 
 | Metric | Agent, K=5 | B2 one-shot | K=10 control |
@@ -124,7 +185,7 @@ The controls are B2, same-model one-shot grading, and B3, the same criterion pro
 | Repeatability, two runs | 0.968 | Not measured | Not measured |
 | Median latency / 12-page case | 46.5 s / 50.6 s | Not measured | Not recorded |
 
-Source: `EVALUATION_live_qwen7b.md` and the K=10 note. These are historical measurements, not a current-build scorecard. The old QWK pooled incompatible rubric scales, and MAE excluded abstentions while mixing raw marks. The revised harness uses within-criterion QWK and normalised MAE, and reports coverage and jointly scored samples. Do not use historical QWK values to establish superiority. M4 missed its target. The K=10 control did not improve macro-F1, which weakens a retrieval-only explanation on this small corpus; it does not establish a general causal conclusion.
+Source: `EVALUATION_live_qwen7b.md` and the K=10 note. These are historical measurements under `assessment_v2`, superseded by the frozen campaign above and kept only to show what changed. The old QWK pooled incompatible rubric scales, and MAE excluded abstentions while mixing raw marks. The revised harness uses within-criterion QWK and normalised MAE, and reports coverage and jointly scored samples. Do not use historical QWK values to establish superiority. M4 missed its target. The K=10 control did not improve macro-F1, which weakens a retrieval-only explanation on this small corpus; it does not establish a general causal conclusion.
 
 The historical real-PDF UI run took about 126 seconds on the serial build, above the 120-second target. Current code submits criterion calls concurrently, but the model server can still queue them. Current-build checks are reported separately in `docs/validation/README.md`; a smoke check does not replace the labelled campaign.
 
@@ -133,6 +194,43 @@ The historical real-PDF UI run took about 126 seconds on the serial build, above
 The final software suite passed 92 regression tests, including headless UI interactions. Offline A/B3 campaigns preserve the failed fixture macro-F1 target and are not model-quality results. The current local Qwen smoke run took 33.81 s for the decoy BM25 path, 38.29 s for the same-prompt full-context B3 path, and 61.85 s for the 16-page own-proposal PDF. The PDF yielded five valid provisional scores and one citation-rule rejection; the rejected score remains null. Each condition ran once, so these timings do not establish a speed-up, repeatability or general quality. The final run's source hashes match the current implementation. Full records and limitations are in `docs/validation/README.md`.
 
 ### Failure analysis and unmeasured outcomes
+
+Three traces from the frozen campaign, one per scenario the protocol requires.
+Each shows the retrieved span, the output and the reference; reproduce any of
+them with `scripts/extract_traces.py`.
+
+**Decoy, `s4_decoy_eval` C3.** The only retrieved unit is *"We mention
+evaluation only as a keyword without specifying metrics or a baseline. This
+sentence is a decoy and does not include Recall@5, labelled data, or test
+scenarios."* Reference `insufficient`. A answered `insufficient`, citing
+`E-004`. B3, given the whole document, cited the same unit and answered
+`sufficient` 2.0. The failure is interpretive, not retrieval.
+
+**Dispersed, `s2_dispersed` C1.** Two relevant sentences sit on pages 1 and 7
+with four pages of deliberate filler between them. A retrieved and cited both
+(`E-001` Opening, `E-007` Users), then judged `partial` 2.0 against a reference
+of `sufficient` 4.0. Retrieval succeeded and the descriptor judgement differed:
+M3 Recall@5 is 1.000 across the corpus, so finding evidence is not the
+bottleneck.
+
+**Ordinary but hardest, `s8_missing_method`.** A's worst document at 0.200
+accuracy. For C1 the submission says only *"The scoped marking-workload gap is
+unverifiable provisional scores."* The 4-mark descriptor requires a problem
+"scoped with affected users and a testable gap"; the 2-mark descriptor is
+"stated but not scoped". The reference says `sufficient` 4.0, and all three
+systems independently declined to award 4: A `partial` 2.0, B3 `sufficient`
+2.0, B2 `insufficient`. The same pattern recurs on C3.
+
+We read that as a doubtful reference label rather than a system failure, and we
+deliberately did not change it. Editing a label after seeing model output is
+fitting the target to the predictions, which is the error this project already
+corrected once (`dataset/LABELS_V2_CHANGES.md`). The observation stands as a
+further reason the conclusions wait for independently annotated data.
+
+Of A's 43 decisions, 10 are wrong and 6 of those are one step below the
+reference, so the conservative bias is reduced from the September build but not
+eliminated. The corrective round was used on 11.6% of calls and two records
+finished carrying a feedback-citation warning, which a marker sees.
 
 - Decoy wording can appear relevant to retrieval while lacking actual criterion content. Keep the retrieved passage and output together in the failure trace.
 - Seven historical first attempts failed the citation rule; six were repaired by one revision and one remained rejected. This demonstrates bounded correction on those cases, not semantic correctness.

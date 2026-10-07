@@ -1,0 +1,4327 @@
+{
+  "schema_version": 2,
+  "generated_with": {
+    "gateway": "qwen2.5:7b-instruct@127.0.0.1:11434",
+    "prompt_version": "assessment_v4",
+    "k": 5,
+    "repeats": 3,
+    "split": "dev",
+    "evidence_mode": "full_context",
+    "created_at_utc": "2026-10-07T02:07:04.976713+00:00",
+    "evidence_kind": "model_gateway_run",
+    "gateway_class": "OpenAICompatibleGateway",
+    "model_config": {
+      "model": "qwen2.5:7b-instruct",
+      "temperature": 0.0,
+      "max_tokens": 700,
+      "timeout": 180.0,
+      "max_retries": 1
+    },
+    "git_commit": "d484c7afaee53dc055a7905895154bb602a3d9e4",
+    "git_dirty": true,
+    "code": {
+      "sha256": "b0e3e8a67a26da733c5945d13da541c3204a7807d77837bd20ced740b412d425",
+      "files": {
+        "src/rubric_agent/__init__.py": "0d4833f66ff8d456fc4b5b711d7cf60fd3e33491294fd742dc891b650bd8f010",
+        "src/rubric_agent/chunker.py": "a73c8b6ddc87d820296a262bec5e8b4e07cf7491ade0832c7b138c3ab8841968",
+        "src/rubric_agent/cli.py": "dcef02c119c10daa92d431005ebbb9dcc5a3a923c6a368d099e9d8de38a8d723",
+        "src/rubric_agent/coverage.py": "f827b692836bc575be019553e47b19ce26fde9537089873214b4fc21d605c362",
+        "src/rubric_agent/errors.py": "089d79102384ef7e0d9e494b89e3c07dd3081c6013cdee2098dcc7c8eb6223ba",
+        "src/rubric_agent/eval.py": "5dcd31c2d15a6b2d605c709a43e6d09cb1f195ef2680ad4be6e515ca222f23f1",
+        "src/rubric_agent/gateway.py": "53aacbf348d66d257b1341197a7672adbbb5a3d35d246d1560539c0c5613b9f0",
+        "src/rubric_agent/pipeline.py": "af7e17c53f778d174b540094509039c032817dd42495d05652c9e5ad9d8eb9f9",
+        "src/rubric_agent/resources.py": "acb1a51d7d577596e28de01c7a5c910d57cb006bfd4b686bee783cf1e4564bd7",
+        "src/rubric_agent/retriever.py": "8f033cbcc1e8533e112949bbf095681747b4d464dff1899416cd1feb719b96af",
+        "src/rubric_agent/review.py": "9f1539f93948d99ec070823cc4ba2ed5959e3c20df514f81bc819f15f85679be",
+        "src/rubric_agent/rubric_parser.py": "076841fe463c2e303499709a46c48992f5cf25a9fceac88a1249cf4edb3ca7d7",
+        "src/rubric_agent/schemas.py": "1c38e06ed8e920ed06c220a77546c789ef670c8e4fe977e7351081c860151bd3",
+        "src/rubric_agent/store.py": "a0b976c6fab9a1ff8afc98114119843f154436a9325284b05bef8a601f9f21f2",
+        "src/rubric_agent/text_parser.py": "19d591264c481f388dcab6841945f4d8fe8b5d1087ead2c04b51aa957f9c726d",
+        "src/rubric_agent/textutil.py": "67fb59a686fd42b815dc42a053a13a6ecb5d95ac894a225eb6ad988e12196a5a",
+        "src/rubric_agent/validator.py": "f969dfcb04742deb7ddab6b8762d28e3582c7798676352957814eaa92673af64"
+      }
+    },
+    "prompts": {
+      "sha256": "e692a0650575ad05170aaf375e121c848e4bc57ba089314d7d3cd325c812a67d",
+      "files": {
+        "assessment_v1.md": "d1b70babeda6d98d29f9ee987983937eaaa3eae7aadc690a8a18dc5899cc2517",
+        "assessment_v2.md": "7f9246e587b24daa132d5d85a20ec268a636f0509d9463921391339f0b00389e",
+        "assessment_v3.md": "1561476b3bbcbf171ef7fc60959f9027349d4a3d6186532f19c19f375150291a",
+        "assessment_v4.md": "b537777bc9104e96373aaaece761dc640443f8aaaac415f0f6abab4b95e114e9",
+        "assessment_v5.md": "534e3ff1f42e88680885149b745862ddbee2e7ad9498bd35dbade6b4843f76a6",
+        "direct_grading_v1.md": "5cb95fb2d029ec1558fc29f2753b6ed64fe69dc1881502fb7608c0f9812bcdcc"
+      }
+    },
+    "dataset": {
+      "sha256": "df3ba0e59f4b93a95edd8feeb5017c7bffd72a2a5f2ee139f69eb4eea1fe17bd",
+      "files": {
+        "labels_v2.json": "4f6c46e15e72a136d98cd3b9e3116b2b5b1219c5f36e14817fbcb7de625f79dd",
+        "rubrics/engineering_report.md": "bea09daf1b9ead77f265d8cd607efa65193c84ffad93bd5fadefebdfb3f16799",
+        "rubrics/proposal_rubric.md": "2e33e02538287f0514b880b9c581d223854872842e4dbabd6461cd07e3af0c3d",
+        "submissions/p1_strong.txt": "e4671d19f2f057564b28fc3530fc3af5f8560777a200b5fda50649657ea2ba8e",
+        "submissions/p2_gaps.txt": "4d733c0c51486d8a33f72de73ad6be4486dc8d248ec54e390fb27b6e9b8f728b",
+        "submissions/s1_standard.txt": "641e65616e87f76862ba9d219aa4e967f3791006b4ff44e7191b1700f2b15fd5",
+        "submissions/s2_dispersed.txt": "61b717672fa8a8d572837a43be9913334e594f4d1b6b98524c5e0a23bcdf9652",
+        "submissions/s3_missing_eval.txt": "12dd6820902564f270f00354b445ac8a5e2a32385d92ba4907a333cb7b9ec890",
+        "submissions/s4_decoy_eval.txt": "adfb6e97b0a96e9c6f32d1d18c7102c5bceec08b4b37bead00c6945af997d542",
+        "submissions/s6_weak_problem.txt": "3cc8af90b32647f70ba7829c36581852eed78d2a36e61aeefb1842b102c308da",
+        "submissions/s7_partial_results.txt": "090da6f3b391f52fb42c3f0bb4f0cd02b5f106195bce3eeacf93cca2e22ea04f",
+        "submissions/s8_missing_method.txt": "c9447d2a6f211fb31108ae3420f341133c8abad03b107e2f522260c3a6844b02"
+      }
+    },
+    "labels_file": "labels_v2.json",
+    "runtime": {
+      "python": "3.14.7",
+      "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+      "pydantic": "2.13.5",
+      "pypdf": "6.18.1"
+    },
+    "label_validation": "Independent annotation is not verified by this harness; see EVALUATION_PROTOCOL.md.",
+    "latency_scope": "first agent run per rubric/submission; wall-clock including parsing, retrieval, calls and validation",
+    "workers": "pipeline default (one worker per criterion)",
+    "corrective_rounds_max": 1
+  },
+  "pairs": 43,
+  "submissions": 9,
+  "rubrics": 2,
+  "metrics": {
+    "M1_rubric_criteria": 1.0,
+    "M2_locator_complete": 1.0,
+    "M3_recall_at_k": 1.0,
+    "M3_precision_at_k": 0.16527777777777783,
+    "M4_sufficiency_macro_f1": 0.40096618357487923,
+    "M4_sufficiency_accuracy": 0.7441860465116279,
+    "M4_B2_sufficiency_macro_f1": null,
+    "M4_B2_sufficiency_accuracy": null,
+    "M5_citation_exists": 1.0,
+    "M5_citation_supports_proxy": 0.8461538461538461,
+    "M6_unsupported_rate": 0.0,
+    "M6_unsupported_rate_B2": null,
+    "M6_relative_reduction_vs_B2": null,
+    "M7_score_range_validity": 1.0,
+    "M8_agent_qwk": 0.01069518716577539,
+    "M8_agent_mae": 1.2272727272727273,
+    "M8_agent_normalised_mae": 0.3181818181818182,
+    "M8_agent_score_coverage": 0.868421052631579,
+    "M8_B2_qwk": null,
+    "M8_B2_mae": null,
+    "M8_B2_normalised_mae": null,
+    "M8_B2_score_coverage": null,
+    "M12_repeatability": 1.0,
+    "M13_median_latency_ms": 40962.162374999025,
+    "M13_s5_latency_ms": null,
+    "M16_export_completeness": 1.0,
+    "M17_feedback_grounding": 1.0
+  },
+  "targets": {
+    "M1_rubric_criteria": 0.95,
+    "M2_locator_complete": 1.0,
+    "M3_recall_at_k": 0.85,
+    "M4_sufficiency_macro_f1": 0.75,
+    "M5_citation_exists": 0.95,
+    "M6_unsupported_rate": 0.05,
+    "M6_relative_reduction_vs_B2": 0.3,
+    "M7_score_range_validity": 1.0,
+    "M12_repeatability": 0.9,
+    "M13_median_latency_ms": 120000,
+    "M13_s5_latency_ms": 120000,
+    "M16_export_completeness": 1.0,
+    "M17_feedback_grounding": 1.0
+  },
+  "pass": {
+    "M1_rubric_criteria": true,
+    "M2_locator_complete": true,
+    "M3_recall_at_k": true,
+    "M4_sufficiency_macro_f1": false,
+    "M5_citation_exists": true,
+    "M6_unsupported_rate": true,
+    "M6_relative_reduction_vs_B2": null,
+    "M7_score_range_validity": true,
+    "M12_repeatability": true,
+    "M13_median_latency_ms": true,
+    "M13_s5_latency_ms": null,
+    "M16_export_completeness": true,
+    "M17_feedback_grounding": true
+  },
+  "agent": {
+    "sufficiency_accuracy": 0.7441860465116279,
+    "sufficiency_macro_f1": 0.40096618357487923,
+    "sufficiency_pairs": 43,
+    "sufficiency_per_class": {
+      "sufficient": {
+        "precision": 0.9375,
+        "recall": 0.8108108108108109,
+        "f1": 0.8695652173913043,
+        "gold_support": 37,
+        "predicted": 32,
+        "true_positives": 30,
+        "false_positives": 2,
+        "false_negatives": 7
+      },
+      "partial": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "gold_support": 1,
+        "predicted": 4,
+        "true_positives": 0,
+        "false_positives": 4,
+        "false_negatives": 1
+      },
+      "insufficient": {
+        "precision": 0.2857142857142857,
+        "recall": 0.4,
+        "f1": 0.3333333333333333,
+        "gold_support": 5,
+        "predicted": 7,
+        "true_positives": 2,
+        "false_positives": 5,
+        "false_negatives": 3
+      }
+    },
+    "sufficiency_confusion": {
+      "insufficient->insufficient": 2,
+      "insufficient->partial": 2,
+      "insufficient->sufficient": 1,
+      "partial->sufficient": 1,
+      "sufficient->insufficient": 5,
+      "sufficient->partial": 2,
+      "sufficient->sufficient": 30
+    },
+    "claims": 44,
+    "unsupported_claims": 0,
+    "unsupported_rate": 0.0,
+    "score_qwk": 0.01069518716577539,
+    "qwk_defined_groups": 9,
+    "qwk_scored_pairs": 33,
+    "score_mae": 1.2272727272727273,
+    "score_normalised_mae": 0.3181818181818182,
+    "score_coverage": 0.868421052631579,
+    "scored_pairs": 33,
+    "gold_scored_pairs": 38,
+    "abstained_on_gold_scored": 5
+  },
+  "paired_scoring": null,
+  "run_outputs": [
+    {
+      "rubric_id": "engineering_report",
+      "submission_id": "s1_standard",
+      "agent_runs": [
+        {
+          "run_index": 0,
+          "latency_ms": 43834.06479199766,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001",
+                  "E-002"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The introduction states a scoped problem: the marking-workload gap for long analytic rubrics [E-001]. The users section identifies affected parties: university markers and unit coordinators [E-002]. However, the problem is not scoped with specific affected users or a testable gap.",
+                "draft_feedback": "Specify the affected users and a testable gap in the problem statement.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-003",
+                  "E-004",
+                  "E-008"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 4.0,
+                "score_max": 4.0,
+                "explanation": "The methodology is described as incremental, with a sequence of development steps [E-003]. The architecture is stated to be provider-independent [E-004]. The communication is consistent, with numbered headings and consistent terminology [E-008].",
+                "draft_feedback": null,
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 3,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [
+                  "E-005"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The evaluation plan mentions Recall@5, citation accuracy, and two baselines (manual marking and direct whole-document LLM grading) [E-005]. However, it does not detail the procedure for how these metrics will be used or the scenarios in which they will be applied.",
+                "draft_feedback": "Specify the procedure for using the mentioned metrics and detail the test scenarios in more depth [E-005].",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [
+                  "E-006"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The document states, 'Results On the synthetic corpus the method recovered criterion evidence and the discussion notes that scores remain provisional until a marker confirms them.' [E-006] This indicates results are reported but does not provide interpretation or discussion of method and limitations.",
+                "draft_feedback": "Provide an interpretation of the results and discuss how they relate to the method and any limitations.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [
+                  "E-008"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 2.0,
+                "explanation": "The document states that each figure caption uses consistent terminology and numbered headings without drifting labels [E-008], which aligns with the descriptor 'Consistent headings, captions and terminology'.",
+                "draft_feedback": "Ensure all sections of the document maintain this consistency for a more cohesive presentation.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            }
+          ]
+        },
+        {
+          "run_index": 1,
+          "latency_ms": 26280.81533299701,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001",
+                  "E-002"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The introduction states a scoped problem: the marking-workload gap for long analytic rubrics [E-001]. The users section identifies affected parties: university markers and unit coordinators [E-002]. However, the problem is not fully scoped, as no specific testable gap is mentioned.",
+                "draft_feedback": "Specify a testable gap in the problem statement to fully scope the issue.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-003",
+                  "E-004",
+                  "E-008"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 4.0,
+                "score_max": 4.0,
+                "explanation": "The methodology is described as incremental, with a sequence of development steps [E-003]. The architecture is stated to be provider-independent [E-004]. The communication is consistent, with numbered headings and consistent terminology [E-008].",
+                "draft_feedback": null,
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 3,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [
+                  "E-005"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The evaluation plan mentions Recall@5, citation accuracy, and two baselines (manual marking and direct whole-document LLM grading) [E-005]. However, it does not detail the procedure for how these metrics will be used or the scenarios in which they will be applied.",
+                "draft_feedback": "Specify the procedure for using the mentioned metrics and detail the test scenarios in more depth [E-005].",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [
+                  "E-006"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The document states, 'Results On the synthetic corpus the method recovered criterion evidence and the discussion notes that scores remain provisional until a marker confirms them.' [E-006] This indicates results are reported but does not provide interpretation or discussion of method and limitations.",
+                "draft_feedback": "Provide an interpretation of the results and discuss how they relate to the method and any limitations.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [
+                  "E-008"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 2.0,
+                "explanation": "The document states that each figure caption uses consistent terminology and numbered headings without drifting labels [E-008], which aligns with the descriptor 'Consistent headings, captions and terminology'.",
+                "draft_feedback": "Ensure all sections of the document maintain this consistency for a more cohesive presentation.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            }
+          ]
+        },
+        {
+          "run_index": 2,
+          "latency_ms": 26344.852084002923,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001",
+                  "E-002"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The introduction states a scoped problem: the marking-workload gap for long analytic rubrics [E-001]. The users section identifies affected parties: university markers and unit coordinators [E-002]. However, the problem is not fully scoped, as no specific testable gap is mentioned.",
+                "draft_feedback": "Specify a testable gap in the problem statement to fully scope the issue.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-003",
+                  "E-004",
+                  "E-008"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 4.0,
+                "score_max": 4.0,
+                "explanation": "The methodology is described as incremental, with a sequence of development steps [E-003]. The architecture is stated to be provider-independent [E-004]. The communication is consistent, with numbered headings and consistent terminology [E-008].",
+                "draft_feedback": null,
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 3,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [
+                  "E-005"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The evaluation plan mentions Recall@5, citation accuracy, and two baselines (manual marking and direct whole-document LLM grading) [E-005]. However, it does not detail the procedure for how these metrics will be used or the scenarios in which they will be applied.",
+                "draft_feedback": "Specify the procedure for using the mentioned metrics and detail the test scenarios in more depth [E-005].",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [
+                  "E-006"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The document states, 'Results On the synthetic corpus the method recovered criterion evidence and the discussion notes that scores remain provisional until a marker confirms them.' [E-006] This indicates results are reported but does not provide interpretation or discussion of method and limitations.",
+                "draft_feedback": "Provide an interpretation of the results and discuss how they relate to the method and any limitations.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [
+                  "E-008"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 2.0,
+                "explanation": "The document states that each figure caption uses consistent terminology and numbered headings without drifting labels [E-008], which aligns with the descriptor 'Consistent headings, captions and terminology'.",
+                "draft_feedback": "Ensure all sections of the document maintain this consistency for a more cohesive presentation.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            }
+          ]
+        }
+      ],
+      "baseline_B2": null
+    },
+    {
+      "rubric_id": "engineering_report",
+      "submission_id": "s2_dispersed",
+      "agent_runs": [
+        {
+          "run_index": 0,
+          "latency_ms": 60724.181541008875,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008",
+              "E-009",
+              "E-010",
+              "E-011",
+              "E-012"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008",
+              "E-009",
+              "E-010",
+              "E-011",
+              "E-012"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008",
+              "E-009",
+              "E-010",
+              "E-011",
+              "E-012"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008",
+              "E-009",
+              "E-010",
+              "E-011",
+              "E-012"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008",
+              "E-009",
+              "E-010",
+              "E-011",
+              "E-012"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001",
+                  "E-007",
+                  "E-011"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The document states the problem as a marking-workload gap [E-001]. Affected users are identified as human markers who confirm every score [E-007]. However, the problem is not scoped, as there is no mention of a specific testable gap [E-011].",
+                "draft_feedback": "Specify a testable gap related to the marking-workload problem.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 3,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-002",
+                  "E-005",
+                  "E-008",
+                  "E-011"
+                ],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "The method is described as starting with the incremental BM25 retrieval path [E-002], which indicates some method has been named. A fixture adapter for tests is mentioned [E-005], suggesting the method is testable. The validator rejects unknown IDs before reaching the review UI [E-008], indicating the method is provider-independent. However, the limitations section only mentions synthetic data, without any discussion of incremental or testable aspects [E-011].",
+                "draft_feedback": "Expand the limitations section to include more details about the method's incremental and provider-independent nature.",
+                "flags": [
+                  "uncited_feedback_claim:1",
+                  "validation_failed",
+                  "revised_once"
+                ]
+              },
+              "accepted": false,
+              "warnings": [
+                "uncited_feedback_claim:1"
+              ],
+              "claims": 4,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [
+                  "E-009"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The evaluation plan mentions metrics such as Recall@5 and citation accuracy, but does not specify baselines, scenarios, or labelled data [E-009].",
+                "draft_feedback": "Specify the baselines, scenarios, and labelled data used in the evaluation.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [
+                  "E-010"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The evidence [E-010] states 'Results show retrieved spans from three non-adjacent method sections and the discussion treats this as a recall check', which indicates results are reported but lacks interpretation or discussion of method and limitations.",
+                "draft_feedback": "Provide an interpretation of the results and discuss how they relate to the method and any limitations.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [
+                  "E-012"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 2.0,
+                "explanation": "The document includes numbered headings and a single figure caption, which maintain consistent terminology [E-012].",
+                "draft_feedback": "Ensure all sections use consistent terminology throughout the document.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            }
+          ]
+        },
+        {
+          "run_index": 1,
+          "latency_ms": 35692.71812500665,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008",
+              "E-009",
+              "E-010",
+              "E-011",
+              "E-012"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008",
+              "E-009",
+              "E-010",
+              "E-011",
+              "E-012"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008",
+              "E-009",
+              "E-010",
+              "E-011",
+              "E-012"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008",
+              "E-009",
+              "E-010",
+              "E-011",
+              "E-012"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008",
+              "E-009",
+              "E-010",
+              "E-011",
+              "E-012"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001",
+                  "E-007",
+                  "E-011"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The document states the problem as a marking-workload gap [E-001]. Affected users are identified as human markers who confirm every score [E-007]. However, the problem is not scoped, as there is no mention of a specific testable gap [E-011].",
+                "draft_feedback": "Specify a testable gap related to the marking-workload problem.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 3,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-002",
+                  "E-005",
+                  "E-008",
+                  "E-011"
+                ],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "The method is described as starting with the incremental BM25 retrieval path [E-002], which indicates some method has been named. A fixture adapter for tests is mentioned [E-005], suggesting the method is testable. The validator rejects unknown IDs before reaching the review UI [E-008], indicating the method is provider-independent. However, the limitations section only mentions synthetic data, without any discussion of incremental or testable aspects [E-011].",
+                "draft_feedback": "Expand the limitations section to include more details about the method's incremental and provider-independent nature.",
+                "flags": [
+                  "uncited_feedback_claim:1",
+                  "validation_failed",
+                  "revised_once"
+                ]
+              },
+              "accepted": false,
+              "warnings": [
+                "uncited_feedback_claim:1"
+              ],
+              "claims": 4,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [
+                  "E-009"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The evaluation plan mentions metrics such as Recall@5 and citation accuracy, but does not specify baselines, scenarios, or labelled data [E-009].",
+                "draft_feedback": "Specify the baselines, scenarios, and labelled data used in the evaluation.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [
+                  "E-010"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The evidence [E-010] states 'Results show retrieved spans from three non-adjacent method sections and the discussion treats this as a recall check', which indicates results are reported but lacks interpretation or discussion of method and limitations.",
+                "draft_feedback": "Provide an interpretation of the results and discuss how they relate to the method and any limitations.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [
+                  "E-012"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 2.0,
+                "explanation": "The document includes numbered headings and a single figure caption, which maintain consistent terminology [E-012].",
+                "draft_feedback": "Ensure all sections use consistent terminology throughout the document.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            }
+          ]
+        },
+        {
+          "run_index": 2,
+          "latency_ms": 35630.06324999151,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008",
+              "E-009",
+              "E-010",
+              "E-011",
+              "E-012"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008",
+              "E-009",
+              "E-010",
+              "E-011",
+              "E-012"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008",
+              "E-009",
+              "E-010",
+              "E-011",
+              "E-012"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008",
+              "E-009",
+              "E-010",
+              "E-011",
+              "E-012"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006",
+              "E-007",
+              "E-008",
+              "E-009",
+              "E-010",
+              "E-011",
+              "E-012"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001",
+                  "E-007",
+                  "E-011"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The document states the problem as a marking-workload gap [E-001]. Affected users are identified as human markers who confirm every score [E-007]. However, the problem is not scoped, as there is no mention of a specific testable gap [E-011].",
+                "draft_feedback": "Specify a testable gap related to the marking-workload problem.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 3,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-002",
+                  "E-005",
+                  "E-008",
+                  "E-011"
+                ],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "The method is described as starting with the incremental BM25 retrieval path [E-002], which indicates some method has been named. A fixture adapter for tests is mentioned [E-005], suggesting the method is testable. The validator rejects unknown IDs before reaching the review UI [E-008], indicating the method is provider-independent. However, the limitations section only mentions synthetic data, without any discussion of incremental or testable aspects [E-011].",
+                "draft_feedback": "Expand the limitations section to include more details about the method's incremental and provider-independent nature.",
+                "flags": [
+                  "uncited_feedback_claim:1",
+                  "validation_failed",
+                  "revised_once"
+                ]
+              },
+              "accepted": false,
+              "warnings": [
+                "uncited_feedback_claim:1"
+              ],
+              "claims": 4,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [
+                  "E-009"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The evaluation plan mentions metrics such as Recall@5 and citation accuracy, but does not specify baselines, scenarios, or labelled data [E-009].",
+                "draft_feedback": "Specify the baselines, scenarios, and labelled data used in the evaluation.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [
+                  "E-010"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The evidence [E-010] states 'Results show retrieved spans from three non-adjacent method sections and the discussion treats this as a recall check', which indicates results are reported but lacks interpretation or discussion of method and limitations.",
+                "draft_feedback": "Provide an interpretation of the results and discuss how they relate to the method and any limitations.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [
+                  "E-012"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 2.0,
+                "explanation": "The document includes numbered headings and a single figure caption, which maintain consistent terminology [E-012].",
+                "draft_feedback": "Ensure all sections use consistent terminology throughout the document.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            }
+          ]
+        }
+      ],
+      "baseline_B2": null
+    },
+    {
+      "rubric_id": "engineering_report",
+      "submission_id": "s3_missing_eval",
+      "agent_runs": [
+        {
+          "run_index": 0,
+          "latency_ms": 36525.35454099416,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001",
+                  "E-002"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The problem statement is stated but not scoped [E-001]. Affected users are specified [E-002], but the testable gap is missing.",
+                "draft_feedback": "Clarify the scoped marking-workload gap in the problem statement [E-001].",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-003"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The methodology section states 'The incremental method uses BM25 retrieval and a fixture adapter for tests plus a validator that rejects unknown IDs' [E-003]. This provides a method but lacks a detailed sequence or incremental steps, matching the 2-mark descriptor.",
+                "draft_feedback": "Provide a step-by-step sequence of the incremental method used in the project [E-003].",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "No evidence provided directly addresses the evaluation plan. The document focuses on the problem, users, methodology, results, and communication, but does not specify any metrics, baselines, scenarios, or labelled data [C3].",
+                "draft_feedback": null,
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [
+                  "E-004"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The evidence [E-004] states 'Results Narrative results describe a working parser; the discussion admits there is no measurement section.' This indicates results are present but not interpreted against the method and limitations, matching the 2-mark descriptor 'Results without interpretation'.",
+                "draft_feedback": "Provide an interpretation of the results in relation to the method and limitations used.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [
+                  "E-005"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 2.0,
+                "explanation": "The evidence [E-005] states that headings are consistent and the only figure caption names the parser, which aligns with the descriptor 'Consistent headings, captions and terminology'.",
+                "draft_feedback": "Ensure all figures have captions and that terminology is consistent throughout the document.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            }
+          ]
+        },
+        {
+          "run_index": 1,
+          "latency_ms": 36971.79549999419,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001",
+                  "E-002"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The problem statement is stated but not scoped [E-001]. Affected users are specified [E-002], but the testable gap is missing.",
+                "draft_feedback": "Clarify the scoped marking-workload gap in the problem statement [E-001].",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-003"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The methodology section states 'The incremental method uses BM25 retrieval and a fixture adapter for tests plus a validator that rejects unknown IDs' [E-003]. This provides a method but lacks a detailed sequence or incremental steps, matching the 2-mark descriptor.",
+                "draft_feedback": "Provide a step-by-step sequence of the incremental method used in the project [E-003].",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "No evidence provided directly addresses the evaluation plan. The document focuses on the problem, users, methodology, results, and communication, but does not specify any metrics, baselines, scenarios, or labelled data [C3].",
+                "draft_feedback": null,
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [
+                  "E-004"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The evidence [E-004] states 'Results Narrative results describe a working parser; the discussion admits there is no measurement section.' This indicates results are present but not interpreted against the method and limitations, matching the 2-mark descriptor 'Results without interpretation'.",
+                "draft_feedback": "Provide an interpretation of the results in relation to the method and limitations used.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [
+                  "E-005"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 2.0,
+                "explanation": "The evidence [E-005] states that headings are consistent and the only figure caption names the parser, which aligns with the descriptor 'Consistent headings, captions and terminology'.",
+                "draft_feedback": "Ensure all figures have captions and that terminology is consistent throughout the document.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            }
+          ]
+        },
+        {
+          "run_index": 2,
+          "latency_ms": 36827.68166599271,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001",
+                  "E-002"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The problem statement is stated but not scoped [E-001]. Affected users are specified [E-002], but the testable gap is missing.",
+                "draft_feedback": "Clarify the scoped marking-workload gap in the problem statement [E-001].",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-003"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The methodology section states 'The incremental method uses BM25 retrieval and a fixture adapter for tests plus a validator that rejects unknown IDs' [E-003]. This provides a method but lacks a detailed sequence or incremental steps, matching the 2-mark descriptor.",
+                "draft_feedback": "Provide a step-by-step sequence of the incremental method used in the project [E-003].",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "No evidence provided directly addresses the evaluation plan. The document focuses on the problem, users, methodology, results, and communication, but does not specify any metrics, baselines, scenarios, or labelled data [C3].",
+                "draft_feedback": null,
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 0,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [
+                  "E-004"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The evidence [E-004] states 'Results Narrative results describe a working parser; the discussion admits there is no measurement section.' This indicates results are present but not interpreted against the method and limitations, matching the 2-mark descriptor 'Results without interpretation'.",
+                "draft_feedback": "Provide an interpretation of the results in relation to the method and limitations used.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [
+                  "E-005"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 2.0,
+                "explanation": "The evidence [E-005] states that headings are consistent and the only figure caption names the parser, which aligns with the descriptor 'Consistent headings, captions and terminology'.",
+                "draft_feedback": "Ensure all figures have captions and that terminology is consistent throughout the document.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            }
+          ]
+        }
+      ],
+      "baseline_B2": null
+    },
+    {
+      "rubric_id": "engineering_report",
+      "submission_id": "s4_decoy_eval",
+      "agent_runs": [
+        {
+          "run_index": 0,
+          "latency_ms": 56783.98645900597,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001",
+                  "E-002"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The problem statement is stated but not scoped [E-001]. It mentions the 'scoped marking-workload gap', but does not provide details on the affected users or a testable gap. The affected users are mentioned in a separate section [E-002], but this does not fully scope the problem.",
+                "draft_feedback": "Clarify the specific problem and the affected users in the problem statement.",
+                "flags": [
+                  "revised_once"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-003"
+                ],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "The methodology is described as an incremental BM25 retrieval path and fixture adapter for tests feed a validator that rejects unknown IDs [E-003]. This meets the descriptor for 2 marks, as it names the method without providing a detailed sequence.",
+                "draft_feedback": "Expand on the method to include a sequence of steps or a more detailed description.",
+                "flags": [
+                  "uncited_feedback_claim:1",
+                  "validation_failed",
+                  "revised_once"
+                ]
+              },
+              "accepted": false,
+              "warnings": [
+                "uncited_feedback_claim:1"
+              ],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [
+                  "E-004"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The evidence [E-004] states that evaluation is mentioned only as a keyword without specifying metrics or a baseline. This matches the descriptor 'Metrics listed without a procedure' [C3:2.0].",
+                "draft_feedback": "Specify the metrics and a baseline for the evaluation.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [
+                  "E-005"
+                ],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "The evidence [E-005] states 'Results are anecdotal. The discussion says the demo 'felt fine''. This matches the descriptor 'Results without interpretation' [C4:2.0].",
+                "draft_feedback": "Provide numerical results and interpret them against the method and limitations.",
+                "flags": [
+                  "uncited_claim:1",
+                  "validation_failed",
+                  "revised_once"
+                ]
+              },
+              "accepted": false,
+              "warnings": [
+                "uncited_claim:1"
+              ],
+              "claims": 2,
+              "unsupported_claims": 1
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [
+                  "E-006"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 1.0,
+                "score_max": 2.0,
+                "explanation": "The evidence [E-006] states that consistent terminology appears in headings and one figure caption, which aligns with the descriptor 'Headings exist but terminology drifts' [C5:1.0].",
+                "draft_feedback": "Ensure consistent terminology throughout the document to meet the higher descriptor of 'Consistent headings, captions and terminology' [C5:2.0].",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            }
+          ]
+        },
+        {
+          "run_index": 1,
+          "latency_ms": 42528.51879199443,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001",
+                  "E-002"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The problem statement is stated but not scoped [E-001]. It mentions the 'scoped marking-workload gap', but does not provide details on the affected users or a testable gap. The affected users are mentioned in a separate section [E-002], but this does not fully scope the problem.",
+                "draft_feedback": "Clarify the specific problem and the affected users in the problem statement.",
+                "flags": [
+                  "revised_once"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-003"
+                ],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "The methodology is described as an incremental BM25 retrieval path and fixture adapter for tests feed a validator that rejects unknown IDs [E-003]. This meets the descriptor for 2 marks, as it names the method without providing a detailed sequence.",
+                "draft_feedback": "Expand on the method to include a sequence of steps or a more detailed description.",
+                "flags": [
+                  "uncited_feedback_claim:1",
+                  "validation_failed",
+                  "revised_once"
+                ]
+              },
+              "accepted": false,
+              "warnings": [
+                "uncited_feedback_claim:1"
+              ],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [
+                  "E-004"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The evidence [E-004] states that evaluation is mentioned only as a keyword without specifying metrics or a baseline. This matches the descriptor 'Metrics listed without a procedure' [C3:2.0].",
+                "draft_feedback": "Specify the metrics and a baseline for the evaluation.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [
+                  "E-005"
+                ],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "The evidence [E-005] states 'Results are anecdotal. The discussion says the demo 'felt fine''. This matches the descriptor 'Results without interpretation' [C4:2.0].",
+                "draft_feedback": "Provide numerical results and interpret them against the method and limitations.",
+                "flags": [
+                  "uncited_claim:1",
+                  "validation_failed",
+                  "revised_once"
+                ]
+              },
+              "accepted": false,
+              "warnings": [
+                "uncited_claim:1"
+              ],
+              "claims": 2,
+              "unsupported_claims": 1
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [
+                  "E-006"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 1.0,
+                "score_max": 2.0,
+                "explanation": "The evidence [E-006] states that consistent terminology appears in headings and one figure caption, which aligns with the descriptor 'Headings exist but terminology drifts' [C5:1.0].",
+                "draft_feedback": "Ensure consistent terminology throughout the document to meet the higher descriptor of 'Consistent headings, captions and terminology' [C5:2.0].",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            }
+          ]
+        },
+        {
+          "run_index": 2,
+          "latency_ms": 42604.78550000698,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001",
+                  "E-002"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The problem statement is stated but not scoped [E-001]. It mentions the 'scoped marking-workload gap', but does not provide details on the affected users or a testable gap. The affected users are mentioned in a separate section [E-002], but this does not fully scope the problem.",
+                "draft_feedback": "Clarify the specific problem and the affected users in the problem statement.",
+                "flags": [
+                  "revised_once"
+                ]
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-003"
+                ],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "The methodology is described as an incremental BM25 retrieval path and fixture adapter for tests feed a validator that rejects unknown IDs [E-003]. This meets the descriptor for 2 marks, as it names the method without providing a detailed sequence.",
+                "draft_feedback": "Expand on the method to include a sequence of steps or a more detailed description.",
+                "flags": [
+                  "uncited_feedback_claim:1",
+                  "validation_failed",
+                  "revised_once"
+                ]
+              },
+              "accepted": false,
+              "warnings": [
+                "uncited_feedback_claim:1"
+              ],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [
+                  "E-004"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The evidence [E-004] states that evaluation is mentioned only as a keyword without specifying metrics or a baseline. This matches the descriptor 'Metrics listed without a procedure' [C3:2.0].",
+                "draft_feedback": "Specify the metrics and a baseline for the evaluation.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [
+                  "E-005"
+                ],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "The evidence [E-005] states 'Results are anecdotal. The discussion says the demo 'felt fine''. This matches the descriptor 'Results without interpretation' [C4:2.0].",
+                "draft_feedback": "Provide numerical results and interpret them against the method and limitations.",
+                "flags": [
+                  "uncited_claim:1",
+                  "validation_failed",
+                  "revised_once"
+                ]
+              },
+              "accepted": false,
+              "warnings": [
+                "uncited_claim:1"
+              ],
+              "claims": 2,
+              "unsupported_claims": 1
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [
+                  "E-006"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 1.0,
+                "score_max": 2.0,
+                "explanation": "The evidence [E-006] states that consistent terminology appears in headings and one figure caption, which aligns with the descriptor 'Headings exist but terminology drifts' [C5:1.0].",
+                "draft_feedback": "Ensure consistent terminology throughout the document to meet the higher descriptor of 'Consistent headings, captions and terminology' [C5:2.0].",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            }
+          ]
+        }
+      ],
+      "baseline_B2": null
+    },
+    {
+      "rubric_id": "engineering_report",
+      "submission_id": "s6_weak_problem",
+      "agent_runs": [
+        {
+          "run_index": 0,
+          "latency_ms": 40962.162374999025,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001"
+                ],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "The problem statement is stated but not scoped [E-001].",
+                "draft_feedback": "Scope the problem by identifying the affected users and the specific gap in the marking-workload relationship.",
+                "flags": [
+                  "uncited_feedback_claim:1",
+                  "validation_failed",
+                  "revised_once"
+                ]
+              },
+              "accepted": false,
+              "warnings": [
+                "uncited_feedback_claim:1"
+              ],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-002"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 4.0,
+                "score_max": 4.0,
+                "explanation": "The methodology section states that the method involves incremental BM25 retrieval and a fixture adapter for tests, which sit behind a validator that rejects unknown IDs [E-002]. This description aligns with the descriptor 'Method is incremental, testable and provider-independent' [C2:4.0].",
+                "draft_feedback": "Ensure that the method description is clear and that all components are tested independently to confirm their functionality.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [
+                  "E-003"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The evaluation plan mentions metrics such as Recall@5, citation accuracy, a manual baseline, and a direct-LLM baseline [E-003]. This evidence matches the 2-mark descriptor, which requires metrics listed without a procedure.",
+                "draft_feedback": "Specify the procedure for how these metrics will be calculated and used in the evaluation.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [
+                  "E-004"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The evidence [E-004] states 'Results include a small table; the discussion links them to retrieval quality.' This indicates that results are present and discussed, matching the 'Results without interpretation' descriptor [C4: 2.0].",
+                "draft_feedback": "Ensure the discussion provides more than just linking to retrieval quality; interpret the results against the method and limitations.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [
+                  "E-005"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 1.0,
+                "score_max": 2.0,
+                "explanation": "The document includes headings, one figure caption, and consistent terminology [E-005], matching the 1-mark descriptor 'Headings exist but terminology drifts'.",
+                "draft_feedback": "Ensure all headings, captions, and terminology are consistent throughout the document.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            }
+          ]
+        },
+        {
+          "run_index": 1,
+          "latency_ms": 28660.560958989663,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001"
+                ],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "The problem statement is stated but not scoped [E-001].",
+                "draft_feedback": "Scope the problem by identifying the affected users and the specific gap in the marking-workload relationship.",
+                "flags": [
+                  "uncited_feedback_claim:1",
+                  "validation_failed",
+                  "revised_once"
+                ]
+              },
+              "accepted": false,
+              "warnings": [
+                "uncited_feedback_claim:1"
+              ],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-002"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 4.0,
+                "score_max": 4.0,
+                "explanation": "The methodology section states that the method involves incremental BM25 retrieval and a fixture adapter for tests, which sit behind a validator that rejects unknown IDs [E-002]. This description aligns with the descriptor 'Method is incremental, testable and provider-independent' [C2:4.0].",
+                "draft_feedback": "Ensure that the method description is clear and that all components are tested independently to confirm their functionality.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [
+                  "E-003"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The evaluation plan mentions metrics such as Recall@5, citation accuracy, a manual baseline, and a direct-LLM baseline [E-003]. This evidence matches the 2-mark descriptor, which requires metrics listed without a procedure.",
+                "draft_feedback": "Specify the procedure for how these metrics will be calculated and used in the evaluation.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [
+                  "E-004"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The evidence [E-004] states 'Results include a small table; the discussion links them to retrieval quality.' This indicates that results are present and discussed, matching the 'Results without interpretation' descriptor [C4: 2.0].",
+                "draft_feedback": "Ensure the discussion provides more than just linking to retrieval quality; interpret the results against the method and limitations.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [
+                  "E-005"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 1.0,
+                "score_max": 2.0,
+                "explanation": "The document includes headings, one figure caption, and consistent terminology [E-005], matching the 1-mark descriptor 'Headings exist but terminology drifts'.",
+                "draft_feedback": "Ensure all headings, captions, and terminology are consistent throughout the document.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            }
+          ]
+        },
+        {
+          "run_index": 2,
+          "latency_ms": 28702.067167003406,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001"
+                ],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "The problem statement is stated but not scoped [E-001].",
+                "draft_feedback": "Scope the problem by identifying the affected users and the specific gap in the marking-workload relationship.",
+                "flags": [
+                  "uncited_feedback_claim:1",
+                  "validation_failed",
+                  "revised_once"
+                ]
+              },
+              "accepted": false,
+              "warnings": [
+                "uncited_feedback_claim:1"
+              ],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-002"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 4.0,
+                "score_max": 4.0,
+                "explanation": "The methodology section states that the method involves incremental BM25 retrieval and a fixture adapter for tests, which sit behind a validator that rejects unknown IDs [E-002]. This description aligns with the descriptor 'Method is incremental, testable and provider-independent' [C2:4.0].",
+                "draft_feedback": "Ensure that the method description is clear and that all components are tested independently to confirm their functionality.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [
+                  "E-003"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The evaluation plan mentions metrics such as Recall@5, citation accuracy, a manual baseline, and a direct-LLM baseline [E-003]. This evidence matches the 2-mark descriptor, which requires metrics listed without a procedure.",
+                "draft_feedback": "Specify the procedure for how these metrics will be calculated and used in the evaluation.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [
+                  "E-004"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The evidence [E-004] states 'Results include a small table; the discussion links them to retrieval quality.' This indicates that results are present and discussed, matching the 'Results without interpretation' descriptor [C4: 2.0].",
+                "draft_feedback": "Ensure the discussion provides more than just linking to retrieval quality; interpret the results against the method and limitations.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [
+                  "E-005"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 1.0,
+                "score_max": 2.0,
+                "explanation": "The document includes headings, one figure caption, and consistent terminology [E-005], matching the 1-mark descriptor 'Headings exist but terminology drifts'.",
+                "draft_feedback": "Ensure all headings, captions, and terminology are consistent throughout the document.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            }
+          ]
+        }
+      ],
+      "baseline_B2": null
+    },
+    {
+      "rubric_id": "engineering_report",
+      "submission_id": "s7_partial_results",
+      "agent_runs": [
+        {
+          "run_index": 0,
+          "latency_ms": 41524.29879200645,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001"
+                ],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "The problem statement 'Problem The scoped marking-workload gap is missing page locators on AI comments' is stated but not scoped [E-001].",
+                "draft_feedback": "Scope the problem by identifying the affected users and the specific gap in the marking-workload process.",
+                "flags": [
+                  "uncited_feedback_claim:1",
+                  "validation_failed",
+                  "revised_once"
+                ]
+              },
+              "accepted": false,
+              "warnings": [
+                "uncited_feedback_claim:1"
+              ],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-002"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The methodology section mentions an incremental method that includes BM25 retrieval, a fixture adapter for tests, and a validator that rejects unknown IDs [E-002]. This evidence aligns with the descriptor 'Method named without a sequence' (2 marks).",
+                "draft_feedback": "Provide a sequence or steps for the incremental method to fully meet the criteria.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [
+                  "E-003"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The evaluation plan mentions metrics on the labelled evaluation set, including Recall@5 and citation accuracy, compared to a manual baseline and a direct-LLM baseline [E-003]. This evidence matches the 2-mark descriptor, as it lists metrics without specifying the procedure.",
+                "draft_feedback": "Specify the procedure for calculating the metrics mentioned in the evaluation plan [E-003].",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [
+                  "E-004"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The evidence 'Results A single number is stated with no discussion of limitations' [E-004] matches the descriptor 'Results without interpretation' [C4:2].",
+                "draft_feedback": "Add a discussion of the limitations associated with the stated number.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [
+                  "E-005"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 2.0,
+                "explanation": "The evidence [E-005] states that consistent terminology is used in headings, which matches the descriptor 'Consistent headings, captions and terminology' [C5:2].",
+                "draft_feedback": "Ensure that consistent terminology is maintained throughout the document to enhance readability and coherence.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            }
+          ]
+        },
+        {
+          "run_index": 1,
+          "latency_ms": 28943.149707993143,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001"
+                ],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "The problem statement 'Problem The scoped marking-workload gap is missing page locators on AI comments' is stated but not scoped [E-001].",
+                "draft_feedback": "Scope the problem by identifying the affected users and the specific gap in the marking-workload process.",
+                "flags": [
+                  "uncited_feedback_claim:1",
+                  "validation_failed",
+                  "revised_once"
+                ]
+              },
+              "accepted": false,
+              "warnings": [
+                "uncited_feedback_claim:1"
+              ],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-002"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The methodology section mentions an incremental method that includes BM25 retrieval, a fixture adapter for tests, and a validator that rejects unknown IDs [E-002]. This evidence aligns with the descriptor 'Method named without a sequence' (2 marks).",
+                "draft_feedback": "Provide a sequence or steps for the incremental method to fully meet the criteria.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [
+                  "E-003"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The evaluation plan mentions metrics on the labelled evaluation set, including Recall@5 and citation accuracy, compared to a manual baseline and a direct-LLM baseline [E-003]. This evidence matches the 2-mark descriptor, as it lists metrics without specifying the procedure.",
+                "draft_feedback": "Specify the procedure for calculating the metrics mentioned in the evaluation plan [E-003].",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [
+                  "E-004"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The evidence 'Results A single number is stated with no discussion of limitations' [E-004] matches the descriptor 'Results without interpretation' [C4:2].",
+                "draft_feedback": "Add a discussion of the limitations associated with the stated number.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [
+                  "E-005"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 2.0,
+                "explanation": "The evidence [E-005] states that consistent terminology is used in headings, which matches the descriptor 'Consistent headings, captions and terminology' [C5:2].",
+                "draft_feedback": "Ensure that consistent terminology is maintained throughout the document to enhance readability and coherence.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            }
+          ]
+        },
+        {
+          "run_index": 2,
+          "latency_ms": 29057.072208001046,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001"
+                ],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 4.0,
+                "explanation": "The problem statement 'Problem The scoped marking-workload gap is missing page locators on AI comments' is stated but not scoped [E-001].",
+                "draft_feedback": "Scope the problem by identifying the affected users and the specific gap in the marking-workload process.",
+                "flags": [
+                  "uncited_feedback_claim:1",
+                  "validation_failed",
+                  "revised_once"
+                ]
+              },
+              "accepted": false,
+              "warnings": [
+                "uncited_feedback_claim:1"
+              ],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-002"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The methodology section mentions an incremental method that includes BM25 retrieval, a fixture adapter for tests, and a validator that rejects unknown IDs [E-002]. This evidence aligns with the descriptor 'Method named without a sequence' (2 marks).",
+                "draft_feedback": "Provide a sequence or steps for the incremental method to fully meet the criteria.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [
+                  "E-003"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The evaluation plan mentions metrics on the labelled evaluation set, including Recall@5 and citation accuracy, compared to a manual baseline and a direct-LLM baseline [E-003]. This evidence matches the 2-mark descriptor, as it lists metrics without specifying the procedure.",
+                "draft_feedback": "Specify the procedure for calculating the metrics mentioned in the evaluation plan [E-003].",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [
+                  "E-004"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The evidence 'Results A single number is stated with no discussion of limitations' [E-004] matches the descriptor 'Results without interpretation' [C4:2].",
+                "draft_feedback": "Add a discussion of the limitations associated with the stated number.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [
+                  "E-005"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 2.0,
+                "explanation": "The evidence [E-005] states that consistent terminology is used in headings, which matches the descriptor 'Consistent headings, captions and terminology' [C5:2].",
+                "draft_feedback": "Ensure that consistent terminology is maintained throughout the document to enhance readability and coherence.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            }
+          ]
+        }
+      ],
+      "baseline_B2": null
+    },
+    {
+      "rubric_id": "engineering_report",
+      "submission_id": "s8_missing_method",
+      "agent_runs": [
+        {
+          "run_index": 0,
+          "latency_ms": 36153.08212499076,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The problem statement 'Problem The scoped marking-workload gap is unverifiable provisional scores' [E-001] is stated but not scoped, matching the 2-mark descriptor.",
+                "draft_feedback": "Clarify the affected users and the specific gap in the problem statement.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-002"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The methodology is mentioned as ‘We will use AI somehow’ [E-002], but no sequence or incremental steps are provided. This evidence allows the marker to identify the 2-point descriptor but does not provide enough detail to fully satisfy the criterion.",
+                "draft_feedback": "Provide a detailed sequence of the methodology to be used, including any incremental steps and how it will be testable and provider-independent.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [
+                  "E-003"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The evaluation plan mentions Recall@5, citation accuracy, a manual baseline, and a direct-LLM baseline [E-003]. This evidence matches the 2-mark descriptor, as it lists metrics without specifying a procedure.",
+                "draft_feedback": "Specify the procedure for each metric listed in the evaluation plan [E-003].",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [
+                  "E-004"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The evidence [E-004] states that 'Results are described as pending; the discussion is empty.' This indicates that results are present but not interpreted, matching the 'Results without interpretation' descriptor [C4: 2.0].",
+                "draft_feedback": "Provide an interpretation of the results in the discussion section.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [
+                  "E-005"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 2.0,
+                "explanation": "The document contains a figure caption that exists and headings that stay consistent [E-005]. This meets the descriptor for 2 marks: 'Consistent headings, captions and terminology'.",
+                "draft_feedback": "Ensure all headings and captions are consistent throughout the document.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            }
+          ]
+        },
+        {
+          "run_index": 1,
+          "latency_ms": 24183.420457993634,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The problem statement 'Problem The scoped marking-workload gap is unverifiable provisional scores' [E-001] is stated but not scoped, matching the 2-mark descriptor.",
+                "draft_feedback": "Clarify the affected users and the specific gap in the problem statement.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-002"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The methodology is mentioned as ‘We will use AI somehow’ [E-002], but no sequence or incremental steps are provided. This evidence allows the marker to identify the 2-point descriptor but does not provide enough detail to fully satisfy the criterion.",
+                "draft_feedback": "Provide a detailed sequence of the methodology to be used, including any incremental steps and how it will be testable and provider-independent.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [
+                  "E-003"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The evaluation plan mentions Recall@5, citation accuracy, a manual baseline, and a direct-LLM baseline [E-003]. This evidence matches the 2-mark descriptor, as it lists metrics without specifying a procedure.",
+                "draft_feedback": "Specify the procedure for each metric listed in the evaluation plan [E-003].",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [
+                  "E-004"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The evidence [E-004] states that 'Results are described as pending; the discussion is empty.' This indicates that results are present but not interpreted, matching the 'Results without interpretation' descriptor [C4: 2.0].",
+                "draft_feedback": "Provide an interpretation of the results in the discussion section.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [
+                  "E-005"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 2.0,
+                "explanation": "The document contains a figure caption that exists and headings that stay consistent [E-005]. This meets the descriptor for 2 marks: 'Consistent headings, captions and terminology'.",
+                "draft_feedback": "Ensure all headings and captions are consistent throughout the document.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            }
+          ]
+        },
+        {
+          "run_index": 2,
+          "latency_ms": 24185.405666998122,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ],
+            "C5": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005",
+              "E-006"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The problem statement 'Problem The scoped marking-workload gap is unverifiable provisional scores' [E-001] is stated but not scoped, matching the 2-mark descriptor.",
+                "draft_feedback": "Clarify the affected users and the specific gap in the problem statement.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-002"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The methodology is mentioned as ‘We will use AI somehow’ [E-002], but no sequence or incremental steps are provided. This evidence allows the marker to identify the 2-point descriptor but does not provide enough detail to fully satisfy the criterion.",
+                "draft_feedback": "Provide a detailed sequence of the methodology to be used, including any incremental steps and how it will be testable and provider-independent.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [
+                  "E-003"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The evaluation plan mentions Recall@5, citation accuracy, a manual baseline, and a direct-LLM baseline [E-003]. This evidence matches the 2-mark descriptor, as it lists metrics without specifying a procedure.",
+                "draft_feedback": "Specify the procedure for each metric listed in the evaluation plan [E-003].",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [
+                  "E-004"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.0,
+                "score_max": 4.0,
+                "explanation": "The evidence [E-004] states that 'Results are described as pending; the discussion is empty.' This indicates that results are present but not interpreted, matching the 'Results without interpretation' descriptor [C4: 2.0].",
+                "draft_feedback": "Provide an interpretation of the results in the discussion section.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C5",
+                "evidence_ids": [
+                  "E-005"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.0,
+                "score_max": 2.0,
+                "explanation": "The document contains a figure caption that exists and headings that stay consistent [E-005]. This meets the descriptor for 2 marks: 'Consistent headings, captions and terminology'.",
+                "draft_feedback": "Ensure all headings and captions are consistent throughout the document.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            }
+          ]
+        }
+      ],
+      "baseline_B2": null
+    },
+    {
+      "rubric_id": "proposal_rubric",
+      "submission_id": "p1_strong",
+      "agent_runs": [
+        {
+          "run_index": 0,
+          "latency_ms": 33385.731750007835,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 5.0,
+                "score_max": 5.0,
+                "explanation": "The evidence states the problem is repeated evidence search by markers [E-001], identifies stakeholders as tutors and coordinators, and provides evidence of need from marker interviews and a workload survey [E-001].",
+                "draft_feedback": "Ensure the problem statement is clear and concise for the reader.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-002"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.5,
+                "score_max": 5.0,
+                "explanation": "The evidence [E-002] states that requirements are prioritised as Must, Should and Could, and each has a measurable acceptance criteria row. This matches the descriptor 'Requirements listed without priority or acceptance criteria' [C2, 2.5].",
+                "draft_feedback": "Ensure that each requirement includes a clear and measurable acceptance criteria.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [
+                  "E-003"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.5,
+                "score_max": 5.0,
+                "explanation": "The methodology section states that development runs in incremental iterations, and each iteration ends with automated tests and a fixture model adapter [E-003]. This evidence matches the descriptor 'Method described without iterations or tests' [C3, 2.5].",
+                "draft_feedback": "Ensure that the methodology section includes details of the iterations and the automated tests used.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [
+                  "E-004"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.5,
+                "score_max": 5.0,
+                "explanation": "The evidence [E-004] states that a weekly timeline covers Weeks 7 to 13 and a risk register lists mitigations for model access, extraction errors, and annotation delay. This matches the descriptor 'Timeline given without risks' [C4: 2.5].",
+                "draft_feedback": "Include specific mitigations for each risk listed in the risk register to better align with the 'Weekly timeline with a risk register and mitigations' descriptor [C4: 5.0].",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            }
+          ]
+        },
+        {
+          "run_index": 1,
+          "latency_ms": 20775.032958001248,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 5.0,
+                "score_max": 5.0,
+                "explanation": "The evidence states the problem is repeated evidence search by markers [E-001], identifies stakeholders as tutors and coordinators, and provides evidence of need from marker interviews and a workload survey [E-001].",
+                "draft_feedback": "Ensure the problem statement is clear and concise for the reader.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-002"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.5,
+                "score_max": 5.0,
+                "explanation": "The evidence [E-002] states that requirements are prioritised as Must, Should and Could, and each has a measurable acceptance criteria row. This matches the descriptor 'Requirements listed without priority or acceptance criteria' [C2, 2.5].",
+                "draft_feedback": "Ensure that each requirement includes a clear and measurable acceptance criteria.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [
+                  "E-003"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.5,
+                "score_max": 5.0,
+                "explanation": "The methodology section states that development runs in incremental iterations, and each iteration ends with automated tests and a fixture model adapter [E-003]. This evidence matches the descriptor 'Method described without iterations or tests' [C3, 2.5].",
+                "draft_feedback": "Ensure that the methodology section includes details of the iterations and the automated tests used.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [
+                  "E-004"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.5,
+                "score_max": 5.0,
+                "explanation": "The evidence [E-004] states that a weekly timeline covers Weeks 7 to 13 and a risk register lists mitigations for model access, extraction errors, and annotation delay. This matches the descriptor 'Timeline given without risks' [C4: 2.5].",
+                "draft_feedback": "Include specific mitigations for each risk listed in the risk register to better align with the 'Weekly timeline with a risk register and mitigations' descriptor [C4: 5.0].",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            }
+          ]
+        },
+        {
+          "run_index": 2,
+          "latency_ms": 21039.562207995914,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 5.0,
+                "score_max": 5.0,
+                "explanation": "The evidence states the problem is repeated evidence search by markers [E-001], identifies stakeholders as tutors and coordinators, and provides evidence of need from marker interviews and a workload survey [E-001].",
+                "draft_feedback": "Ensure the problem statement is clear and concise for the reader.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-002"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.5,
+                "score_max": 5.0,
+                "explanation": "The evidence [E-002] states that requirements are prioritised as Must, Should and Could, and each has a measurable acceptance criteria row. This matches the descriptor 'Requirements listed without priority or acceptance criteria' [C2, 2.5].",
+                "draft_feedback": "Ensure that each requirement includes a clear and measurable acceptance criteria.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [
+                  "E-003"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.5,
+                "score_max": 5.0,
+                "explanation": "The methodology section states that development runs in incremental iterations, and each iteration ends with automated tests and a fixture model adapter [E-003]. This evidence matches the descriptor 'Method described without iterations or tests' [C3, 2.5].",
+                "draft_feedback": "Ensure that the methodology section includes details of the iterations and the automated tests used.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [
+                  "E-004"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.5,
+                "score_max": 5.0,
+                "explanation": "The evidence [E-004] states that a weekly timeline covers Weeks 7 to 13 and a risk register lists mitigations for model access, extraction errors, and annotation delay. This matches the descriptor 'Timeline given without risks' [C4: 2.5].",
+                "draft_feedback": "Include specific mitigations for each risk listed in the risk register to better align with the 'Weekly timeline with a risk register and mitigations' descriptor [C4: 5.0].",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            }
+          ]
+        }
+      ],
+      "baseline_B2": null
+    },
+    {
+      "rubric_id": "proposal_rubric",
+      "submission_id": "p2_gaps",
+      "agent_runs": [
+        {
+          "run_index": 0,
+          "latency_ms": 35614.79133401008,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.5,
+                "score_max": 5.0,
+                "explanation": "The problem is stated as 'marking is slow' [E-001], which is a clear problem. However, stakeholders are not named and no evidence of need is provided, matching the descriptor 'Problem stated without stakeholders or evidence of need' [E-001].",
+                "draft_feedback": "Identify the stakeholders affected by slow marking and provide evidence of their need for a faster process [E-001].",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-002"
+                ],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 5.0,
+                "explanation": "The evidence [E-002] states that 'Requirements are listed as a flat set without priority and without acceptance criteria', which matches the descriptor 'Requirements listed without priority or acceptance criteria' [C2: 2.5].",
+                "draft_feedback": "Prioritize the requirements and define measurable acceptance criteria for each one.",
+                "flags": [
+                  "uncited_feedback_claim:1",
+                  "validation_failed",
+                  "revised_once"
+                ]
+              },
+              "accepted": false,
+              "warnings": [
+                "uncited_feedback_claim:1"
+              ],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [
+                  "E-003"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.5,
+                "score_max": 5.0,
+                "explanation": "The methodology is described once, but there are no iterations or tests planned [E-003]. This evidence suggests the 2.5 mark descriptor, but a marker would need to search further to confirm there are no iterations or tests.",
+                "draft_feedback": "Ensure the methodology includes iterative development and planned tests.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [
+                  "E-004"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.5,
+                "score_max": 5.0,
+                "explanation": "The document provides a timeline by week [E-004], but it does not discuss any risks associated with the project. This evidence allows the marker to identify the 2.5 descriptor, but more information is needed to fully assess the feasibility and risks.",
+                "draft_feedback": "Include a risk register and mitigation strategies for each risk identified in the timeline [E-004].",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            }
+          ]
+        },
+        {
+          "run_index": 1,
+          "latency_ms": 25793.61120799149,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.5,
+                "score_max": 5.0,
+                "explanation": "The problem is stated as 'marking is slow' [E-001], which is a clear problem. However, stakeholders are not named and no evidence of need is provided, matching the descriptor 'Problem stated without stakeholders or evidence of need' [E-001].",
+                "draft_feedback": "Identify the stakeholders affected by slow marking and provide evidence of their need for a faster process [E-001].",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-002"
+                ],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 5.0,
+                "explanation": "The evidence [E-002] states that 'Requirements are listed as a flat set without priority and without acceptance criteria', which matches the descriptor 'Requirements listed without priority or acceptance criteria' [C2: 2.5].",
+                "draft_feedback": "Prioritize the requirements and define measurable acceptance criteria for each one.",
+                "flags": [
+                  "uncited_feedback_claim:1",
+                  "validation_failed",
+                  "revised_once"
+                ]
+              },
+              "accepted": false,
+              "warnings": [
+                "uncited_feedback_claim:1"
+              ],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [
+                  "E-003"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.5,
+                "score_max": 5.0,
+                "explanation": "The methodology is described once, but there are no iterations or tests planned [E-003]. This evidence suggests the 2.5 mark descriptor, but a marker would need to search further to confirm there are no iterations or tests.",
+                "draft_feedback": "Ensure the methodology includes iterative development and planned tests.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [
+                  "E-004"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.5,
+                "score_max": 5.0,
+                "explanation": "The document provides a timeline by week [E-004], but it does not discuss any risks associated with the project. This evidence allows the marker to identify the 2.5 descriptor, but more information is needed to fully assess the feasibility and risks.",
+                "draft_feedback": "Include a risk register and mitigation strategies for each risk identified in the timeline [E-004].",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            }
+          ]
+        },
+        {
+          "run_index": 2,
+          "latency_ms": 26193.615333002526,
+          "retrieved_ids": {
+            "C1": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C2": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C3": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ],
+            "C4": [
+              "E-001",
+              "E-002",
+              "E-003",
+              "E-004",
+              "E-005"
+            ]
+          },
+          "assessments": [
+            {
+              "draft": {
+                "criterion_id": "C1",
+                "evidence_ids": [
+                  "E-001"
+                ],
+                "sufficiency": "sufficient",
+                "provisional_score": 2.5,
+                "score_max": 5.0,
+                "explanation": "The problem is stated as 'marking is slow' [E-001], which is a clear problem. However, stakeholders are not named and no evidence of need is provided, matching the descriptor 'Problem stated without stakeholders or evidence of need' [E-001].",
+                "draft_feedback": "Identify the stakeholders affected by slow marking and provide evidence of their need for a faster process [E-001].",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 2,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C2",
+                "evidence_ids": [
+                  "E-002"
+                ],
+                "sufficiency": "insufficient",
+                "provisional_score": null,
+                "score_max": 5.0,
+                "explanation": "The evidence [E-002] states that 'Requirements are listed as a flat set without priority and without acceptance criteria', which matches the descriptor 'Requirements listed without priority or acceptance criteria' [C2: 2.5].",
+                "draft_feedback": "Prioritize the requirements and define measurable acceptance criteria for each one.",
+                "flags": [
+                  "uncited_feedback_claim:1",
+                  "validation_failed",
+                  "revised_once"
+                ]
+              },
+              "accepted": false,
+              "warnings": [
+                "uncited_feedback_claim:1"
+              ],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C3",
+                "evidence_ids": [
+                  "E-003"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.5,
+                "score_max": 5.0,
+                "explanation": "The methodology is described once, but there are no iterations or tests planned [E-003]. This evidence suggests the 2.5 mark descriptor, but a marker would need to search further to confirm there are no iterations or tests.",
+                "draft_feedback": "Ensure the methodology includes iterative development and planned tests.",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            },
+            {
+              "draft": {
+                "criterion_id": "C4",
+                "evidence_ids": [
+                  "E-004"
+                ],
+                "sufficiency": "partial",
+                "provisional_score": 2.5,
+                "score_max": 5.0,
+                "explanation": "The document provides a timeline by week [E-004], but it does not discuss any risks associated with the project. This evidence allows the marker to identify the 2.5 descriptor, but more information is needed to fully assess the feasibility and risks.",
+                "draft_feedback": "Include a risk register and mitigation strategies for each risk identified in the timeline [E-004].",
+                "flags": []
+              },
+              "accepted": true,
+              "warnings": [],
+              "claims": 1,
+              "unsupported_claims": 0
+            }
+          ]
+        }
+      ],
+      "baseline_B2": null
+    }
+  ],
+  "denominators": {
+    "labelled_pairs": 43,
+    "gold_numeric_scores": 38,
+    "agent_scored_pairs": 33,
+    "B2_scored_pairs": null,
+    "retrieval_pairs_with_relevant_units": 42,
+    "retrieval_pairs_without_relevant_units": 1,
+    "evidence_units": 59,
+    "citations": 52,
+    "agent_positive_claims": 44,
+    "B2_positive_claims": null,
+    "range_checked_outputs": 43,
+    "repeatability_criteria": 43,
+    "latency_submissions": 9,
+    "s5_latency_submissions": 0,
+    "export_rows": 43,
+    "feedback_outputs": 41
+  },
+  "metric_notes": {
+    "M3": "Macro average over pairs with at least one phrase-matched relevant unit; empty gold sets excluded and counted.",
+    "M6": "Legacy unsupported keys count uncited positive sentences only, not semantic hallucinations. B2 is not asked for evidence IDs.",
+    "M8": "MAE/QWK are conditional on emitted scores with numeric gold. QWK is pair-weighted across defined rubric/criterion groups; no mixed-scale pooling.",
+    "M12": "Requires at least two runs; one run is unmeasured. Stable abstention counts as repeatability, not quality.",
+    "M17": "Checks only that feedback citation IDs are allowed; does not establish semantic grounding."
+  },
+  "per_scenario": {
+    "S1": {
+      "pairs": 24,
+      "sufficiency_accuracy": 0.8333333333333334,
+      "sufficiency_macro_f1": 0.45,
+      "sufficiency_pairs": 24,
+      "sufficiency_per_class": {
+        "sufficient": {
+          "precision": 0.95,
+          "recall": 0.95,
+          "f1": 0.9500000000000001,
+          "gold_support": 20,
+          "predicted": 20,
+          "true_positives": 19,
+          "false_positives": 1,
+          "false_negatives": 1
+        },
+        "partial": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "gold_support": 1,
+          "predicted": 2,
+          "true_positives": 0,
+          "false_positives": 2,
+          "false_negatives": 1
+        },
+        "insufficient": {
+          "precision": 0.5,
+          "recall": 0.3333333333333333,
+          "f1": 0.4,
+          "gold_support": 3,
+          "predicted": 2,
+          "true_positives": 1,
+          "false_positives": 1,
+          "false_negatives": 2
+        }
+      },
+      "sufficiency_confusion": {
+        "insufficient->insufficient": 1,
+        "insufficient->partial": 2,
+        "partial->sufficient": 1,
+        "sufficient->insufficient": 1,
+        "sufficient->sufficient": 19
+      },
+      "claims": 25,
+      "unsupported_claims": 0,
+      "unsupported_rate": 0.0,
+      "score_qwk": -0.07017543859649121,
+      "qwk_defined_groups": 8,
+      "qwk_scored_pairs": 19,
+      "score_mae": 1.375,
+      "score_normalised_mae": 0.35,
+      "score_coverage": 0.9523809523809523,
+      "scored_pairs": 20,
+      "gold_scored_pairs": 21,
+      "abstained_on_gold_scored": 1
+    },
+    "S2": {
+      "pairs": 5,
+      "sufficiency_accuracy": 0.8,
+      "sufficiency_macro_f1": 0.29629629629629634,
+      "sufficiency_pairs": 5,
+      "sufficiency_per_class": {
+        "sufficient": {
+          "precision": 1.0,
+          "recall": 0.8,
+          "f1": 0.888888888888889,
+          "gold_support": 5,
+          "predicted": 4,
+          "true_positives": 4,
+          "false_positives": 0,
+          "false_negatives": 1
+        },
+        "partial": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "gold_support": 0,
+          "predicted": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0
+        },
+        "insufficient": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "gold_support": 0,
+          "predicted": 1,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 0
+        }
+      },
+      "sufficiency_confusion": {
+        "sufficient->insufficient": 1,
+        "sufficient->sufficient": 4
+      },
+      "claims": 6,
+      "unsupported_claims": 0,
+      "unsupported_rate": 0.0,
+      "score_qwk": 0.0,
+      "qwk_defined_groups": 3,
+      "qwk_scored_pairs": 3,
+      "score_mae": 1.5,
+      "score_normalised_mae": 0.375,
+      "score_coverage": 0.8,
+      "scored_pairs": 4,
+      "gold_scored_pairs": 5,
+      "abstained_on_gold_scored": 1
+    },
+    "S3": {
+      "pairs": 9,
+      "sufficiency_accuracy": 0.6666666666666666,
+      "sufficiency_macro_f1": 0.47863247863247865,
+      "sufficiency_pairs": 9,
+      "sufficiency_per_class": {
+        "sufficient": {
+          "precision": 1.0,
+          "recall": 0.625,
+          "f1": 0.7692307692307693,
+          "gold_support": 8,
+          "predicted": 5,
+          "true_positives": 5,
+          "false_positives": 0,
+          "false_negatives": 3
+        },
+        "partial": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "gold_support": 0,
+          "predicted": 2,
+          "true_positives": 0,
+          "false_positives": 2,
+          "false_negatives": 0
+        },
+        "insufficient": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "gold_support": 1,
+          "predicted": 2,
+          "true_positives": 1,
+          "false_positives": 1,
+          "false_negatives": 0
+        }
+      },
+      "sufficiency_confusion": {
+        "insufficient->insufficient": 1,
+        "sufficient->insufficient": 1,
+        "sufficient->partial": 2,
+        "sufficient->sufficient": 5
+      },
+      "claims": 9,
+      "unsupported_claims": 0,
+      "unsupported_rate": 0.0,
+      "score_qwk": 0.0,
+      "qwk_defined_groups": 2,
+      "qwk_scored_pairs": 2,
+      "score_mae": 0.5714285714285714,
+      "score_normalised_mae": 0.14285714285714285,
+      "score_coverage": 0.875,
+      "scored_pairs": 7,
+      "gold_scored_pairs": 8,
+      "abstained_on_gold_scored": 1
+    },
+    "S4": {
+      "pairs": 5,
+      "sufficiency_accuracy": 0.4,
+      "sufficiency_macro_f1": 0.1904761904761905,
+      "sufficiency_pairs": 5,
+      "sufficiency_per_class": {
+        "sufficient": {
+          "precision": 0.6666666666666666,
+          "recall": 0.5,
+          "f1": 0.5714285714285715,
+          "gold_support": 4,
+          "predicted": 3,
+          "true_positives": 2,
+          "false_positives": 1,
+          "false_negatives": 2
+        },
+        "partial": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "gold_support": 0,
+          "predicted": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0
+        },
+        "insufficient": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "gold_support": 1,
+          "predicted": 2,
+          "true_positives": 0,
+          "false_positives": 2,
+          "false_negatives": 1
+        }
+      },
+      "sufficiency_confusion": {
+        "insufficient->sufficient": 1,
+        "sufficient->insufficient": 2,
+        "sufficient->sufficient": 2
+      },
+      "claims": 4,
+      "unsupported_claims": 0,
+      "unsupported_rate": 0.0,
+      "score_qwk": 0.0,
+      "qwk_defined_groups": 2,
+      "qwk_scored_pairs": 2,
+      "score_mae": 1.5,
+      "score_normalised_mae": 0.5,
+      "score_coverage": 0.5,
+      "scored_pairs": 2,
+      "gold_scored_pairs": 4,
+      "abstained_on_gold_scored": 2
+    }
+  },
+  "validator_warnings": {
+    "uncited_claim": 1,
+    "uncited_feedback_claim": 5
+  },
+  "first_attempt_warnings": {
+    "uncited_claim": 2,
+    "uncited_feedback_claim": 5
+  },
+  "revision_rate": 0.16279069767441862,
+  "baseline_B2": null,
+  "requires_marker_session": [
+    "M9",
+    "M10",
+    "M11",
+    "M14",
+    "M15 (data audit)",
+    "M5 human support judgement"
+  ],
+  "campaign_manifest": "manifest.json"
+}
