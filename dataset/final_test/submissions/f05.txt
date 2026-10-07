@@ -1,0 +1,24 @@
+===PAGE 1===
+# Proposal: equipment return notes
+
+Demonstrators write free-text notes when a teaching kit is returned. Students later find inconsistent descriptions of which cable is missing. The proposed assistant turns a note into a checklist for a demonstrator to review. The intended stakeholders are the returning student and the demonstrator accepting the kit. We have not collected interviews, frequencies of missing items or another measurement of demand.
+
+===PAGE 2===
+# Delivery calendar
+
+Week 1: collect example note formats. Week 2: make a checklist prompt. Week 3: add a review page. Week 4: demonstrate a return. This draft has no risk register, contingency allocation or named fallback for model access failure.
+
+===PAGE 3===
+# Unrelated venue notes
+
+The lab has two entrances, a storage cupboard and a bench near the window. The venue notes describe where a demonstration might take place. They are not requirements for model accuracy or inventory handling.
+
+===PAGE 4===
+# Appendix: interface details
+
+The assistant should show the original note and allow a demonstrator to change each item before saving. The proposal also lists login, mobile layout and a history page, without priority or measurable acceptance criteria. A JSON fixture response will be used while designing the page. The plan does not specify automated tests, iterations with acceptance gates or how to check a real model against that fixture.
+
+===PAGE 5===
+# Open decisions
+
+The initial pipeline reads a note, calls a model and displays a checklist. The choice of model and handling of contradictory notes remain undecided. The scheduled demonstration will show one example, but no performance claim is made from that single walkthrough.

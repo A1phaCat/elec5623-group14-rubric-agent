@@ -1,0 +1,23 @@
+===PAGE 1===
+# Bench voltage monitor: problem and scope
+
+This report describes a bench-only prototype that warns an undergraduate electronics demonstrator when a 5 V teaching supply remains outside 4.75–5.25 V for two consecutive samples. The affected users are demonstrators supervising several workstations. A transient excursion should not interrupt an otherwise valid experiment. The testable gap is whether two-sample confirmation reduces transient false alarms without missing persistent excursions in a fixed simulated trace. This is not a safety-certified monitor.
+
+===PAGE 2===
+# Method and implementation
+
+Iteration 1 parses timestamped voltage samples and rejects missing values. Iteration 2 implements the two-sample confirmation rule, resetting the counter after an in-range sample. Iteration 3 presents a warning and a timestamped event log. A sensor adapter accepts either a CSV fixture or a hardware reader behind the same read_sample interface; the state machine does not depend on a sensor vendor. Unit tests cover boundary values, reset behaviour and a persistent low-voltage condition.
+
+===PAGE 3===
+# Evaluation procedure
+
+The fixture contains ten observations, sampled one second apart: 5.00, 4.60, 5.00, 4.60, 4.60, 5.00, 5.00, 5.40, 5.00, 5.00 V. Its persistent-event reference is the consecutive low pair at seconds 4–5; seconds 2 and 8 are isolated excursions. Compare the proposed rule with a one-sample threshold on this identical trace. Count detected persistent events, false alarm events and detection delay from the first persistent sample. Additional tests will exercise missing samples and a high-voltage pair. This manually constructed fixture is development data; no independent hardware experiment has been run.
+
+===PAGE 4===
+# Results and discussion
+
+For the stated trace, the one-sample threshold starts alarms at seconds 2, 4 and 8. The confirmation rule starts one alarm at second 5. Both detect the persistent event; false alarms decrease from two to zero, with one second of added delay. These are direct calculations on the toy sequence, not real equipment measurements. The trade-off follows from waiting for a second out-of-range sample. A supply failure requiring immediate shutdown would make that delay unacceptable. The tiny constructed sequence cannot establish field reliability.
+
+# Figure 1. State-machine overview
+
+In-range → reset counter; first out-of-range → pending; second out-of-range → warning. Throughout this report, an observation is a single sample and an alarm event starts only when entering the warning state.

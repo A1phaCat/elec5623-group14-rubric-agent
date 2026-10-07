@@ -1,0 +1,19 @@
+===PAGE 1===
+# Proposal: teaching-kit reservation assistant
+
+Students and laboratory demonstrators share a stock of teaching kits. In the project's constructed scheduling example, kit K1 is booked from 09:00 to 10:00 and a second request overlaps from 09:30 to 10:30. A spreadsheet without conflict checks accepts both rows. This reproducible overlap illustrates the need for a conflict warning; it is a synthetic example, not an interview or institutional demand estimate. The proposed assistant helps a demonstrator inspect conflicts before confirming a booking.
+
+===PAGE 2===
+# Prioritised requirements
+
+Must R1: reject overlapping confirmed bookings for the same kit; every pair in a six-case fixture must be classified correctly, including touching endpoints. Must R2: require demonstrator confirmation before saving any booking; all save attempts without confirmation must leave the file unchanged. Should R3: explain conflicts with the two booking IDs; every conflict response must contain valid IDs from its input. Could R4: suggest an alternative slot; this feature is excluded from the first release. These are acceptance targets, not achieved outcomes.
+
+===PAGE 3===
+# Iterative method
+
+Week 1 builds the interval-overlap function with automated boundary tests. Week 2 adds a fixture language-model adapter that returns a fixed explanation and tests unknown booking IDs. Week 3 connects a model through the same adapter, while deterministic overlap rules remain authoritative. Week 4 adds the review screen and replays the original fixtures before demonstration. Fixture responses exercise the workflow without a paid service and are not used as evidence of language-model accuracy.
+
+===PAGE 4===
+# Feasibility, ownership and risks
+
+The weekly deliverables above are sized for one small team and text-only bookings. The parser owner handles Week 1; the model owner handles Week 2; the integration owner handles Week 3; the interface owner handles Week 4, with two people reviewing each change. Risk R1: model unavailability, mitigated by fixture mode and a visible service-unavailable notice. R2: stale bookings, mitigated by rereading before confirmation. R3: fabricated IDs, mitigated by checking every returned ID. The largest unresolved feasibility question is whether a demonstrator can inspect the conflict view quickly; a consenting user session is planned and has not happened.

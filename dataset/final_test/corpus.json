@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "created_date": "2026-10-04",
+  "provenance": "AI-assisted synthetic documents; no real student submissions or independent human labels.",
+  "status": "inputs_prepared_labels_pending",
+  "independence_limit": "Inputs were authored and inspected by an AI assistant working on the project. Freeze code and prompts before human annotation and model runs; do not claim the development team never saw these inputs.",
+  "submissions": [
+    {"submission_id": "f01", "rubric_id": "engineering_report", "scenario": "ordinary", "split": "heldout"},
+    {"submission_id": "f02", "rubric_id": "engineering_report", "scenario": "dispersed_missing", "split": "heldout"},
+    {"submission_id": "f03", "rubric_id": "engineering_report", "scenario": "decoy_adversarial", "split": "heldout"},
+    {"submission_id": "f04", "rubric_id": "proposal_rubric", "scenario": "ordinary", "split": "heldout"},
+    {"submission_id": "f05", "rubric_id": "proposal_rubric", "scenario": "dispersed_missing", "split": "heldout"},
+    {"submission_id": "f06", "rubric_id": "proposal_rubric", "scenario": "decoy_adversarial", "split": "heldout"}
+  ]
+}

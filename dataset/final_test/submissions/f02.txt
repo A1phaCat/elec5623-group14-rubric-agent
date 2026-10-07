@@ -1,0 +1,24 @@
+===PAGE 1===
+# Shared battery logger: opening note
+
+Laboratory demonstrators need to find why a portable teaching battery stops during a session. The logger records voltage once per minute. We want its event list to identify an interruption of more than two minutes; shorter gaps are outside the current scope. The intended users are demonstrators, rather than students estimating battery lifetime.
+
+===PAGE 2===
+# Appendix A: file contract
+
+Rows have timestamp, voltage and status columns. A replay reader uses the same interface as the device reader. In the first increment we checked malformed CSV headers. A later increment added gap grouping. We have not recorded the result of either check. The work plan says to test the grouping rule using a stored fixture after the interface is stable.
+
+===PAGE 3===
+# Equipment inventory
+
+The demonstration kit contains one rechargeable pack, a USB cable and a voltage divider. Packing instructions ask the custodian to count these items at the end of the week. This inventory describes the kit, not a validation dataset.
+
+===PAGE 4===
+# Discussion before measurements
+
+The design is inexpensive and may make a missed sample easier to investigate. No run log or numeric results are available in this draft. A gap could arise from either an unplugged reader or the battery itself, so an interruption cannot be interpreted as battery failure without additional information. We use outage, gap and stop as informal names for a missing-data interval.
+
+===PAGE 5===
+# Appendix B: unfinished checks
+
+Possible measures are detection accuracy and processing time. The draft does not identify a labelled dataset, comparison method, sample count or acceptance threshold. The intended workflow is to read rows, reject invalid timestamps, group missing intervals and display the groups. It still needs a rule for clock resets. Diagram placeholder: add the final signal chart here.
