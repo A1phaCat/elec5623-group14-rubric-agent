@@ -2,28 +2,29 @@
   "schema_version": 2,
   "generated_with": {
     "gateway": "fixture-descriptor-v2",
-    "prompt_version": "assessment_v2",
+    "prompt_version": "assessment_v4",
     "k": 5,
     "repeats": 3,
     "split": "all",
     "evidence_mode": "full_context",
-    "created_at_utc": "2026-10-04T10:16:34.751657+00:00",
+    "created_at_utc": "2026-10-07T01:32:42.649386+00:00",
     "evidence_kind": "fixture_regression",
     "gateway_class": "FixtureGateway",
     "model_config": {},
-    "git_commit": "a0852ee72f2963765a569165ee37c062d34fa4d0",
+    "git_commit": "80a90b2d69c3f2e80ac453864a90fffcae1f9ce1",
     "git_dirty": true,
     "code": {
-      "sha256": "ff771e0ee7b7a6a582db885bfba86ec84b20897d5322117968ffd42208da3444",
+      "sha256": "534309638b31f4bc59cb8845b3acc1e2699471bd924a62de52fde5186ea301ba",
       "files": {
-        "src/rubric_agent/__init__.py": "21974e03ccf923f945535239764605d3ee95ecea788117162cf6ea70e4b2fada",
+        "src/rubric_agent/__init__.py": "5368c8755024ad2b30cb1f39528b59a146a3ec395b626db6b5000a058f1ac851",
         "src/rubric_agent/chunker.py": "a73c8b6ddc87d820296a262bec5e8b4e07cf7491ade0832c7b138c3ab8841968",
-        "src/rubric_agent/cli.py": "e646e9cd467bd13f4c1cd687ffeff2f0f31d7f679796f70abc0e09df308628be",
+        "src/rubric_agent/cli.py": "dcef02c119c10daa92d431005ebbb9dcc5a3a923c6a368d099e9d8de38a8d723",
         "src/rubric_agent/coverage.py": "f827b692836bc575be019553e47b19ce26fde9537089873214b4fc21d605c362",
         "src/rubric_agent/errors.py": "089d79102384ef7e0d9e494b89e3c07dd3081c6013cdee2098dcc7c8eb6223ba",
-        "src/rubric_agent/eval.py": "bd0f1ac71c0196458d6b8a280848c89d22ede95c432ee5c9d81ef572a164fa7a",
-        "src/rubric_agent/gateway.py": "7a6d0d9e529278cfc398b70a5b6ea148803de6ff3e4f95f8832dddeadb7a0666",
+        "src/rubric_agent/eval.py": "5dcd31c2d15a6b2d605c709a43e6d09cb1f195ef2680ad4be6e515ca222f23f1",
+        "src/rubric_agent/gateway.py": "53aacbf348d66d257b1341197a7672adbbb5a3d35d246d1560539c0c5613b9f0",
         "src/rubric_agent/pipeline.py": "af7e17c53f778d174b540094509039c032817dd42495d05652c9e5ad9d8eb9f9",
+        "src/rubric_agent/resources.py": "acb1a51d7d577596e28de01c7a5c910d57cb006bfd4b686bee783cf1e4564bd7",
         "src/rubric_agent/retriever.py": "8f033cbcc1e8533e112949bbf095681747b4d464dff1899416cd1feb719b96af",
         "src/rubric_agent/review.py": "9f1539f93948d99ec070823cc4ba2ed5959e3c20df514f81bc819f15f85679be",
         "src/rubric_agent/rubric_parser.py": "076841fe463c2e303499709a46c48992f5cf25a9fceac88a1249cf4edb3ca7d7",
@@ -35,10 +36,13 @@
       }
     },
     "prompts": {
-      "sha256": "2cc65ad20a639c6225ece946c41b713d846508a8d34176f2a2db9b822ad8a286",
+      "sha256": "e692a0650575ad05170aaf375e121c848e4bc57ba089314d7d3cd325c812a67d",
       "files": {
         "assessment_v1.md": "d1b70babeda6d98d29f9ee987983937eaaa3eae7aadc690a8a18dc5899cc2517",
         "assessment_v2.md": "7f9246e587b24daa132d5d85a20ec268a636f0509d9463921391339f0b00389e",
+        "assessment_v3.md": "1561476b3bbcbf171ef7fc60959f9027349d4a3d6186532f19c19f375150291a",
+        "assessment_v4.md": "b537777bc9104e96373aaaece761dc640443f8aaaac415f0f6abab4b95e114e9",
+        "assessment_v5.md": "534e3ff1f42e88680885149b745862ddbee2e7ad9498bd35dbade6b4843f76a6",
         "direct_grading_v1.md": "5cb95fb2d029ec1558fc29f2753b6ed64fe69dc1881502fb7608c0f9812bcdcc"
       }
     },
@@ -63,9 +67,10 @@
         "submissions/s9_strong_eval_weak_comm.txt": "e91c5ef86e55b01a71cc87c9ff1631429ca70cd34da4eb36ea87ddb6f51ab699"
       }
     },
+    "labels_file": "labels.json",
     "runtime": {
       "python": "3.14.7",
-      "platform": "macOS-27.0-arm64-arm-64bit-Mach-O",
+      "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
       "pydantic": "2.13.5",
       "pypdf": "6.18.1"
     },
@@ -101,8 +106,8 @@
     "M8_B2_normalised_mae": null,
     "M8_B2_score_coverage": null,
     "M12_repeatability": 1.0,
-    "M13_median_latency_ms": 7.6955840340815485,
-    "M13_s5_latency_ms": 47.63924999861047,
+    "M13_median_latency_ms": 1.432958000805229,
+    "M13_s5_latency_ms": 7.049042003927752,
     "M16_export_completeness": 1.0,
     "M17_feedback_grounding": 1.0
   },
@@ -140,6 +145,48 @@
     "sufficiency_accuracy": 0.4838709677419355,
     "sufficiency_macro_f1": 0.40450660450660453,
     "sufficiency_pairs": 62,
+    "sufficiency_per_class": {
+      "sufficient": {
+        "precision": 0.9583333333333334,
+        "recall": 0.5609756097560976,
+        "f1": 0.7076923076923077,
+        "gold_support": 41,
+        "predicted": 24,
+        "true_positives": 23,
+        "false_positives": 1,
+        "false_negatives": 18
+      },
+      "partial": {
+        "precision": 0.1,
+        "recall": 0.15384615384615385,
+        "f1": 0.12121212121212123,
+        "gold_support": 13,
+        "predicted": 20,
+        "true_positives": 2,
+        "false_positives": 18,
+        "false_negatives": 11
+      },
+      "insufficient": {
+        "precision": 0.2777777777777778,
+        "recall": 0.625,
+        "f1": 0.3846153846153846,
+        "gold_support": 8,
+        "predicted": 18,
+        "true_positives": 5,
+        "false_positives": 13,
+        "false_negatives": 3
+      }
+    },
+    "sufficiency_confusion": {
+      "insufficient->insufficient": 5,
+      "insufficient->partial": 3,
+      "partial->insufficient": 10,
+      "partial->partial": 2,
+      "partial->sufficient": 1,
+      "sufficient->insufficient": 3,
+      "sufficient->partial": 15,
+      "sufficient->sufficient": 23
+    },
     "claims": 88,
     "unsupported_claims": 0,
     "unsupported_rate": 0.0,
@@ -161,7 +208,7 @@
       "agent_runs": [
         {
           "run_index": 0,
-          "latency_ms": 6.015499995555729,
+          "latency_ms": 1.6387500072596595,
           "retrieved_ids": {
             "C1": [
               "E-001",
@@ -299,7 +346,7 @@
         },
         {
           "run_index": 1,
-          "latency_ms": 4.8321670037694275,
+          "latency_ms": 1.3780419976683334,
           "retrieved_ids": {
             "C1": [
               "E-001",
@@ -437,7 +484,7 @@
         },
         {
           "run_index": 2,
-          "latency_ms": 7.931291998829693,
+          "latency_ms": 1.3039160112384707,
           "retrieved_ids": {
             "C1": [
               "E-001",
@@ -582,7 +629,7 @@
       "agent_runs": [
         {
           "run_index": 0,
-          "latency_ms": 9.377416979987174,
+          "latency_ms": 1.9344580068718642,
           "retrieved_ids": {
             "C1": [
               "E-001",
@@ -735,7 +782,7 @@
         },
         {
           "run_index": 1,
-          "latency_ms": 11.319416051264852,
+          "latency_ms": 1.9671670015668496,
           "retrieved_ids": {
             "C1": [
               "E-001",
@@ -888,7 +935,7 @@
         },
         {
           "run_index": 2,
-          "latency_ms": 6.853958999272436,
+          "latency_ms": 2.1933749958407134,
           "retrieved_ids": {
             "C1": [
               "E-001",
@@ -1048,7 +1095,7 @@
       "agent_runs": [
         {
           "run_index": 0,
-          "latency_ms": 18.66495900321752,
+          "latency_ms": 3.0243329965742305,
           "retrieved_ids": {
             "C1": [
               "E-001",
@@ -1222,7 +1269,7 @@
         },
         {
           "run_index": 1,
-          "latency_ms": 12.963582994416356,
+          "latency_ms": 2.9805420053889975,
           "retrieved_ids": {
             "C1": [
               "E-001",
@@ -1396,7 +1443,7 @@
         },
         {
           "run_index": 2,
-          "latency_ms": 12.163917010184377,
+          "latency_ms": 3.1359170097857714,
           "retrieved_ids": {
             "C1": [
               "E-001",
@@ -1577,7 +1624,7 @@
       "agent_runs": [
         {
           "run_index": 0,
-          "latency_ms": 4.750624997541308,
+          "latency_ms": 1.2547500082291663,
           "retrieved_ids": {
             "C1": [
               "E-001",
@@ -1712,7 +1759,7 @@
         },
         {
           "run_index": 1,
-          "latency_ms": 8.459832984954119,
+          "latency_ms": 1.223500003106892,
           "retrieved_ids": {
             "C1": [
               "E-001",
@@ -1847,7 +1894,7 @@
         },
         {
           "run_index": 2,
-          "latency_ms": 6.496875023003668,
+          "latency_ms": 1.3456669985316694,
           "retrieved_ids": {
             "C1": [
               "E-001",
@@ -1989,7 +2036,7 @@
       "agent_runs": [
         {
           "run_index": 0,
-          "latency_ms": 5.8398330002091825,
+          "latency_ms": 1.305750003666617,
           "retrieved_ids": {
             "C1": [
               "E-001",
@@ -2128,7 +2175,7 @@
         },
         {
           "run_index": 1,
-          "latency_ms": 7.278500008396804,
+          "latency_ms": 1.3415419962257147,
           "retrieved_ids": {
             "C1": [
               "E-001",
@@ -2267,7 +2314,7 @@
         },
         {
           "run_index": 2,
-          "latency_ms": 6.505707977339625,
+          "latency_ms": 1.2156250013504177,
           "retrieved_ids": {
             "C1": [
               "E-001",
@@ -2413,7 +2460,7 @@
       "agent_runs": [
         {
           "run_index": 0,
-          "latency_ms": 47.63924999861047,
+          "latency_ms": 7.049042003927752,
           "retrieved_ids": {
             "C1": [
               "E-001",
@@ -2613,7 +2660,7 @@
         },
         {
           "run_index": 1,
-          "latency_ms": 54.56829100148752,
+          "latency_ms": 6.997374992351979,
           "retrieved_ids": {
             "C1": [
               "E-001",
@@ -2813,7 +2860,7 @@
         },
         {
           "run_index": 2,
-          "latency_ms": 53.26850002165884,
+          "latency_ms": 6.99695800722111,
           "retrieved_ids": {
             "C1": [
               "E-001",
@@ -3020,7 +3067,7 @@
       "agent_runs": [
         {
           "run_index": 0,
-          "latency_ms": 14.769000001251698,
+          "latency_ms": 1.476750010624528,
           "retrieved_ids": {
             "C1": [
               "E-001",
@@ -3158,7 +3205,7 @@
         },
         {
           "run_index": 1,
-          "latency_ms": 12.815875001251698,
+          "latency_ms": 1.5185840020421892,
           "retrieved_ids": {
             "C1": [
               "E-001",
@@ -3296,7 +3343,7 @@
         },
         {
           "run_index": 2,
-          "latency_ms": 12.315166008193046,
+          "latency_ms": 1.42920900543686,
           "retrieved_ids": {
             "C1": [
               "E-001",
@@ -3441,7 +3488,7 @@
       "agent_runs": [
         {
           "run_index": 0,
-          "latency_ms": 13.516957988031209,
+          "latency_ms": 1.432958000805229,
           "retrieved_ids": {
             "C1": [
               "E-001",
@@ -3579,7 +3626,7 @@
         },
         {
           "run_index": 1,
-          "latency_ms": 5.823084036819637,
+          "latency_ms": 1.5372079942608252,
           "retrieved_ids": {
             "C1": [
               "E-001",
@@ -3717,7 +3764,7 @@
         },
         {
           "run_index": 2,
-          "latency_ms": 7.594166963826865,
+          "latency_ms": 1.412999990861863,
           "retrieved_ids": {
             "C1": [
               "E-001",
@@ -3862,7 +3909,7 @@
       "agent_runs": [
         {
           "run_index": 0,
-          "latency_ms": 7.177416002377868,
+          "latency_ms": 1.3314590032678097,
           "retrieved_ids": {
             "C1": [
               "E-001",
@@ -4000,7 +4047,7 @@
         },
         {
           "run_index": 1,
-          "latency_ms": 13.085582992061973,
+          "latency_ms": 1.38824999157805,
           "retrieved_ids": {
             "C1": [
               "E-001",
@@ -4138,7 +4185,7 @@
         },
         {
           "run_index": 2,
-          "latency_ms": 71.10420800745487,
+          "latency_ms": 1.312042004428804,
           "retrieved_ids": {
             "C1": [
               "E-001",
@@ -4283,7 +4330,7 @@
       "agent_runs": [
         {
           "run_index": 0,
-          "latency_ms": 10.94229199225083,
+          "latency_ms": 1.3204999995650724,
           "retrieved_ids": {
             "C1": [
               "E-001",
@@ -4421,7 +4468,7 @@
         },
         {
           "run_index": 1,
-          "latency_ms": 8.588625001721084,
+          "latency_ms": 1.3790419907309115,
           "retrieved_ids": {
             "C1": [
               "E-001",
@@ -4559,7 +4606,7 @@
         },
         {
           "run_index": 2,
-          "latency_ms": 9.708874975331128,
+          "latency_ms": 1.2949160009156913,
           "retrieved_ids": {
             "C1": [
               "E-001",
@@ -4704,7 +4751,7 @@
       "agent_runs": [
         {
           "run_index": 0,
-          "latency_ms": 5.682500021066517,
+          "latency_ms": 1.4082090056035668,
           "retrieved_ids": {
             "C1": [
               "E-001",
@@ -4814,7 +4861,7 @@
         },
         {
           "run_index": 1,
-          "latency_ms": 4.699499986600131,
+          "latency_ms": 1.4150420029181987,
           "retrieved_ids": {
             "C1": [
               "E-001",
@@ -4924,7 +4971,7 @@
         },
         {
           "run_index": 2,
-          "latency_ms": 7.056541973724961,
+          "latency_ms": 1.5300839877454564,
           "retrieved_ids": {
             "C1": [
               "E-001",
@@ -5041,7 +5088,7 @@
       "agent_runs": [
         {
           "run_index": 0,
-          "latency_ms": 7.6955840340815485,
+          "latency_ms": 1.0676670062821358,
           "retrieved_ids": {
             "C1": [
               "E-001",
@@ -5149,7 +5196,7 @@
         },
         {
           "run_index": 1,
-          "latency_ms": 7.88108300184831,
+          "latency_ms": 1.011875006952323,
           "retrieved_ids": {
             "C1": [
               "E-001",
@@ -5257,7 +5304,7 @@
         },
         {
           "run_index": 2,
-          "latency_ms": 3.312624990940094,
+          "latency_ms": 1.0630000033415854,
           "retrieved_ids": {
             "C1": [
               "E-001",
@@ -5372,7 +5419,7 @@
       "agent_runs": [
         {
           "run_index": 0,
-          "latency_ms": 4.882915993221104,
+          "latency_ms": 1.6586669953539968,
           "retrieved_ids": {
             "C1": [
               "E-001",
@@ -5480,7 +5527,7 @@
         },
         {
           "run_index": 1,
-          "latency_ms": 7.612832996528596,
+          "latency_ms": 1.2192919966764748,
           "retrieved_ids": {
             "C1": [
               "E-001",
@@ -5588,7 +5635,7 @@
         },
         {
           "run_index": 2,
-          "latency_ms": 4.090957983862609,
+          "latency_ms": 1.1670410021906719,
           "retrieved_ids": {
             "C1": [
               "E-001",
@@ -5729,6 +5776,48 @@
       "sufficiency_accuracy": 0.4117647058823529,
       "sufficiency_macro_f1": 0.34542124542124536,
       "sufficiency_pairs": 34,
+      "sufficiency_per_class": {
+        "sufficient": {
+          "precision": 0.9166666666666666,
+          "recall": 0.4782608695652174,
+          "f1": 0.6285714285714286,
+          "gold_support": 23,
+          "predicted": 12,
+          "true_positives": 11,
+          "false_positives": 1,
+          "false_negatives": 12
+        },
+        "partial": {
+          "precision": 0.07692307692307693,
+          "recall": 0.14285714285714285,
+          "f1": 0.1,
+          "gold_support": 7,
+          "predicted": 13,
+          "true_positives": 1,
+          "false_positives": 12,
+          "false_negatives": 6
+        },
+        "insufficient": {
+          "precision": 0.2222222222222222,
+          "recall": 0.5,
+          "f1": 0.30769230769230765,
+          "gold_support": 4,
+          "predicted": 9,
+          "true_positives": 2,
+          "false_positives": 7,
+          "false_negatives": 2
+        }
+      },
+      "sufficiency_confusion": {
+        "insufficient->insufficient": 2,
+        "insufficient->partial": 2,
+        "partial->insufficient": 5,
+        "partial->partial": 1,
+        "partial->sufficient": 1,
+        "sufficient->insufficient": 2,
+        "sufficient->partial": 10,
+        "sufficient->sufficient": 11
+      },
       "claims": 50,
       "unsupported_claims": 0,
       "unsupported_rate": 0.0,
@@ -5747,6 +5836,42 @@
       "sufficiency_accuracy": 0.8,
       "sufficiency_macro_f1": 0.29629629629629634,
       "sufficiency_pairs": 5,
+      "sufficiency_per_class": {
+        "sufficient": {
+          "precision": 1.0,
+          "recall": 0.8,
+          "f1": 0.888888888888889,
+          "gold_support": 5,
+          "predicted": 4,
+          "true_positives": 4,
+          "false_positives": 0,
+          "false_negatives": 1
+        },
+        "partial": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "gold_support": 0,
+          "predicted": 1,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 0
+        },
+        "insufficient": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "gold_support": 0,
+          "predicted": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0
+        }
+      },
+      "sufficiency_confusion": {
+        "sufficient->partial": 1,
+        "sufficient->sufficient": 4
+      },
       "claims": 10,
       "unsupported_claims": 0,
       "unsupported_rate": 0.0,
@@ -5765,6 +5890,45 @@
       "sufficiency_accuracy": 0.4444444444444444,
       "sufficiency_macro_f1": 0.47301587301587306,
       "sufficiency_pairs": 9,
+      "sufficiency_per_class": {
+        "sufficient": {
+          "precision": 1.0,
+          "recall": 0.6666666666666666,
+          "f1": 0.8,
+          "gold_support": 3,
+          "predicted": 2,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 1
+        },
+        "partial": {
+          "precision": 0.5,
+          "recall": 0.2,
+          "f1": 0.28571428571428575,
+          "gold_support": 5,
+          "predicted": 2,
+          "true_positives": 1,
+          "false_positives": 1,
+          "false_negatives": 4
+        },
+        "insufficient": {
+          "precision": 0.2,
+          "recall": 1.0,
+          "f1": 0.33333333333333337,
+          "gold_support": 1,
+          "predicted": 5,
+          "true_positives": 1,
+          "false_positives": 4,
+          "false_negatives": 0
+        }
+      },
+      "sufficiency_confusion": {
+        "insufficient->insufficient": 1,
+        "partial->insufficient": 4,
+        "partial->partial": 1,
+        "sufficient->partial": 1,
+        "sufficient->sufficient": 2
+      },
       "claims": 8,
       "unsupported_claims": 0,
       "unsupported_rate": 0.0,
@@ -5783,6 +5947,45 @@
       "sufficiency_accuracy": 0.6666666666666666,
       "sufficiency_macro_f1": 0.5185185185185185,
       "sufficiency_pairs": 9,
+      "sufficiency_per_class": {
+        "sufficient": {
+          "precision": 1.0,
+          "recall": 0.8,
+          "f1": 0.888888888888889,
+          "gold_support": 5,
+          "predicted": 4,
+          "true_positives": 4,
+          "false_positives": 0,
+          "false_negatives": 1
+        },
+        "partial": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "gold_support": 1,
+          "predicted": 2,
+          "true_positives": 0,
+          "false_positives": 2,
+          "false_negatives": 1
+        },
+        "insufficient": {
+          "precision": 0.6666666666666666,
+          "recall": 0.6666666666666666,
+          "f1": 0.6666666666666666,
+          "gold_support": 3,
+          "predicted": 3,
+          "true_positives": 2,
+          "false_positives": 1,
+          "false_negatives": 1
+        }
+      },
+      "sufficiency_confusion": {
+        "insufficient->insufficient": 2,
+        "insufficient->partial": 1,
+        "partial->insufficient": 1,
+        "sufficient->partial": 1,
+        "sufficient->sufficient": 4
+      },
       "claims": 12,
       "unsupported_claims": 0,
       "unsupported_rate": 0.0,
@@ -5801,6 +6004,43 @@
       "sufficiency_accuracy": 0.4,
       "sufficiency_macro_f1": 0.1904761904761905,
       "sufficiency_pairs": 5,
+      "sufficiency_per_class": {
+        "sufficient": {
+          "precision": 1.0,
+          "recall": 0.4,
+          "f1": 0.5714285714285715,
+          "gold_support": 5,
+          "predicted": 2,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 3
+        },
+        "partial": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "gold_support": 0,
+          "predicted": 2,
+          "true_positives": 0,
+          "false_positives": 2,
+          "false_negatives": 0
+        },
+        "insufficient": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "gold_support": 0,
+          "predicted": 1,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 0
+        }
+      },
+      "sufficiency_confusion": {
+        "sufficient->insufficient": 1,
+        "sufficient->partial": 2,
+        "sufficient->sufficient": 2
+      },
       "claims": 8,
       "unsupported_claims": 0,
       "unsupported_rate": 0.0,
