@@ -48,3 +48,9 @@ Use a shared dataset, rubric, backbone and decoding settings for direct whole-do
 Do not copy QWK values from different papers into a leaderboard against our 62 pairs: their datasets, score ranges, annotators and models differ. Independently annotate evidence support and scores; add a second annotator before claiming human-level agreement. For RULERS calibration, use a separate calibration split and report it. For any prompt-injection claim, collect benign/perturbed paired results rather than inferring robustness from JSON validity.
 
 Commercial tools and miscellaneous repositories can provide workflow context, but they do not replace these close scientific comparators. No claim that another tool lacks a feature is made from an absent README mention.
+
+## RAG-assisted grading comparison
+
+Chu, Y., He, P., Li, H., Han, H., Yang, K., Xue, Y., Li, T., Krajcik, J., & Tang, J. (2025). *Enhancing LLM-Based Short Answer Grading with Retrieval-Augmented Generation*. [Primary arXiv record](https://arxiv.org/abs/2504.05276), first submitted 7 April 2025, v2 revised 3 June 2025; record identifies an EDM 2025 short paper. Checked 4 October 2026. The method retrieves educational domain information using question/answer context; our corpus is the submitted document itself. We do not transplant its reported improvement to our data.
+
+Current B3 (`--evidence-mode full_context`) is implemented with identical criterion prompts, citation requirements, validation and repair budget. It selects every original evidence unit in document order. Single-case local checks are in `validation/README.md`; full independent comparisons remain pending.

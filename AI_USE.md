@@ -24,3 +24,11 @@
 - **What it did not do:** change the 6.5/10 proposal mark, resubmit the proposal, invent who did which work, invent metrics or quotations, relabel the 62 pairs, or rerun the model.
 
 Update this file whenever an AI tool contributes to a change.
+
+## 4 October 2026 — Codex assistance
+
+- **Produced:** source-based comparison of the tutor-named EFS, GradeAgentOps and RULERS methods; updated report, fixed evaluation protocol and named proposed responsibilities. User selected Zhengyu Han as core GenAI/evaluation lead. Project instructions now retain the user's request to apply the actual proposal feedback in later 5623 work.
+- **Implemented:** finite/schema/feedback validation; review/export integrity; same-prompt full-context B3 and replay; evaluation denominators, conditional score metrics, per-criterion QWK, manifests and per-repeat outputs; targeted regression tests and a repeatable local-model smoke script.
+- **Verified by tools:** offline tests/lint, fixture A/B3 runs, and actual local Qwen2.5-7B smoke runs (synthetic decoy and own de-identified PDF). Exact records are in `docs/validation/README.md` and companion JSON. A smoke check is not a full labelled quality study.
+- **Not completed by AI:** independent human annotation, participant timings, teammate acceptance of proposed roles, actual-member contribution attestations, or the live assessed Q&A. No grades were submitted and no Canvas write was performed.
+- **Human review:** still required before submission. AI-generated code or text must not be claimed as independently authored or already reviewed by every teammate.

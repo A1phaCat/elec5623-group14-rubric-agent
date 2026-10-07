@@ -1,39 +1,32 @@
-# Marker comments addressed
+# Proposal 扣分与 A2 改进对照
 
-Draft aid, 2026-10-04. Not part of the submitted page count.
+更新：2026-10-04。来源是用户本次提供的评分细则摘要，并非逐字英文评语或本轮重新读取 Canvas。Proposal 为 **6.5/10**，评分人 **Haolin Jin**，用户提供的提交时间为 **9 月 8 日 19:28**；没有另外的总评。本文件用于准备最终报告，不是对已交 Proposal 的改分或重交。
 
-Proposal marker: Haolin Jin. Score: 6.5/10. This note does not change that mark and is not a resubmission. The approved direction stays Track A, a rubric marking agent, as approved by tutor Linghan Huang on 6 September 2026.
+| Proposal 项目 | 得分 | 用户提供的扣分原因 | 本轮实际应对 | 仍需完成 |
+|---|---:|---|---|---|
+| 问题、背景和动机 | 0.5/1.5 | evidence-first 已有近似论文，不能作为原创核心 | 报告§3明确承认 EFS、GradeAgentOps、RULERS 的重叠；贡献收窄为长文档人审产品与有限实验 | 组员阅读原文，能解释相似/差异 |
+| 产品、方法和技术设计 | 1.5/2 | 技术选择含糊，评价指标未真正确定 | 固定 Qwen2.5-7B、temperature 0、assessment_v2、BM25 K=5；协议定义指标/分母/阈值 | 冻结版本后做完整当前模型实验 |
+| 竞品分析和评测计划 | 1/2 | 应比较最近邻研究，而非只有人工/通用LLM/商业产品 | 三项研究的原始来源和比较；新增相同prompt/引用/validator的全篇上下文B3；修正M6与QWK/MAE解释 | 独立人工参考标签；不可声称已复现或打败论文系统 |
+| 可行性、风险、计划和分工 | 1/1.5 | 没有明确分配给组员 | `TEAM_DELIVERY.md`、报告§10、贡献指南和需求表已带人名；Han 主导核心系统与评估 | 其他组员确认；提交真实贡献记录 |
+| 表达和参考文献 | 1/1.5 | 遗漏重要论文 | 补老师点名研究及RAG，标明版本/日期/来源；移除过度创新和无证据性能结论 | 最终引用与8–12页版式核查 |
+| 需求工程和问题定义 | 1.5/1.5 | 无扣分 | 保留原FR/NFR和产品方向，继续映射代码、测试、指标与姓名 | 最终版本重新核对traceability |
 
-The sentences below are the rubric comments, quoted, then the section of `docs/FINAL_REPORT_DRAFT.md` that now answers them.
+## 以 A2 的20分权重安排工作
 
-## Problem / motivation, 0.5/1.5
+| A2 评分项 | 分值 | 最值得保留的证据 | 负责人建议 |
+|---|---:|---|---|
+| 产品完整度与技术实现 | 4 | 可运行MVP；PDF→证据→建议→人审→导出；失效输入/人审边界测试 | 全组；Han整合技术边界 |
+| GenAI工程与架构 | 4 | 明确model/prompt/context/revision选择；普通软件和GenAI分工；实际失败轨迹 | **Zhengyu Han** |
+| 评价、证据与批判分析 | 4 | A/B2/B3同数据结果；coverage与conditional MAE；独立标注；局限 | **Zhengyu Han设计分析，Yutong Liu复现运行** |
+| 创新与相关工作定位 | 3 | 最近邻论文比较和有边界的贡献；充分引用 | Zongjian Li，Han核对实现 |
+| 所选Track一致性 | 2 | 保持Track A与原目标用户；超出通用聊天/简单API套壳的实际工作流 | 全组 |
+| 产品质量与工作流 | 2 | 清楚的证据定位、人审操作、失败提示；真实用户测试 | Zhaoxinyi Zhou |
+| 文档与团队交付 | 1 | 源码说明、报告与演示一致，真实贡献证据 | 全组 |
 
-> They called an "evidence-first control architecture" the key innovation, but closely related work was already published. "Evidence-First Scoring explicitly separates criterion-specific evidence extraction from scoring."
+这不是预估得分。代码检查、一个PDF演示、完整标注实验和真实用户研究是不同证据，不能互相替代。
 
-Section 3 no longer treats that separation as the invention. Cai (2026) already defines Evidence-First Scoring as two stages: extract criterion-specific spans, then score from those spans and the rubric. GradeAgentOps, RULERS and a retrieval-augmented short-answer grader are named in the same section. The difference stated for this repository is BM25 top-5 over one submission, a fail-closed validator, human accept/edit/reject, export blocked until every criterion is decided, and no LMS write.
+## Han 的重点
 
-Requirements Engineering and Project Definition was 1.5/1.5. Section 2 keeps the same user, scope and out-of-scope list.
+优先掌握并负责模型输出合同、引用校验、有限纠错循环，以及为什么比较要同时看分数误差和拒绝率。Codex可以协助代码、实验脚本、指标计算、论文核对和报告润色；独立人工标注、实际组员贡献和现场无AI答辩仍需本人/组员完成。
 
-## Technical design, 1.5/2
-
-> Still at the level of "BM25/keyword baselines, with embeddings or hybrid methods added only if they improve Recall@K" and "Likely components include...". Missing truly defined evaluation metrics.
-
-Sections 4–6 state the decisions that are in the code: BM25 k=5, local `qwen2.5:7b-instruct`, temperature 0, prompt `assessment_v2`. Embeddings are not in the measured system. Section 7 names M4, M6, M8, M12 and M13, the targets, and the miss: M4 0.554 against 0.75.
-
-## Analysis / evaluation, 1/2
-
-> Compared manual marking, generic LLMs, Turnitin, Gradescope. Those are not the critical research alternatives. Should have compared Evidence-First Scoring, GradeAgentOps, RULERS, or at least current RAG-assisted assessment. The claim that evidence-first review is the key differentiator lost credibility.
-
-Section 3 compares those systems. Turnitin and Gradescope stay only as products, not as the research comparison. Chu et al. (2025) is the retrieval-augmented assessment paper. The measured comparison is still the same model in one call (B2). Kappa stays about 0.48 for the agent and about 0.87 for B2. Unsupported claims stay 0 versus 1. The report does not claim the higher agreement. Second-annotator agreement and marker-session times are stated as not collected.
-
-## Team, 1/1.5
-
-> Missing clear allocation of work.
-
-Section 10 does not fill five contribution rows. Git history on 4 October 2026 is two commits by `hanzhengyu202305-arch`. Each member has to write a row they can point to in git before 3 November 2026.
-
-## References, 1/1.5
-
-> Missing a lot of reference papers.
-
-Section 10 adds the papers opened on 4 October 2026: Cai (2026), Anghel et al. (2026), Hong et al. (2026a, 2026b), Chu et al. (2025). Citations already in the draft were kept. Papers that could not be opened were not added.
+当前证据入口：`validation/README.md`。长期检查标准已写进项目根目录 `AGENTS.md`，基于本次评语，而非猜测 tutor 的个人性格。原始 A2 权重来自课程目录 `ELEC5623_A2.pdf` pp.3–4，日期来自保存的简报，本轮没有宣称更新四门课 Canvas。

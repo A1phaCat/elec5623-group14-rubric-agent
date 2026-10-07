@@ -1,7 +1,8 @@
 # Contributing (Group 14)
 
-The unit assesses individual contribution through the repository history, so
-work in your own branch and merge through pull requests.
+The final A2 report requires substantive named contributions. Use repository
+history, reviewed artifacts and experiment records to support those claims.
+The table below is a proposed allocation, not proof of completed work.
 
 ## Setup
 
@@ -14,7 +15,7 @@ pytest -q
 
 ## Workflow
 
-1. Branch from `main`: `git switch -c a3/retrieval-hybrid` (prefix = your area A1–A5).
+1. Branch from `main`: `git switch -c codex/a3-retrieval-check` (include your area A1–A5).
 2. Keep commits small and descriptive: `A4: validator rejects uncited claims (FR10)`.
 3. Every PR must: keep `pytest -q` and `ruff check src tests app scripts` green, update `docs/REQUIREMENTS_TRACEABILITY.md` if an FR/test changed, and re-run `rma eval --report docs/EVALUATION.md` if retrieval, gateway or validator changed.
 4. One reviewer from a different area approves before merge.
@@ -22,13 +23,17 @@ pytest -q
 
 ## Areas (proposal §10.2)
 
-| Area | Scope | Main files |
-|---|---|---|
-| A1 | Rubric schema and parser | `rubric_parser.py`, `schemas.py` |
-| A2 | Ingestion, export, storage | `text_parser.py`, `chunker.py`, `review.py` (export) |
-| A3 | Retrieval, run log, evaluation harness | `retriever.py`, `store.py`, `eval.py` |
-| A4 | Assessment prompt, gateway, validator | `gateway.py`, `prompts/`, `validator.py` |
-| A5 | Marker UI and usability study | `app/streamlit_app.py`, `tests/test_ui.py` |
+| Area | Proposed owner | Scope | Main files |
+|---|---|---|---|
+| A1 | Zongjian Li | Rubric schema and parser | `rubric_parser.py`, `schemas.py` |
+| A2 | Yuchun Zheng | Ingestion, export, storage | `text_parser.py`, `chunker.py`, `review.py` (export) |
+| A3 | Yutong Liu | Retrieval, run log, evaluation harness | `retriever.py`, `store.py`, `eval.py` |
+| A4 | Zhengyu Han | Assessment prompt, gateway, validator | `gateway.py`, `prompts/`, `validator.py` |
+| A5 | Zhaoxinyi Zhou | Marker UI and usability study | `app/streamlit_app.py`, `tests/test_ui.py` |
+
+**Zhengyu Han also leads evaluation design and result interpretation**, while
+Yutong Liu owns run execution and reproducibility. Full deliverables and member
+confirmation are tracked in `docs/TEAM_DELIVERY.md`.
 
 ## Adding a labelled case
 

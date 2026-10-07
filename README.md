@@ -25,14 +25,15 @@ rubric + submission → parse → chunk (E-001…) → BM25 top-K per criterion
 cd rubric-marking-agent
 python3 -m venv .venv && source .venv/bin/activate
 pip install -e '.[dev]'
-python scripts/generate_dataset.py        # synthetic corpus, safe to re-run
-pytest -q                                 # 32 tests, offline, ~10 s
+python scripts/generate_dataset.py        # regenerates synthetic inputs; preserve manual edits first
+pytest -q                                 # offline regression tests
 ruff check src tests app scripts          # lint (also in CI)
 rma demo --submission s4_decoy_eval       # agent path on the keyword-decoy case
 rma baseline --submission s4_decoy_eval   # B2: whole-document grading, for contrast
 rma eval --report docs/EVALUATION.md      # M1–M17 harness on 62 labelled pairs
 rma demo --log runs.jsonl && rma replay --log runs.jsonl   # M12 reproducibility
 streamlit run app/streamlit_app.py        # marker UI + Evaluation + Run log pages
+python scripts/export_second_pass.py      # blank 62-row sheet; do not copy the first labels
 ```
 
 ### The real case
@@ -52,9 +53,9 @@ rma demo --rubric dataset/real/elec5623_business_proposal_rubric.md \
 
 | Gateway | How to select | Use |
 |---|---|---|
-| **fixture** (default) | nothing to set | deterministic offline stand-in; tests, CI, fault injection |
-| **local Ollama** | run `ollama serve`, then `--gateway ollama:qwen2.5:7b-instruct` (the UI lists running models automatically) | real model, no key, nothing leaves the machine — this is candidate (b) of proposal §6.3 |
-| **hosted / Azure** | `RMA_MODEL_ENDPOINT`, `RMA_MODEL`, `RMA_MODEL_API_KEY` (+ `RMA_API_KEY_HEADER=api-key`, `RMA_API_VERSION` for Azure), then `--gateway live` | candidate (a); see `docs/GOVERNANCE.md` for secret handling |
+| **fixture** (default) | `--gateway fixture` before the subcommand | deterministic offline stand-in; tests, CI, fault injection |
+| **local Ollama** | run `ollama serve`, then `rma --gateway ollama:qwen2.5:7b-instruct demo` (the UI lists running models automatically) | real model, no key, nothing leaves the machine — this is candidate (b) of proposal §6.3 |
+| **hosted / Azure** | `RMA_MODEL_ENDPOINT`, `RMA_MODEL`, `RMA_MODEL_API_KEY` (+ `RMA_API_KEY_HEADER=api-key`, `RMA_API_VERSION` for Azure), then `rma --gateway live demo` | candidate (a); see `docs/GOVERNANCE.md` for secret handling |
 
 Live evaluation with the local model: `rma --gateway ollama:qwen2.5:7b-instruct eval --repeats 2 --report docs/EVALUATION_live_qwen7b.md --json docs/evaluation_live_qwen7b.json`
 (about 50 min on an M2 Pro; results committed under `docs/`).
@@ -64,7 +65,7 @@ Live evaluation with the local model: `rma --gateway ollama:qwen2.5:7b-instruct 
 | Path | Purpose |
 |---|---|
 | `src/rubric_agent/` | Package: parsers, chunker, retriever, gateway, validator, review, store, eval, CLI |
-| `app/streamlit_app.py`, `app/pages/` | Marker UI (review · B2 comparison · export), Evaluation dashboard, Run-log viewer with replay |
+| `app/streamlit_app.py`, `app/review.py`, `app/evaluation.py`, `app/run_log.py` | Marker UI (review · B2 comparison · export), Evaluation dashboard, Run-log viewer with replay |
 | `prompts/` | Versioned prompts (`assessment_v2` current, `assessment_v1` kept, `direct_grading_v1` for B2) |
 | `dataset/` | 3 synthetic rubrics (block, table, numbered), 13 submissions, 62 labelled pairs, labelling guide |
 | `dataset/real/` | Official Canvas rubric (transcribed) + our proposal PDF |
@@ -79,16 +80,39 @@ Live evaluation with the local model: `rma --gateway ollama:qwen2.5:7b-instruct 
 | `STATUS.md` | What is done, what needs people, what needs the tutor |
 | `AI_USE.md` | Generative AI disclosure |
 
-## Status against the course
+## Current development and assessment alignment (4 October 2026)
 
-Checked Canvas 13 Sep 2026: the Project Development (20%) and Presentation
-(10%) briefs are still not published as assignment pages; Week 1 slides list
-the expected evidence (working prototype aligned with the approved proposal,
-repository history, architecture, evaluation, safety/governance, limitations,
-contribution record, Week 13 demo with all-member Q&A). This repository targets
-that list. See `STATUS.md` for the open items that need people or approvals
-rather than code.
+The proposal scored **6.5/10**, per feedback supplied by the user. The final
+project retains the same Track A problem; evidence-first scoring is established
+prior work, not an invention claimed here. Start with:
 
-Also from Canvas: **Lab 6 (published 13 Sep) confirms the mid-term quiz on
-Wed 16 Sep, 11:00, paper, 1 hour, Weeks 1–6, one A4 double-sided cheat sheet,
-calculator allowed.** This repository does not help with that.
+- `docs/MARKER_RESPONSE.md`: each deduction mapped to a concrete response.
+- `docs/RELATED_WORK.md`: Evidence-First Scoring, GradeAgentOps, RULERS and RAG comparison with verified primary sources.
+- `docs/EVALUATION_PROTOCOL.md`: fixed model/configuration, A/B2/B3 controls, metric definitions and independent-study plan.
+- `docs/TEAM_DELIVERY.md`: named proposed ownership; **Zhengyu Han leads the core GenAI system and evaluation**.
+- `docs/FINAL_REPORT_DRAFT.md`: the ten-section working report; contribution evidence and human studies remain incomplete.
+- `docs/validation/README.md`: current-source checks, separate from the historical model-quality reports.
+
+B3 changes only context selection/order while retaining the criterion prompt,
+citations, validation and revision budget:
+
+```bash
+rma --gateway fixture demo --submission s4_decoy_eval --evidence-mode full_context
+rma --gateway fixture eval --evidence-mode full_context --no-baseline --report docs/EVALUATION_B3_fixture_v2.md --json docs/evaluation_B3_fixture_v2.json
+```
+
+Review now refuses direct acceptance of an invalid or absent AI score. Manual
+scores must obey the rubric range and step. Invalid edits block export. Model
+values must be finite; quoted feedback cannot bypass the evidence checks.
+
+**Evidence limits:** M6 counts uncited positive sentences, not semantic
+hallucinations. MAE/QWK exclude abstentions and must be read with score coverage.
+Historical pooled QWK is not comparable with the revised within-criterion
+metric. Fixture results demonstrate software behaviour only. Independent labels,
+user timings and a full current-model campaign are still needed.
+
+The local `ELEC5623_A2.pdf` specifies source code plus one final report (suggested
+8–12 pages excluding references/appendices), due 3 November 2026 at 23:59;
+presentation/Q&A is 4 November. Dates are from the saved brief, not a fresh
+Canvas check. Live presentation/Q&A prohibits AI. The older Week 8 notes are
+historical course material.

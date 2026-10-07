@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-10-04 — A2 and proposal-feedback improvements (working tree)
+
+- Correct novelty positioning against EFS, GradeAgentOps and RULERS; explicit evaluation protocol and named proposed delivery, with Zhengyu Han leading GenAI/evaluation.
+- Reject non-finite/model-grid/feedback quote failures; prevent accepting invalid suggestions or exporting stale invalid edits.
+- Add same-prompt full-context B3 and replay; improve denominator, abstention, scale-aware QWK, raw-output and hash evidence.
+- Record current offline and local-model validation separately from historical 13 September results; preserve failed targets and remaining independent-study work.
+
+
+## 22 Sep 2026 — documents only
+
+No pipeline change. Added `docs/FINAL_REPORT_DRAFT.md` (A2's ten sections, using the 13 Sep local-model numbers only) and `docs/WEEK8_TUTOR_UPDATE.md`. Architecture note: Week 7 RAG/context applies; MCP is not added. `pytest -q`: 34 passed.
+
 ## 0.3.0 — 13 Sep 2026 (evening)
 
 First numbers from a real model, a real document on the real rubric, and the

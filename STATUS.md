@@ -1,44 +1,49 @@
-# Status — 13 Sep 2026 (v0.3.0)
+# Status — 4 October 2026
 
-## Canvas facts (checked today)
+The user supplied the proposal result **6.5/10**, marked by **Haolin Jin**.
+`docs/MARKER_RESPONSE.md` maps each deduction to current work. The saved A2 brief
+allocates 4 implementation + 4 GenAI engineering + 4 evaluation + 3 novelty +
+2 track alignment + 2 workflow + 1 documentation marks. This is not an estimated grade.
 
-- Assignments page: Interactive Oral 1 (2/2), Oral 2, Business Proposal (submitted, ungraded). No Project Development or Presentation assignment page yet.
-- The Business Proposal **marking rubric** is on the assignment page (6 criteria, 10 marks). It is transcribed in `dataset/real/` and is the rubric used by the first UI example.
-- Modules: Lab 6 uploaded today. Part A = mid-term quiz Wed 16 Sep 11:00 (paper, 1 h, Weeks 1–6, A4 cheat sheet). Part B = MCP + LangChain concepts: tools ≠ permission, validate arguments, fail with an explicit error, keep credentials out of prompts and logs. Those rules are applied in `gateway.py` / `validator.py`.
-- Until a brief appears, the approved Group 14 proposal is the project definition.
+## Implemented in this revision
 
-## Done in code (all tested offline; live numbers from a local 7B model)
+- Same Track A rubric-marking product and existing FR/NFR remain in place.
+- `AGENTS.md` records the user's instruction to apply the tutor's actual feedback in future 5623 work.
+- `docs/RELATED_WORK.md` and report §3 compare Evidence-First Scoring, GradeAgentOps, RULERS and RAG; evidence-first is not claimed as an invention.
+- `docs/TEAM_DELIVERY.md` names proposed owners. **Zhengyu Han leads core GenAI engineering and evaluation design/interpretation.** Roles are not completed-contribution claims.
+- Model scores reject non-finite values, wrong criteria, wrong range/grid and invalid cited quotes in feedback as well as explanations.
+- Invalid/absent AI scores cannot be accepted. Human edits follow rubric range/grid. Invalid UI edits clear stale confirmation; export rechecks all decisions.
+- B3 full-context ablation uses the same criterion prompt, citations, validator and correction budget, and is supported by logging/replay and CLI.
+- Evaluation reports include denominators, A/B2 macro-F1, score coverage, conditional normalised MAE, per-criterion QWK, shared scored subsets, hashes and individual repeated outputs. One run cannot pass repeatability; empty denominators remain unmeasured.
 
-| Proposal item | Status |
-|---|---|
-| FR1–FR3 rubric ingest: block, table (numeric or banded headers, optional Max), numbered list, PDF; official Canvas rubric | done |
-| FR4–FR5 TXT/PDF ingest with heading detection; 16-page real PDF → 66 units with section names | done |
-| FR6 BM25 top-K or explicit empty; Recall@5 0.99 / Precision@5 0.78 | done |
-| FR7 evidence in context (cited vs uncited, adjacent text, locator) | done (UI) |
-| FR8 sufficiency label | done; macro-F1 0.55 with Qwen 7B (target 0.75) — see `docs/EVALUATION_NOTES.md` |
-| FR9–FR11 constrained score, grounded explanation, fail-closed validator, one corrective round | done; M6 0.00, M7 1.00 live |
-| FR12–FR13 accept/edit/reject, override with AI value retained, range-checked | done |
-| FR14 draft feedback with citation check | done; M17 1.00 live |
-| FR15 export JSON + CSV, all fields, session summary | done; M16 1.00 |
-| FR16 / NFR7 run log incl. attempts; `rma replay`; Run-log page | done; M12 0.97 live |
-| NFR3 latency ≤120 s for 10–20 pages | 51 s on the 12-page case with the 7B model (M2 Pro) |
-| NFR5 export blocked while pending | done (unit + UI test) |
-| NFR6 no student data; local model keeps text on the machine | done |
-| B2 baseline + comparison | done; B2 QWK 0.87 but 45/45 claims untraceable |
-| C5 provider-independent adapter: fixture / local Ollama / OpenAI-Azure | done; live run committed |
-| Docs: architecture, traceability, governance, demo script, evaluation notes, contributing, CI (tests + lint + real case) | done |
+## Verification and evidence limits
 
-## Needs the group / tutor (not code)
+`docs/validation/README.md` records actual current checks and local-model smoke
+runs. `EVALUATION_fixture_v2.md` and `EVALUATION_B3_fixture_v2.md` are offline
+harness checks, **not LLM-quality evidence**. Their M4 failure is retained.
 
-1. **Model decision.** We now have real numbers from candidate (b) (local Qwen 7B). If the group wants candidate (a) (Azure AI Foundry from Lab 1), set the `RMA_*` variables on one machine and run `rma --gateway live eval --report docs/EVALUATION_live_azure.md --json docs/evaluation_live_azure.json`; the Evaluation page will show both. Ask the tutor which provider is acceptable for the demo.
-2. **Annotation round (the important one).** The live run shows the agent one step *more conservative* than our single-annotator labels on 20 of 62 pairs. A second labeller on the 62 pairs, with sufficiency and score labelled independently, decides whether that is a model problem or a label problem. Guide: `dataset/LABELLING_GUIDE.md` (add one worked example of "sufficient evidence, low score").
-3. **Two to three marker sessions (S8)** for M9–M11, M14. The export now records session duration, override rate and intervention count, so the session only needs a stopwatch and the questionnaire from proposal §8.5.
-4. **Fill in names** in `docs/REQUIREMENTS_TRACEABILITY.md`, `CONTRIBUTING.md` and `docs/DEMO_SCRIPT.md` (areas A1–A5), then each member pushes to their own branch so the contribution record exists.
-5. **Demo machine.** Ollama + `qwen2.5:7b-instruct` (4.7 GB) installed and `OLLAMA_CONTEXT_LENGTH=16384`; pre-run the real case before the session (~2 min).
-6. **Hybrid re-ranking** stays out: Recall@5 is 0.99 on the corpus (de-scoping rule §10.3).
+The 13 September reports remain historical snapshots. Their pooled QWK is
+superseded by a scale-aware implementation and must not be compared directly
+with new QWK. A citation's existence does not establish semantic support; M6
+counts uncited detected sentences only. B2 was not instructed to cite.
 
-## Honest limits
+Current local-model smoke checks use the existing Qwen2.5-7B installation; they
+do not constitute a full labelled campaign or independent validation. The
+prototype can reject a record and leave its score empty; a successful HTTP
+call is not automatically a usable score.
 
-- The fixture is a descriptor-matching heuristic for tests and CI. It is not evidence about any model.
-- The live numbers come from one 7B model on 62 synthetic pairs labelled by one person. They are enough to show the pipeline works end to end and to expose the labelling issue above; they are not the evaluation campaign.
-- No gold labels exist for the real proposal case (our own marks are not released, and labelling our own work would not be independent).
+## Remaining human/evidence work
+
+1. Confirm proposed roles and record each member's actual reviewed contribution.
+2. Complete independent annotation before adjudication, preserve both originals, and compute agreement.
+3. Execute the frozen A/B2/B3 protocol on the fresh heldout corpus. Existing dev/heldout data have both been inspected.
+4. Conduct 2–3 real marker sessions and record timing, overrides and usability observations.
+5. Integrate final results, inspect report length/layout, verify the source package runs on the demo machine and rehearse without AI.
+
+## Course facts and history
+
+From the local A2 brief: source code plus one final report, suggested 8–12 pages
+excluding references/appendices, due **3 November 2026, 23:59**; presentation
+and Q&A on **4 November 2026**, with AI prohibited during the live assessment.
+The separate presentation-format brief is not verified here. Older Week 8
+updates are historical; this task did not refresh Canvas.
