@@ -26,10 +26,33 @@ what makes those labels a test rather than a tuning target
 
 | Scope | SHA-256 |
 |---|---|
-| `src/rubric_agent/**/*.py` | `534309638b31f4bc59cb8845b3acc1e2699471bd924a62de52fde5186ea301ba` |
+| `src/rubric_agent/**/*.py`, at the `v1.0.0-frozen` tag | `534309638b31f4bc59cb8845b3acc1e2699471bd924a62de52fde5186ea301ba` |
+| `src/rubric_agent/**/*.py`, **as the campaign ran** | `b0e3e8a67a26da733c5945d13da541c3204a7807d77837bd20ced740b412d425` |
 | `prompts/*` | `d80612d16c4bec4584d7baafa9721e256caee3534df7e65a8ae40ba8d9ed4706` |
 | `dataset/final_test` inputs (excluding the annotation workspace) | `14f72e5c491f0729ca1f539feae20e13bae26a8a91332d1d8779c507bb49eaa3` |
 | `dataset/` development corpus and both label files | `ac15a11f9bce6bc31b8c10706e863f139c12e4cc233d0b4c50b215e38b0ef3cd` |
+
+**Why there are two code digests.** The tag was created before
+`__version__` was bumped from `0.3.0` to `1.0.0` in the following commit. That
+bump is the change that tripped the manifest guard mid-run
+(`validation/freeze_guard_2026-10-07.md`); the campaign was then restarted on
+the bumped tree, so the committed results in `evaluation_dev_frozen/` belong to
+the second digest. The two trees differ **only** in that version string: no
+prompt, retrieval setting, validator rule or input differs, which the
+per-file manifest in `evaluation_dev_frozen/manifest.json` shows directly.
+
+The tag is deliberately left where it is rather than moved, so this note
+carries the discrepancy instead of the history being rewritten.
+
+Verify any time with:
+
+```sh
+.venv/bin/python scripts/check_freeze.py
+```
+
+It compares the tree file-by-file against the manifest the runner wrote, which
+is the operative question — can this tree reproduce the committed numbers — and
+then re-derives the aggregates above so this table cannot drift from the files.
 
 Per-file digests of the frozen final-test inputs:
 

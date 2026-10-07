@@ -26,6 +26,12 @@ where = ["src"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-q"
+# Several tests import the helper scripts (scripts.run_campaign and friends),
+# which live outside the installed package. `python -m pytest` happens to put
+# the working directory on sys.path, but a bare `pytest` does not, so the suite
+# only passed depending on how it was invoked. The README and CI both say
+# `pytest -q`, so declare the path here instead of relying on the caller.
+pythonpath = ["."]
 
 [tool.ruff]
 line-length = 130
