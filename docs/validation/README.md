@@ -3,6 +3,19 @@
 These are executed checks on the current working tree. They do not replace
 independent human annotation, a full model-quality benchmark or a user study.
 
+> **Superseded in part.** This file is the 4 October record and is kept at its
+> own date. Current evidence lives in:
+>
+> - `../EVALUATION_dev_frozen_notes.md` and `../evaluation_dev_frozen/` — the
+>   frozen A/B2/B3 campaign under `assessment_v4`, which replaces the smoke
+>   runs below as the description of model behaviour;
+> - `cleanroom_2026-10-07.md` — clean-clone install, 128 tests, wheel audit and
+>   personal-data scan;
+> - `freeze_guard_2026-10-07.md` — the manifest guard aborting a real run;
+> - `../tuning/README.md` — why `assessment_v2` was replaced.
+>
+> The 92-test figure and the `assessment_v2` smoke timings below are historical.
+
 ## Offline software verification
 
 - Full regression suite: **92 tests passed**, including headless Streamlit review/export interaction, model-output faults, evaluation integrity and B3 replay.

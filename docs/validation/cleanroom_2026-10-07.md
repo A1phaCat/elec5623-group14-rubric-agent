@@ -60,10 +60,29 @@ Checked absent from the wheel, and confirmed absent:
 - No API key is required to run the tests, and the gateway only contacts a
   hosted endpoint when `RMA_*` variables are set explicitly.
 
+## Second pass, after the report and campaign were integrated
+
+Repeated on commit `90290cf`, the state carrying the frozen campaign results,
+the refreshed figures and the rebuilt report.
+
+| Check | Outcome |
+|---|---|
+| Fresh clone, tracked files | 165 |
+| `pip install -e '.[dev]'` from a clean venv | succeeded, no step beyond the README |
+| Full test suite | **128 passed** |
+| `ruff check src tests app scripts` | passed |
+| Credential literal scan over all tracked files | no matches |
+| Repository size excluding `.venv` | 4.3 MB of git history |
+| Campaign artifacts present | reports, comparison, manifest, progress log and the full raw provider capture |
+| Annotation sheets | both still 27 blank rows, and `dataset/final_test/labels.json` absent, as they must be until real annotators fill them |
+
+The last row is the one worth keeping. The package is self-consistent about
+what it does not yet have: the final-test labels do not exist, so a campaign on
+that corpus refuses to start, and a regression test fails if a label ever
+appears in those sheets without the agreement statistics being recomputed.
+
 ## Still to do before submission
 
-This rehearsal used the repository as it stands on 7 October. Repeat it on the
-final package after the report is integrated, and refresh it if any dependency
-or packaging file changes. The UI screenshots in `docs/img/` are dated
-13 September and predate `assessment_v4`; they must be regenerated so the
-assessed source matches the demonstrated system.
+Repeat this rehearsal once more on whatever is submitted, and refresh it if any
+dependency or packaging file changes. The screenshots in `docs/img/` are now
+from the frozen build; regenerate them again if the UI changes.
