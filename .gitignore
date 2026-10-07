@@ -14,3 +14,6 @@ runs.jsonl
 # Campaign output is committed once, complete, after a run finishes.
 docs/evaluation_*/checkpoints/
 docs/evaluation_*/*.writing
+docs/evaluation_*/manifest.json
+docs/evaluation_*/progress.jsonl
+docs/evaluation_*/provider_responses.jsonl
