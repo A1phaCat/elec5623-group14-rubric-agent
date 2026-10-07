@@ -10,6 +10,7 @@ from pathlib import Path
 
 import pytest
 
+from rubric_agent import PROMPT_VERSION
 from rubric_agent.chunker import chunk_pages
 from rubric_agent.errors import ExportBlocked, RubricParseError
 from rubric_agent.eval import evaluate_corpus
@@ -328,7 +329,7 @@ def test_fr12_fr13_fr15_nfr5_export_block_and_override():
     edited = next(row for row in record if row["marker_state"] == "edited")
     assert edited["marker_final_score"] == 1
     assert "ai_suggested_score" in edited  # original suggestion retained (FR13)
-    assert record[0]["model_id"] and record[0]["prompt_version"] == "assessment_v2"
+    assert record[0]["model_id"] and record[0]["prompt_version"] == PROMPT_VERSION
     csv_text = session.export_csv()
     assert csv_text.splitlines()[0].startswith("criterion_id,criterion_name")
     assert len(csv_text.splitlines()) == len(record) + 1
@@ -355,7 +356,7 @@ def test_fr16_nfr7_run_log_and_replay(tmp_path):
     entries = logger.read()
     assert len(entries) == len(result.assessments)
     for e in entries:
-        assert e.model_id and e.prompt_version == "assessment_v2" and e.test_case_id == "s1_standard"
+        assert e.model_id and e.prompt_version == PROMPT_VERSION and e.test_case_id == "s1_standard"
         assert e.retrieval_method == "bm25" and e.retrieval_k == 5 and e.rubric_ref and e.submission_ref
     outcomes = [replay_entry(e) for e in entries]
     assert all(o.same_top1 and o.same_cited and o.within_tolerance for o in outcomes)

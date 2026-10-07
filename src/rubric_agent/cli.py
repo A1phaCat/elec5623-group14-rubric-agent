@@ -54,6 +54,9 @@ def main(argv: list[str] | None = None) -> int:
     ev.add_argument("--evidence-mode", choices=["bm25", "full_context"], default="bm25",
                     help="bm25 retrieval or B3 full-context ablation with the same citation/validation rules")
     ev.add_argument("--no-baseline", action="store_true")
+    ev.add_argument("--labels", default="labels.json",
+                    help="label file inside the dataset directory (default labels.json; labels_v2.json holds the "
+                         "reviewed dev-split sufficiency corrections, see dataset/LABELS_V2_CHANGES.md)")
     ev.add_argument("--report", type=Path, default=None, help="write Markdown report here")
     ev.add_argument("--json", type=Path, default=None, help="write raw JSON here")
     ev.add_argument("--log", type=Path, default=None)
@@ -105,7 +108,8 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.cmd == "eval":
         report = evaluate_corpus(DATASET, gateway=gateway, k=args.k, repeats=args.repeats, split=args.split,
-                                 log_path=args.log, with_baseline=not args.no_baseline, evidence_mode=args.evidence_mode)
+                                 log_path=args.log, with_baseline=not args.no_baseline, evidence_mode=args.evidence_mode,
+                                 labels_path=DATASET / args.labels)
         if args.json:
             args.json.parent.mkdir(parents=True, exist_ok=True)
             args.json.write_text(json.dumps(report, indent=2), encoding="utf-8")

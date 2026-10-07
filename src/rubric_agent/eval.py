@@ -67,10 +67,10 @@ def _manifest(root: Path, paths: list[Path]) -> dict:
     return {"sha256": digest, "files": files}
 
 
-def _provenance(dataset_dir: Path, labels: list[GoldLabel], gateway: ModelGateway) -> dict:
+def _provenance(dataset_dir: Path, labels: list[GoldLabel], gateway: ModelGateway, labels_path: Path) -> dict:
     package = Path(__file__).resolve().parent
     root = package.parents[1]
-    data_files = [dataset_dir / "labels.json"]
+    data_files = [labels_path]
     for lab in labels:
         data_files.extend([dataset_dir / "rubrics" / f"{lab.rubric_id}.md",
                            dataset_dir / "submissions" / f"{lab.submission_id}.txt"])
@@ -91,6 +91,7 @@ def _provenance(dataset_dir: Path, labels: list[GoldLabel], gateway: ModelGatewa
         "code": _manifest(root, list(package.rglob("*.py"))),
         "prompts": _manifest(PROMPTS_DIR, [p for p in PROMPTS_DIR.iterdir() if p.is_file()]),
         "dataset": _manifest(dataset_dir, data_files),
+        "labels_file": labels_path.name,
         "runtime": {"python": platform.python_version(), "platform": platform.platform(),
                     "pydantic": version("pydantic"), "pypdf": version("pypdf")},
         "label_validation": "Independent annotation is not verified by this harness; see EVALUATION_PROTOCOL.md.",
@@ -146,6 +147,7 @@ class _Acc:
     suff_fn: dict = field(default_factory=lambda: defaultdict(int))
     suff_correct: int = 0
     suff_total: int = 0
+    suff_confusion: dict = field(default_factory=lambda: defaultdict(int))
     claims: int = 0
     unsupported: int = 0
     abs_err: list[float] = field(default_factory=list)
@@ -156,6 +158,7 @@ class _Acc:
 
     def add_sufficiency(self, pred: str, gold: str) -> None:
         self.suff_total += 1
+        self.suff_confusion[f"{gold}->{pred}"] += 1
         if pred == gold:
             self.suff_tp[pred] += 1
             self.suff_correct += 1
@@ -184,12 +187,27 @@ class _Acc:
     def macro_f1(self) -> float | None:
         if not self.suff_total:
             return None
-        f1s = []
+        return sum(row["f1"] for row in self.per_class().values()) / 3
+
+    def per_class(self) -> dict[str, dict]:
+        """Per-class precision, recall, F1 and the supports they rest on.
+
+        A class with a tiny gold support still contributes a full third of
+        macro-F1, so the denominators travel with the metric rather than being
+        reconstructed from the confusion matrix later.
+        """
+        rows = {}
         for lab in ("sufficient", "partial", "insufficient"):
-            prec = self.suff_tp[lab] / max(self.suff_tp[lab] + self.suff_fp[lab], 1)
-            rec = self.suff_tp[lab] / max(self.suff_tp[lab] + self.suff_fn[lab], 1)
-            f1s.append(0.0 if prec + rec == 0 else 2 * prec * rec / (prec + rec))
-        return sum(f1s) / len(f1s)
+            tp, fp, fn = self.suff_tp[lab], self.suff_fp[lab], self.suff_fn[lab]
+            prec = tp / max(tp + fp, 1)
+            rec = tp / max(tp + fn, 1)
+            rows[lab] = {
+                "precision": prec, "recall": rec,
+                "f1": 0.0 if prec + rec == 0 else 2 * prec * rec / (prec + rec),
+                "gold_support": tp + fn, "predicted": tp + fp,
+                "true_positives": tp, "false_positives": fp, "false_negatives": fn,
+            }
+        return rows
 
     def summary(self) -> dict:
         kappas = []
@@ -201,6 +219,8 @@ class _Acc:
             "sufficiency_accuracy": _ratio(self.suff_correct, self.suff_total),
             "sufficiency_macro_f1": self.macro_f1(),
             "sufficiency_pairs": self.suff_total,
+            "sufficiency_per_class": self.per_class() if self.suff_total else {},
+            "sufficiency_confusion": dict(sorted(self.suff_confusion.items())),
             "claims": self.claims,
             "unsupported_claims": self.unsupported,
             "unsupported_rate": _ratio(self.unsupported, self.claims),
@@ -225,6 +245,7 @@ def evaluate_corpus(
     log_path: Path | None = None,
     with_baseline: bool = True,
     evidence_mode: str = "bm25",
+    labels_path: Path | None = None,
 ) -> dict:
     if repeats < 1 or k < 1:
         raise ValueError("repeats and k must both be positive integers")
@@ -233,7 +254,12 @@ def evaluate_corpus(
     if evidence_mode not in {"bm25", "full_context"}:
         raise ValueError("evidence_mode must be bm25 or full_context")
     gateway = gateway or FixtureGateway()
-    labels = [lab for lab in load_labels(dataset_dir / "labels.json") if split == "all" or lab.split == split]
+    # An explicit label file lets a corrected or adjudicated set be evaluated
+    # without overwriting the one earlier reports were generated from.
+    labels_path = labels_path or dataset_dir / "labels.json"
+    if not labels_path.resolve().is_relative_to(dataset_dir.resolve()):
+        raise ValueError("labels_path must sit inside dataset_dir so the manifest can hash it")
+    labels = [lab for lab in load_labels(labels_path) if split == "all" or lab.split == split]
     if not labels:
         raise ValueError(f"No labels in selected split: {split}")
     by_pair: dict[tuple[str, str], list[GoldLabel]] = defaultdict(list)
@@ -260,7 +286,7 @@ def evaluate_corpus(
     agent_scores: dict[tuple[str, str, str], tuple[float, float, float]] = {}
     baseline_scores: dict[tuple[str, str, str], tuple[float, float, float]] = {}
     run_outputs: list[dict] = []
-    provenance = _provenance(dataset_dir, labels, gateway)
+    provenance = _provenance(dataset_dir, labels, gateway, labels_path)
 
     for (rubric_id, submission_id), golds in sorted(by_pair.items()):
         rubric_path = dataset_dir / "rubrics" / f"{rubric_id}.md"
@@ -494,7 +520,8 @@ def write_markdown_report(report: dict, path: Path) -> None:
         f"evidence mode={g.get('evidence_mode', 'bm25')}, k={g['k']}, repeats={g['repeats']}, split={g['split']}.",
         "",
         f"Corpus: {report['rubrics']} rubrics, {report['submissions']} rubric–submission combinations, "
-        f"{report['pairs']} labelled criterion–submission pairs. The bundled corpus is synthetic; independent labels remain pending.",
+        f"{report['pairs']} labelled criterion–submission pairs, labels `{g.get('labels_file', 'labels.json')}`. "
+        "The bundled corpus is synthetic; independent labels remain pending.",
         "",
     ]
     if g.get("evidence_kind") == "fixture_regression" or g["gateway"].startswith("fixture"):
@@ -524,6 +551,18 @@ def write_markdown_report(report: dict, path: Path) -> None:
         a = report["agent"]
         lines += ["", f"Agent scored **{a['scored_pairs']}/{a['gold_scored_pairs']}** numeric-gold pairs; "
                   f"abstained on **{a['abstained_on_gold_scored']}**. Conditional normalised MAE: {_fmt(a['score_normalised_mae'])}."]
+    if report.get("agent", {}).get("sufficiency_per_class"):
+        lines += ["", "## Sufficiency per class (M4 components)", "",
+                  "Macro-F1 is the unweighted mean of the three F1 values below, so a class with a small gold "
+                  "support still carries one third of the metric. Read the supports before reading the mean.",
+                  "", "| Class | Precision | Recall | F1 | Gold support | Predicted |", "|---|---|---|---|---:|---:|"]
+        for name, row in report["agent"]["sufficiency_per_class"].items():
+            lines.append(f"| {name} | {_fmt(row['precision'])} | {_fmt(row['recall'])} | {_fmt(row['f1'])} "
+                         f"| {row['gold_support']} | {row['predicted']} |")
+        confusion = report["agent"].get("sufficiency_confusion") or {}
+        if confusion:
+            lines += ["", "Confusion (gold→predicted): "
+                      + ", ".join(f"`{key}` ×{value}" for key, value in confusion.items()) + "."]
     lines += ["", "## Per scenario", "", "| Scenario | Pairs | Sufficiency acc. | Uncited positive claim rate | Conditional MAE | Score coverage |",
               "|---|---|---|---|---|---|"]
     for s, row in report["per_scenario"].items():
