@@ -20,6 +20,7 @@ from rubric_agent import PROMPT_VERSION  # noqa: E402
 from rubric_agent.coverage import top_band_coverage  # noqa: E402
 from rubric_agent.errors import ExportBlocked, RubricParseError, SubmissionParseError  # noqa: E402
 from rubric_agent.gateway import build_gateway, local_ollama_models  # noqa: E402
+from rubric_agent.minimax import DEFAULT_ENDPOINT, DEFAULT_MODEL, MiniMaxGateway  # noqa: E402
 from rubric_agent.pipeline import run_direct_baseline, run_pipeline  # noqa: E402
 from rubric_agent.store import RunLogger  # noqa: E402
 
@@ -62,13 +63,29 @@ with st.sidebar:
         options[f"live · {os.environ['RMA_MODEL']} (RMA_* environment)"] = "live"
     for name in _ollama_models():
         options[f"local Ollama · {name}"] = f"ollama:{name}"
+    options["MiniMax API (hosted)"] = "minimax"
     gateway_label = st.radio("Gateway", list(options),
                              help="Live gateways appear only when configured (RMA_* variables) or when a local Ollama server is running. Keys are never shown or logged.")
     spec = options[gateway_label]
+    if spec == "minimax":
+        minimax_regions = {
+            "International · platform.minimax.io": DEFAULT_ENDPOINT,
+            "China · platform.minimaxi.com": "https://api.minimaxi.com/v1",
+        }
+        region = st.selectbox("MiniMax account region", list(minimax_regions), key="minimax-region",
+                              index=1 if os.environ.get("RMA_MINIMAX_ENDPOINT") == "https://api.minimaxi.com/v1" else 0,
+                              help="Select the region of the console that issued your key, not your physical location. A region/key mismatch may return HTTP 401.")
+        minimax_endpoint = minimax_regions[region]
+        st.caption(f"Base URL: {minimax_endpoint}")
+        minimax_model = st.text_input("MiniMax model", value=os.environ.get("RMA_MINIMAX_MODEL", DEFAULT_MODEL))
+        minimax_key = st.text_input("MiniMax API key", type="password", key="minimax-key",
+                                   help="Kept in this browser session only; not saved to files or run logs.")
+        st.caption("Subscription keys (sk-cp) and pay-as-you-go keys use different quotas. Assessment evidence is sent to MiniMax; Ollama is not required.")
     fail_mode = st.selectbox("S6 fault injection (fixture only)", ["none", "unknown_id", "out_of_range", "uncited_claim", "invalid_json"],
                              disabled=spec != "fixture")
     k = st.slider("Evidence units per criterion (K)", 1, 10, 5)
-    log_runs = st.checkbox("Append to run log (data/runs.jsonl)", value=True, help="FR16: model id, prompt version, retrieval settings, evidence IDs, latency.")
+    log_runs = st.checkbox("Append to personal log (data/minimax_runs.jsonl)" if spec == "minimax" else "Append to run log (data/runs.jsonl)",
+                           value=True, help="FR16: model id, prompt version, retrieval settings, evidence IDs, latency.")
     run = st.button("Run review", type="primary", use_container_width=True)
 
     st.divider()
@@ -86,7 +103,9 @@ if run:
     if spec == "fixture" and fail_mode != "none":
         spec = f"fixture:{fail_mode}"
     try:
-        gateway = build_gateway(spec)
+        gateway = (MiniMaxGateway(api_key=minimax_key or os.environ.get("RMA_MINIMAX_API_KEY", ""),
+                                  endpoint=minimax_endpoint, model=minimax_model)
+                   if spec == "minimax" else build_gateway(spec))
         if example != "(upload my own)":
             rubric_src, sub_src = EXAMPLES[example]
             case_id = sub_src.stem
@@ -97,22 +116,28 @@ if run:
         else:
             st.error("Pick an example or upload both a rubric and a submission.")
             st.stop()
-        logger = RunLogger(RUN_LOG) if log_runs else None
+        logger = RunLogger(ROOT / "data" / "minimax_runs.jsonl" if spec == "minimax" else RUN_LOG) if log_runs else None
         with st.spinner("Parsing, retrieving evidence and assessing… (a local 7B model needs roughly 10 s per criterion)"):
-            result = run_pipeline(rubric_src, sub_src, gateway=gateway, k=k, test_case_id=case_id, logger=logger)
+            result = run_pipeline(rubric_src, sub_src, gateway=gateway, k=k, test_case_id=case_id, logger=logger,
+                                  workers=1 if spec == "minimax" else None)
         st.session_state.result = result
         st.session_state.session = result.review_session()
         st.session_state.case_id = case_id
         st.session_state.baseline = None
         st.session_state.gateway_label = gateway_label
         st.session_state.sources = (rubric_src, sub_src, spec)
+        st.session_state.source_gateway = gateway
+        if any("provider_error" in a.draft.flags for a in result.assessments):
+            st.error("Model API request failed; no fallback to fixture. Check the key, endpoint, model permissions, quota and output limit.")
+            if spec == "minimax" and getattr(gateway, "provider_error", None):
+                st.error(gateway.provider_error)
         for key in list(st.session_state.keys()):
             if key.startswith(("act-", "sc-", "cm-")):
                 del st.session_state[key]
     except (RubricParseError, SubmissionParseError) as exc:
         st.error(f"Could not read input: {exc}")
         st.stop()
-    except RuntimeError as exc:
+    except (RuntimeError, ValueError) as exc:
         st.error(str(exc))
         st.stop()
 
@@ -215,7 +240,8 @@ st.caption("B2 is the 'paste everything into a chatbot' approach from the propos
 if st.button("Run B2 on this submission", help="Uses the same gateway. With a local model this is one long call."):
     rubric_src, sub_src, spec = st.session_state.sources
     with st.spinner("Grading the whole document in one call…"):
-        _, drafts = run_direct_baseline(rubric_src, sub_src, gateway=build_gateway(spec.split(":")[0] if spec.startswith("fixture") else spec))
+        _, drafts = run_direct_baseline(rubric_src, sub_src, gateway=(st.session_state.source_gateway
+                                       if spec == "minimax" else build_gateway(spec.split(":")[0] if spec.startswith("fixture") else spec)))
     st.session_state.baseline = drafts
 if st.session_state.baseline:
     rows = []
